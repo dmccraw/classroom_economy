@@ -5,7 +5,7 @@ gem 'rails', '3.2.7'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+# gem 'sqlite3'
 
 
 # Gems used only for assets and not required
@@ -24,6 +24,25 @@ gem 'jquery-rails'
 
 gem 'annotate'
 gem 'devise'
+gem 'bootstrap-sass'
+gem 'pg'
+
+gem 'factory_girl_rails'
+
+group :test do
+  gem 'shoulda'
+  gem 'shoulda-context'
+  gem 'spork'
+  gem 'spork-testunit'
+  gem 'guard-spork'
+  gem 'guard-test'
+  gem 'rb-inotify', :require => false
+  gem 'rb-fsevent', :require => false
+  gem 'rb-fchange', :require => false
+  gem 'growl_notify'
+  gem 'ruby-prof'
+end
+
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

@@ -32,7 +32,11 @@ GEM
       rake
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
+    bootstrap-sass (2.0.4.0)
     builder (3.0.4)
+    childprocess (0.3.6)
+      ffi (~> 1.0, >= 1.0.6)
+    coderay (1.0.8)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -48,6 +52,26 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    factory_girl (4.0.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.0.0)
+      factory_girl (~> 4.0.0)
+      railties (>= 3.0.0)
+    ffi (1.2.0)
+    growl_notify (0.0.3)
+      rb-appscript
+    guard (1.6.1)
+      listen (>= 0.6.0)
+      lumberjack (>= 1.0.2)
+      pry (>= 0.9.10)
+      thor (>= 0.14.6)
+    guard-spork (1.4.0)
+      childprocess (>= 0.2.3)
+      guard (>= 1.1)
+      spork (>= 0.8.4)
+    guard-test (0.7.0)
+      guard (>= 1.1)
+      test-unit (~> 2.2)
     hike (1.2.1)
     i18n (0.6.1)
     journey (1.0.4)
@@ -55,14 +79,22 @@ GEM
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.7.5)
+    listen (0.6.0)
+    lumberjack (1.0.2)
     mail (2.4.4)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    method_source (0.8.1)
     mime-types (1.19)
     multi_json (1.5.0)
     orm_adapter (0.4.0)
+    pg (0.14.1)
     polyglot (0.3.3)
+    pry (0.9.10)
+      coderay (~> 1.0.5)
+      method_source (~> 0.8)
+      slop (~> 3.3.1)
     rack (1.4.1)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -86,18 +118,34 @@ GEM
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
     rake (10.0.3)
+    rb-appscript (0.6.1)
+    rb-fchange (0.0.6)
+      ffi
+    rb-fsevent (0.9.2)
+    rb-inotify (0.8.8)
+      ffi (>= 0.5.0)
     rdoc (3.12)
       json (~> 1.4)
+    ruby-prof (0.10.8)
     sass (3.2.4)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
+    shoulda (3.0.1)
+      shoulda-context (~> 1.0.0)
+      shoulda-matchers (~> 1.0.0)
+    shoulda-context (1.0.0)
+    shoulda-matchers (1.0.0)
+    slop (3.3.3)
+    spork (0.9.2)
+    spork-testunit (0.0.8)
+      spork (>= 0.6.0)
     sprockets (2.1.3)
       hike (~> 1.2)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    sqlite3 (1.3.6)
+    test-unit (2.5.3)
     thor (0.16.0)
     tilt (1.3.3)
     treetop (1.4.12)
@@ -115,10 +163,23 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
+  bootstrap-sass
   coffee-rails (~> 3.2.1)
   devise
+  factory_girl_rails
+  growl_notify
+  guard-spork
+  guard-test
   jquery-rails
+  pg
   rails (= 3.2.7)
+  rb-fchange
+  rb-fsevent
+  rb-inotify
+  ruby-prof
   sass-rails (~> 3.2.3)
-  sqlite3
+  shoulda
+  shoulda-context
+  spork
+  spork-testunit
   uglifier (>= 1.0.3)

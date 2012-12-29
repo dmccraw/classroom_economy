@@ -1,8 +1,12 @@
 ClassroomEconomy::Application.routes.draw do
+
   devise_for :users
 
-  resources :users
+
+
+  resources :stores
   resources :groups
+  resources :users
 
   root to: "root#index"
 

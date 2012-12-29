@@ -1,18 +1,17 @@
 # == Schema Information
 #
-# Table name: groups
+# Table name: accounts
 #
 #  id         :integer          not null, primary key
-#  name       :string(255)
 #  user_id    :integer
+#  group_id   :integer
+#  balance    :float
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 
-require 'test_helper'
-
-class GroupTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+class Account < ActiveRecord::Base
+  belongs_to :user
+  belongs_to :group
+  attr_accessible :balance
 end

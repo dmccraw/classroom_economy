@@ -1,18 +1,15 @@
 # == Schema Information
 #
-# Table name: groups
+# Table name: store_owners
 #
 #  id         :integer          not null, primary key
-#  name       :string(255)
 #  user_id    :integer
+#  store_id   :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 
-require 'test_helper'
-
-class GroupTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+class StoreOwner < ActiveRecord::Base
+  belongs_to :user
+  belongs_to :store
 end
