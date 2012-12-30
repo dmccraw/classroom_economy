@@ -14,7 +14,7 @@
 require 'test_helper'
 
 class TransactionTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  should validate_presence_of(:from_user_id)
+  should validate_presence_of(:to_user_id)
+  should validate_presence_of(:description)
 end

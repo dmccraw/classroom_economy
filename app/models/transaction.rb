@@ -12,8 +12,12 @@
 #
 
 class Transaction < ActiveRecord::Base
-  belongs_to :from, through: :user
-  belongs_to :to, through: :user
-  attr_accessible :amount, :description
+  belongs_to :from, foreign_key: "user_id"
+  belongs_to :to, foreign_key: "user_id"
 
+  validates :from_user_id, presence: true
+  validates :to_user_id, presence: true
+  validates :description, presence: true
+
+  attr_accessible :amount, :description
 end

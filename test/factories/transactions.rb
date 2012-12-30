@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :transaction do
-    from_id nil
-    to_id nil
+    from_user { FactoryGirl.create(:user) }
+    to_user { FactoryGirl.create(:user) }
     amount 1.5
     description "MyText"
   end

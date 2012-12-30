@@ -37,7 +37,11 @@ class User < ActiveRecord::Base
 
   # relationships
   has_many :groups
-  has_many :transactions
+  # has_many :transactions
+
+  # validations
+  validates :user_type, presence: true
+  validates :email, presence: true
 
 
   USER_TYPE_STUDENT = 1
@@ -45,5 +49,17 @@ class User < ActiveRecord::Base
   USER_TYPE_ADMIN   = 10
 
   attr_accessible :email, :first_name, :last_name, :user_type
+
+  def student?
+    self.user_type == USER_TYPE_STUDENT
+  end
+
+  def admin?
+    self.user_type == USER_TYPE_ADMIN
+  end
+
+  def teacher?
+    self.user_type == USER_TYPE_TEACHER
+  end
 
 end

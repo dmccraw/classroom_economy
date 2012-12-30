@@ -28,7 +28,12 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+
+  should have_many(:groups)
+  # should have_many(:transactions)
+
+  # should validate_presence_of(:user_type)
+  should validate_presence_of(:email)
+
+
 end
