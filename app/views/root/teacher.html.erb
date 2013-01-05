@@ -1,0 +1,65 @@
+<%
+  group = get_current_group
+%>
+<h1><%= group.name %></h1>
+<hr>
+<h2>Students</h2>
+<table class="table table-striped table-bordered">
+  <thead>
+    <th>Name</th>
+    <th>Last Logged in</th>
+    <th>Account Balance</th>
+    <th>Action</th>
+  </thead>
+  <tbody>
+    <% if group.members.count > 0 %>
+      <% group.members.each do |member| %>
+        <tr>
+          <td><%= link_to(member.display_name, user_path(member)) %></td>
+          <td><%= member.last_sign_in_at ? I18n.l(member.last_sign_in_at) : "Never" %></td>
+          <td><%= number_to_currency(member.account(group.id).balance) %></td>
+          <td>
+            <%= link_to("Edit", user_path(member)) %> |
+            <%= link_to("Delete", user_path(member), method: "delete", confirm: "Are you sure?") %>
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="10">You have no students created. Create some!</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to("Add Student", new_student_users_path(group_id: group.id)) %>
+<hr>
+<h2>Stores</h2>
+<table class="table table-striped table-bordered">
+  <thead>
+    <th>Name</th>
+    <th>Owners</th>
+    <th>Account Balance</th>
+  </thead>
+  <tbody>
+    <% if group.stores.count > 0 %>
+      <% group.stores.each do |store| %>
+        <tr>
+          <td><%= link_to(store.name, store_path(store)) %></td>
+          <td>
+            <% store.store_owners.each do |owner| %>
+              <%= link_to(owner.user.display_name, user_path(owner.user)) %>&nbsp;
+            <% end %>
+          </td>
+          <td><%= number_to_currency(store.account.balance) %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="10">There are no stores for this class.</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to("Create Class", new_group_path(user_id: current_user.id)) %>
+<%#= link_to("Delete", group_path(group), method: "delete", confirm: "Are you sure?") %>

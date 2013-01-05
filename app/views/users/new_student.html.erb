@@ -1,4 +1,6 @@
-<%= form_for(@user) do |f| %>
+<h1>New Student</h1>
+
+<%= form_for(@user, url: create_student_users_path, method: "post" ) do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -32,6 +34,12 @@
   <% else %>
     <%= f.hidden_field :user_type %>
   <% end %>
+
+  <div class="field">
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>

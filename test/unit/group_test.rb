@@ -12,7 +12,17 @@
 require 'test_helper'
 
 class GroupTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+
+  should validate_presence_of(:name)
+
+  test "test account creation" do
+    teacher = FactoryGirl.create(:user)
+    group = FactoryGirl.create(:group, user_id: teacher.id)
+    assert_not_nil group.store
+    puts group.store.inspect
+    puts group.store.account.inspect
+    # assert_not_nil account = Store.where(owner_id: teacher.id, group_id: group.id).first
+    # puts account.inspect
+
+  end
 end

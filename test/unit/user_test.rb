@@ -5,7 +5,7 @@
 #  id                     :integer          not null, primary key
 #  first_name             :string(255)
 #  last_name              :string(255)
-#  user_name              :string(255)
+#  username               :string(255)
 #  user_type              :integer
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
@@ -32,8 +32,36 @@ class UserTest < ActiveSupport::TestCase
   should have_many(:groups)
   # should have_many(:transactions)
 
-  # should validate_presence_of(:user_type)
-  should validate_presence_of(:email)
+  test "valid_email" do
+    # make sure if teacher or admin that an email is valid
+    user = User.new(first_name: "first", last_name: "last", password: "password", user_type: User::USER_TYPE_ADMIN)
+    assert_false user.save
 
+    user = User.new(first_name: "first", last_name: "last", password: "password", user_type: User::USER_TYPE_TEACHER)
+    assert_false user.save
+
+    user = User.new(first_name: "first", last_name: "last", password: "password", user_type: User::USER_TYPE_STUDENT)
+    assert user.save
+
+  end
+
+  test "groups" do
+
+  end
+
+  test "accounts" do
+    # teacher = FactoryGirl.create(:)
+  end
+
+  test "stores" do
+    group = FactoryGirl.create(:group)
+    user = FactoryGirl.create(:user)
+
+    store = FactoryGirl.create(:store, group_id: group.id)
+    store_owner = FactoryGirl.create(:store_owner, user_id: user.id, store_id: store.id)
+    puts user.stores.inspect
+    puts store.inspect
+    assert user.stores == [store]
+  end
 
 end

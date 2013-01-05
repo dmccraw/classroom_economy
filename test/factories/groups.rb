@@ -1,7 +1,7 @@
 
 FactoryGirl.define do
   factory :group do
-    name nil
+    name "Test Class"
     user_id nil
   end
 end

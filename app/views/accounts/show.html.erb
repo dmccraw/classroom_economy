@@ -1,0 +1,29 @@
+<% if @account.owner_type == "Store" %>
+  <h2>Account for <%= @account.owner.name %></h2>
+<% elsif @account.owner_type == "User" %>
+  <h2>Account for <%= @account.owner.display_name %></h2>
+<% end %>
+<hr>
+<p>
+  <b>Class:</b>
+  <%= @account.group.name %>
+</p>
+<% if @account.owner_type == "Store" %>
+  <p>
+    <b><%= @account.owner.users.count == 1 ? "Owner:": "Owners:" %></b>
+    <% @account.owner.users.each_with_index do |user, index| %>
+      <%= ", " if index != 0 %>
+      <%= user.display_name %>
+    <% end %>
+  </p>
+<% end %>
+
+<p>
+  <b>Balance:</b>
+  <%= number_to_currency(@account.balance) %>
+</p>
+<hr>
+
+<div class="well">
+  <h2>Transactions</h2>
+</div>

@@ -11,10 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121229215636) do
+ActiveRecord::Schema.define(:version => 20121230234318) do
 
   create_table "accounts", :force => true do |t|
-    t.integer  "user_id"
+    t.integer  "owner_id"
+    t.string   "owner_type"
     t.integer  "group_id"
     t.float    "balance"
     t.datetime "created_at", :null => false
@@ -22,7 +23,7 @@ ActiveRecord::Schema.define(:version => 20121229215636) do
   end
 
   add_index "accounts", ["group_id"], :name => "index_accounts_on_group_id"
-  add_index "accounts", ["user_id"], :name => "index_accounts_on_user_id"
+  add_index "accounts", ["owner_id"], :name => "index_accounts_on_owner_id"
 
   create_table "groups", :force => true do |t|
     t.string   "name"
@@ -30,6 +31,16 @@ ActiveRecord::Schema.define(:version => 20121229215636) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "memberships", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "group_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "memberships", ["group_id"], :name => "index_memberships_on_group_id"
+  add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
 
   create_table "store_owners", :force => true do |t|
     t.integer  "user_id"
@@ -44,9 +55,12 @@ ActiveRecord::Schema.define(:version => 20121229215636) do
   create_table "stores", :force => true do |t|
     t.string   "name"
     t.text     "description"
+    t.integer  "group_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  add_index "stores", ["group_id"], :name => "index_stores_on_group_id"
 
   create_table "transactions", :force => true do |t|
     t.integer  "from_user_id"
@@ -63,7 +77,7 @@ ActiveRecord::Schema.define(:version => 20121229215636) do
   create_table "users", :force => true do |t|
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "user_name"
+    t.string   "username"
     t.integer  "user_type"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
@@ -84,7 +98,7 @@ ActiveRecord::Schema.define(:version => 20121229215636) do
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["email"], :name => "index_users_on_email"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
 end

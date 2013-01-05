@@ -3,6 +3,7 @@ require 'test_helper'
 class UsersControllerTest < ActionController::TestCase
   setup do
     @user = FactoryGirl.create(:user)
+    sign_in @user
   end
 
   test "should get index" do
@@ -17,8 +18,9 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should create user" do
+    @user2 = FactoryGirl.build(:user)
     assert_difference('User.count') do
-      post :create, user: { email: @user.email, first_name: @user.first_name, last_name: @user.last_name, user_type: @user.user_type }
+      post :create, user: { email: @user2.email, first_name: @user2.first_name, last_name: @user2.last_name, user_type: @user2.user_type, password: "password", password_confirmation: "password" }
     end
 
     assert_redirected_to user_path(assigns(:user))

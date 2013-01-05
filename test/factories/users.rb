@@ -12,7 +12,7 @@ FactoryGirl.define do
     end
 
     factory :admin do
-      user_type             User::USER_TYPE_STUDENT
+      user_type             User::USER_TYPE_ADMIN
     end
   end
 end

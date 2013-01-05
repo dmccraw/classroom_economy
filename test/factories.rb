@@ -1,6 +1,6 @@
 
 FactoryGirl.define do
-  sequence(:email_address) { |n| "email#{n}@example.com" }
+  sequence(:email_address) { |n| "email#{n}#{rand(100)}@example.com" }
 end
 
 FactoryGirl.define do

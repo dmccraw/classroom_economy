@@ -1,0 +1,89 @@
+<%
+  teachers = User.teachers
+  students = User.students
+  admins = User.admins
+  groups = Group.all
+  stores = Store.all
+%>
+<h1>Admin View</h1><br/>
+<h3>Teachers</h3>
+<table class="table table-striped">
+  <thead>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Created At</th>
+  </thead>
+  <% teachers.each do |teacher| %>
+    <tr>
+      <td><%= teacher.display_name %><td>
+      <td><%= teacher.email %></td>
+      <td><%= I18n.l(teacher.created_at) %></td>
+    </tr>
+  <% end %>
+</table>
+<br/>
+<h3>Students</h3>
+<table class="table table-striped">
+  <thead>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Created At</th>
+  </thead>
+  <% students.each do |student| %>
+    <tr>
+      <td><%= student.display_name %><td>
+      <td><%= student.email %></td>
+      <td><%= I18n.l(student.created_at) %></td>
+    </tr>
+  <% end %>
+</table>
+<br/>
+<h3>Admins</h3>
+<table class="table table-striped">
+  <thead>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Created At</th>
+  </thead>
+  <% admins.each do |admin| %>
+    <tr>
+      <td><%= admin.display_name %><td>
+      <td><%= admin.email %></td>
+      <td><%= I18n.l(admin.created_at) %></td>
+    </tr>
+  <% end %>
+</table>
+<br/>
+<h3>Classes</h3>
+<table class="table table-striped">
+  <thead>
+    <th>Name</th>
+    <th>Owner</th>
+    <th>Created At</th>
+  </thead>
+  <% groups.each do |group| %>
+    <tr>
+      <td><%= group.name %></td>
+      <td><%= group.user.display_name %></td>
+      <td><%= I18n.l(group.created_at) %></td>
+    </tr>
+  <% end %>
+</table>
+<br/>
+<h3>Stores</h3>
+<table class="table table-striped">
+  <thead>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Created At</th>
+  </thead>
+  <tbody>
+    <% stores.each do |store| %>
+      <tr>
+        <td><%= store.name %></td>
+        <td><%= store.description %></td>
+        <td><%= I18n.l(store.created_at) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

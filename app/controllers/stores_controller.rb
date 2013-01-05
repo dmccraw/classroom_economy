@@ -25,6 +25,7 @@ class StoresController < ApplicationController
   # GET /stores/new.json
   def new
     @store = Store.new
+    @store.group_id = params[:group_id]
 
     respond_to do |format|
       format.html # new.html.erb
@@ -44,8 +45,15 @@ class StoresController < ApplicationController
 
     respond_to do |format|
       if @store.save
-        format.html { redirect_to @store, notice: 'Store was successfully created.' }
-        format.json { render json: @store, status: :created, location: @store }
+        if params[:user_id].present?
+          StoreOwner.create(user_id: params[:user_id], store_id: @store.id)
+          @user = User.find(params[:user_id])
+          format.html { redirect_to @user, notice: 'Store was successfully created.' }
+          format.json { render json: @store, status: :created, location: @store }
+        else
+          format.html { redirect_to @store, notice: 'Store was successfully created.' }
+          format.json { render json: @store, status: :created, location: @store }
+        end
       else
         format.html { render action: "new" }
         format.json { render json: @store.errors, status: :unprocessable_entity }
@@ -60,8 +68,14 @@ class StoresController < ApplicationController
 
     respond_to do |format|
       if @store.update_attributes(params[:store])
-        format.html { redirect_to @store, notice: 'Store was successfully updated.' }
-        format.json { head :no_content }
+        if params[:user_id].present?
+          @user = User.find(params[:user_id])
+          format.html { redirect_to @user, notice: 'Store was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { redirect_to @store, notice: 'Store was successfully updated.' }
+          format.json { head :no_content }
+        end
       else
         format.html { render action: "edit" }
         format.json { render json: @store.errors, status: :unprocessable_entity }

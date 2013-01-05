@@ -2,7 +2,9 @@ require 'test_helper'
 
 class StoresControllerTest < ActionController::TestCase
   setup do
+    @student = FactoryGirl.create(:student)
     @store = FactoryGirl.create(:store)
+    sign_in @student
   end
 
   test "should get index" do

@@ -11,12 +11,15 @@
     </div>
   <% end %>
 
+  <%= hidden_field_tag :user_id, params[:user_id] %>
+  <%= f.hidden_field :group_id %>
+
   <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label :name %>
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :description %><br />
+    <%= f.label :description %>
     <%= f.text_area :description %>
   </div>
   <div class="actions">
