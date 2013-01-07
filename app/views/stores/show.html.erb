@@ -1,13 +1,26 @@
-<p>
-  <b>Name:</b>
-  <%= @store.name %>
-</p>
+<%= render partial: "/groups/top", locals: { current_nav: "stores" } %>
 
-<p>
-  <b>Description:</b>
-  <%= @store.description %>
-</p>
+<center>
+  <h1><%= @store.name %><h1>
+</center>
+<hr>
+<h4><%= @store.description %></h4>
+<br/>
 
+<b>Current Balance:</b>
+<%= number_to_currency(@store.account.balance) %>
+<% if @store.edit_store?(current_user) %>
+  <br/><br/>
+  <%= link_to 'Edit Store', edit_group_store_path(@group, @store) %>
+<% end %>
 
-<%= link_to 'Edit', edit_store_path(@store) %> |
-<%= link_to 'Back', stores_path %>
+<% if @store.owner?(current_user) || (current_user.teacher? && @group.can_access?(current_user)) %>
+  <center>
+    <%= link_to "Buy Something", new_group_transaction_path(@group, from_account_id: @store.account.id), class: "btn btn-danger" %>
+    |
+    <%= link_to "Sell Something", new_group_transaction_path(@group, to_account_id: @store.account.id), class: "btn btn-success" %>
+  </center>
+  <hr>
+  <h2>Transactions</h2>
+  <%= render partial: '/transactions/transactions', locals: { transactions: @store.account.transactions } %>
+<% end %>

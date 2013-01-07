@@ -1,18 +1,8 @@
-<%= form_for(@store) do |f| %>
-  <% if @store.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@store.errors.count, "error") %> prohibited this store from being saved:</h2>
+<%= form_for([@group,@store]) do |f| %>
 
-      <ul>
-      <% @store.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render partial: '/shared/errors', locals: { o: @store } %>
 
   <%= hidden_field_tag :user_id, params[:user_id] %>
-  <%= f.hidden_field :group_id %>
 
   <div class="field">
     <%= f.label :name %>
@@ -23,6 +13,6 @@
     <%= f.text_area :description %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit (@store.new_record? ? "Save" : "Update"), class: "btn" %>
   </div>
 <% end %>

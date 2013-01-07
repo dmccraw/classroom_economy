@@ -1,10 +1,32 @@
+<h3>Please select class to view:</h3>
+<br/>
+<% current_user.groups.each do |group| %>
+  <p><%= link_to(group.name, group_path(group)) %></p>
+<% end %>
+
+
 <h2>My Account</h2>
-<% account = current_user.account(get_current_group_id) %>
+<%# account = current_user.account(current_group_id) %>
 <p>
   <b>Balance:</b>
   <%= number_to_currency(account.balance) %> |
   <%= link_to("View Account", account_path(account)) %>
 </p>
+<p>Last 5 transactions</p>
+<% transactions = account.transactions.limit(5).order("created_at ASC") %>
+<table class="table table-striped table-bordered">
+  <thead>
+    <th>From</th>
+    <th>To</th>
+    <th>Amount</th>
+    <th>Description</th>
+    <th>Occurred On</th>
+    <th>Entered In</th>
+  </thead>
+  <tbody>
+    <%= render partial: transactions %>
+  </tbody>
+</table>
 <hr>
 <h2>My Stores</h2>
 <table class="table table-striped table-bordered">
@@ -13,18 +35,16 @@
     <th>Description</th>
     <th>Balance</th>
     <th></th>
-    <th></th>
   </thead>
-<% stores = current_user.stores.where(group_id: get_current_group_id) %>
+<%# stores = current_user.stores.where(group_id: current_group_id) %>
 <% if stores.any? %>
   <tbody>
     <% stores.each do |store| %>
       <tr>
-        <td><%= store.name %></td>
+        <td><%= link_to(store.name, store_path(store)) %></td>
         <td><%= store.description %></td>
         <td><%= number_to_currency(store.account.balance) %></td>
-        <td>Transactions</td>
-        <td><%= link_to "Edit", edit_store_path(store, user_id: current_user.id) %></td>
+        <td><%= link_to "Edit", group_edit_store_path(@group, store, user_id: current_user.id) %></td>
       </tr>
     <% end %>
   </tbody>
@@ -34,6 +54,6 @@
   </tr>
 <% end %>
 </table>
-<%= link_to "Open Store", new_store_path(group_id: get_current_group_id, user_id: current_user.id) %>
+<%= link_to "Open Store", new_store_path(group_id: current_group_id, user_id: current_user.id) %>
 <hr>
 <h2>My Jobs</h2>

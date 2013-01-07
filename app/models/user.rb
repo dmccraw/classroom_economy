@@ -45,10 +45,10 @@ class User < ActiveRecord::Base
 
   # relationships
   # has_many :groups, through: :memberships
-  has_many :accounts, as: :owner
+  has_many :accounts, as: :owner, dependent: :destroy
   has_many :stores, through: :store_owners
-  has_many :store_owners
-  has_many :memberships
+  has_many :store_owners, dependent: :destroy
+  has_many :memberships, dependent: :destroy
   # has_many :transactions
 
   # validations
@@ -116,9 +116,20 @@ class User < ActiveRecord::Base
     end
   end
 
+  def in_group?(group)
+    groups.each do |_group|
+      if group.id == _group.id
+        return true
+      end
+    end
+    false
+  end
+
   def account(group_id)
     Account.where(owner_id: self.id, owner_type: self.class.to_s, group_id: group_id).first
   end
+
+
 
   # devise login with username or email
   # https://github.com/plataformatec/devise/wiki/How-To:-Allow-users-to-sign-in-using-their-username-or-email-address

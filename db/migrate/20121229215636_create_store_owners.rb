@@ -1,8 +1,8 @@
 class CreateStoreOwners < ActiveRecord::Migration
   def change
     create_table :store_owners do |t|
-      t.references :user
-      t.references :store
+      t.references :user,   :null => false
+      t.references :store,  :null => false
 
       t.timestamps
     end

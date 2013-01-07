@@ -20,6 +20,20 @@ class Account < ActiveRecord::Base
 
   before_save :set_initial_balance
 
+  def transactions
+    Transaction.where("from_account_id = :id OR to_account_id = :id", id: self.id)
+  end
+
+  def display_name
+    if owner_type == "User"
+      owner.display_name
+    elsif owner_type == "Store"
+      owner.name
+    else
+      "Unknown Account"
+    end
+  end
+
   private
 
   def set_initial_balance

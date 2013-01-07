@@ -1,15 +1,6 @@
 <%= form_for(@group) do |f| %>
-  <% if @group.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@group.errors.count, "error") %> prohibited this group from being saved:</h2>
 
-      <ul>
-      <% @group.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render partial: '/shared/errors', locals: { o: @group } %>
 
   <%= f.hidden_field :user_id %>
 
@@ -18,6 +9,6 @@
     <%= f.text_field :name %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit @group.new_record? ? "Create" : "Update" class: "btn" %>
   </div>
 <% end %>

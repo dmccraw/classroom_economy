@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121230234318) do
+ActiveRecord::Schema.define(:version => 20130106023554) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "owner_id"
@@ -26,15 +26,36 @@ ActiveRecord::Schema.define(:version => 20121230234318) do
   add_index "accounts", ["owner_id"], :name => "index_accounts_on_owner_id"
 
   create_table "groups", :force => true do |t|
-    t.string   "name"
+    t.string   "name",       :null => false
+    t.integer  "user_id",    :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "job_assignments", :force => true do |t|
+    t.integer  "job_id"
     t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  create_table "memberships", :force => true do |t|
-    t.integer  "user_id"
+  add_index "job_assignments", ["job_id"], :name => "index_job_assignments_on_job_id"
+  add_index "job_assignments", ["user_id"], :name => "index_job_assignments_on_user_id"
+
+  create_table "jobs", :force => true do |t|
+    t.string   "title"
+    t.string   "description"
+    t.float    "salary"
     t.integer  "group_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "jobs", ["group_id"], :name => "index_jobs_on_group_id"
+
+  create_table "memberships", :force => true do |t|
+    t.integer  "user_id",    :null => false
+    t.integer  "group_id",   :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -43,8 +64,8 @@ ActiveRecord::Schema.define(:version => 20121230234318) do
   add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
 
   create_table "store_owners", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "store_id"
+    t.integer  "user_id",    :null => false
+    t.integer  "store_id",   :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -53,9 +74,9 @@ ActiveRecord::Schema.define(:version => 20121230234318) do
   add_index "store_owners", ["user_id"], :name => "index_store_owners_on_user_id"
 
   create_table "stores", :force => true do |t|
-    t.string   "name"
+    t.string   "name",        :null => false
     t.text     "description"
-    t.integer  "group_id"
+    t.integer  "group_id",    :null => false
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
@@ -63,22 +84,26 @@ ActiveRecord::Schema.define(:version => 20121230234318) do
   add_index "stores", ["group_id"], :name => "index_stores_on_group_id"
 
   create_table "transactions", :force => true do |t|
-    t.integer  "from_user_id"
-    t.integer  "to_user_id"
-    t.float    "amount"
-    t.text     "description"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.integer  "from_account_id",                    :null => false
+    t.integer  "to_account_id",                      :null => false
+    t.float    "amount",                             :null => false
+    t.string   "description",                        :null => false
+    t.datetime "occurred_on",                        :null => false
+    t.integer  "user_id",                            :null => false
+    t.boolean  "disputed",        :default => false, :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
   end
 
-  add_index "transactions", ["from_user_id"], :name => "index_transactions_on_from_user_id"
-  add_index "transactions", ["to_user_id"], :name => "index_transactions_on_to_user_id"
+  add_index "transactions", ["from_account_id"], :name => "index_transactions_on_from_account_id"
+  add_index "transactions", ["to_account_id"], :name => "index_transactions_on_to_account_id"
+  add_index "transactions", ["user_id"], :name => "index_transactions_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "username"
-    t.integer  "user_type"
+    t.string   "first_name",                             :null => false
+    t.string   "last_name",                              :null => false
+    t.string   "username",                               :null => false
+    t.integer  "user_type",                              :null => false
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
     t.string   "email",                  :default => "", :null => false

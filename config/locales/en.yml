@@ -3,3 +3,10 @@
 
 en:
   hello: "Hello world"
+  time:
+    formats:
+      short: "%I:%M %p"
+      medium: "%m/%d/%Y %I:%M %p"
+      long: "%A, %B %d, %Y %I:%M:%S %p"
+    am: "AM"
+    pm: "PM"

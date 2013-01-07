@@ -1,3 +1,6 @@
+<% nav = @account.owner_type == "Store" ? "stores" : "students" %>
+<%= render partial: "/groups/top", locals: { current_nav: nav } %>
+
 <% if @account.owner_type == "Store" %>
   <h2>Account for <%= @account.owner.name %></h2>
 <% elsif @account.owner_type == "User" %>
@@ -26,4 +29,5 @@
 
 <div class="well">
   <h2>Transactions</h2>
+  <%= render partial: '/transactions/transactions', locals: { transactions: @account.transactions } %>
 </div>

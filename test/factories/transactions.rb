@@ -2,9 +2,12 @@
 
 FactoryGirl.define do
   factory :transaction do
-    from_user { FactoryGirl.create(:user) }
-    to_user { FactoryGirl.create(:user) }
-    amount 1.5
-    description "MyText"
+    from_account nil
+    to_account nil
+    amount ""
+    description "MyString"
+    occurred_on "2013-01-05 07:24:34"
+    user nil
+    disputed false
   end
 end

@@ -1,0 +1,77 @@
+<% can_update = can? :update, User %>
+<% can_deposit = can? :deposit, User %>
+<% can_withdrawl = can? :withdrawl, User %>
+
+<%= render partial: "/groups/top", locals: { current_nav: "students" } %>
+
+<div class= "pull-right"><%= link_to('Add Student', new_group_student_path(group_id: @group.id), class: "btn btn-info") if can? :create, User %></div>
+<h2>Students</h2>
+<br/>
+<p>This is a list of students in this class.
+  <% if can? :update, User %>
+    From here you can add new students, edit, delete or navigate to a specific student.
+  <% end %>
+</p>
+</br>
+<table class="table table-striped table-bordered">
+  <thead>
+    <th>Student Name</th>
+    <th>Last Logged in</th>
+    <% if can_update %>
+      <th>Account Balance</th>
+    <% end %>
+    <% if can_deposit || can_withdrawl %>
+      <th></th>
+    <% end %>
+    <% if can_update %>
+      <th></th>
+    <% end %>
+  </thead>
+  <tbody>
+    <% if @group.members.count > 0 %>
+      <% @group.members.each do |member| %>
+        <% if member.student? %>
+          <tr>
+            <td><%= link_to(member.display_name, group_student_path(@group,member)) %></td>
+            <td><%= member.last_sign_in_at != nil ? I18n.l(member.last_sign_in_at, format: :medium) : "Never" %></td>
+            <% if can_update %>
+              <td>
+                <%= number_to_currency(member.account(@group.id).balance) %>
+              </td>
+            <% end %>
+            <% if can_deposit || can_withdrawl %>
+              <td>
+              <%= link_to("Add Funds",
+                  new_group_transaction_path(@group,
+                    from_account_id: @group.group_account.id,
+                    to_account_id: member.account(@group.id).id
+                  ),
+                  class: "btn btn-success"
+                ) if can_deposit
+              %>
+              <%= link_to("Withdrawl Funds",
+                  new_group_transaction_path(@group,
+                    to_account_id: @group.group_account.id,
+                    from_account_id: member.account(@group.id).id
+                  ),
+                  class: "btn btn-danger"
+                ) if can_withdrawl
+              %>
+              </td>
+            <% end %>
+            <% if can_update %>
+              <td>
+                <%= link_to 'Edit', edit_group_student_path(@group, member) %>
+                | <%= link_to "Delete", group_student_path(@group, member), method: "delete", data: { confirm: "Are you sure? This action can't be undone!"} %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="100">You have no students defined in this group</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

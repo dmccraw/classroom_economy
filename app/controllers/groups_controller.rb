@@ -19,14 +19,12 @@ class GroupsController < ApplicationController
   # GET /groups/1.json
   def show
     @group = Group.find(params[:id])
+
+    authorize! :show, @group
+
     respond_to do |format|
-      if @group.can_access?(current_user)
-        format.html # show.html.erb
-        format.json { render json: @group }
-      else
-        format.html { redirect_to action: "index"}
-        format.json { render json: nil }
-      end
+      format.html # show.html.erb
+      format.json { render json: @group }
     end
   end
 
@@ -34,7 +32,7 @@ class GroupsController < ApplicationController
   # GET /groups/new.json
   def new
     @group = Group.new
-    @group.user_id = params[:user_id] if params[:user_id]
+    @group.user_id = current_user.id
 
     respond_to do |format|
       format.html # new.html.erb
@@ -54,25 +52,17 @@ class GroupsController < ApplicationController
   # POST /groups
   # POST /groups.json
   def create
-    if current_user.teacher? || current_user.admin?
-      @group = Group.new(params[:group])
-      if current_user.teacher?
-        @group.user_id = current_user.id
-      end
+    @group = Group.new(params[:group])
 
-      respond_to do |format|
-        if @group.save
-          format.html { redirect_to root_path, notice: 'Group was successfully created.' }
-          format.json { render json: @group, status: :created, location: @group }
-        else
-          format.html { render action: "new" }
-          format.json { render json: @group.errors, status: :unprocessable_entity }
-        end
-      end
-    else
-      respond_to do |format|
-        format.html { redirect_to action: "index"}
-        format.json { render json: nil }
+    authorize! :create, @group
+
+    respond_to do |format|
+      if @group.save
+        format.html { redirect_to @group, notice: 'Group was successfully created.' }
+        format.json { render json: @group, status: :created, location: @group }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @group.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -81,10 +71,13 @@ class GroupsController < ApplicationController
   # PUT /groups/1.json
   def update
     @group = Group.find(params[:id])
+
+    authorize! :udpate, @group
+
     if @group.can_access?(current_user)
       respond_to do |format|
         if @group.update_attributes(params[:group])
-          format.html { redirect_to root_path, notice: 'Group was successfully updated.' }
+          format.html { redirect_to @group, notice: 'Group was successfully updated.' }
           format.json { head :no_content }
         else
           format.html { render action: "edit" }
@@ -104,8 +97,9 @@ class GroupsController < ApplicationController
   def destroy
     @group = Group.find(params[:id])
 
-    # only if you are the owner of admin can you delete a group
-    @group.destroy if @group.can_access?(current_user)
+    authorize! :delete, @group
+
+    @group.destroy
 
     respond_to do |format|
       format.html { redirect_to root_path }

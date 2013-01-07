@@ -1,0 +1,62 @@
+<%= render partial: "/groups/top", locals: { current_nav: "students" } %>
+
+<% account = @student.account(@group.id) %>
+<p>
+  <h2><%= @student.display_name %></h2>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @student.email %>
+</p>
+<hr>
+
+<% if can? :update, @student %>
+  <h2>Account</h2>
+  <p>
+    <b>Balance:</b>
+    <%= number_to_currency(account.balance) %>
+  </p>
+  <p>Last 5 Transactions</a>
+  <%= render partial: '/transactions/transactions', locals: { transactions: account.transactions.limit(5).order("created_at DESC") } %>
+  <p>
+    <%= link_to "All Transactions", group_account_path(@group, account)  %>
+  </p>
+  <hr>
+<% end %>
+
+<h2>Stores</h2>
+<table class="table table-striped table-bordered">
+  <thead>
+    <th>Name</th>
+    <th>Description</th>
+    <% if can? :update, @student %>
+      <th>Balance</th>
+      <th></th>
+      <th></th>
+    <% end %>
+  </thead>
+<% stores = @student.stores.where(group_id: @group.id) %>
+<% if stores.any? %>
+  <tbody>
+    <% stores.each do |store| %>
+      <tr>
+        <td><%= store.name %></td>
+        <td><%= store.description %></td>
+        <% if can? :update, @student %>
+          <td><%= number_to_currency(store.account.balance) %></td>
+          <td>Transactions</td>
+          <td><%= link_to "Edit", edit_group_store_path(@group, store) %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+<% else %>
+  <tr>
+    <td colspan="100">This <%= @student.display_user_type %> does not own any stores.</td>
+  </tr>
+<% end %>
+</table>
+<% if can? :update, @student %>
+  <%= link_to 'Open Store', new_group_store_path(student_id: @student.id) if current_user == @student %>
+<% end %>

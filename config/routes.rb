@@ -1,16 +1,23 @@
 ClassroomEconomy::Application.routes.draw do
 
-  devise_for :users
+  devise_for :users, :controllers => { :registrations => "registrations" }
 
-  resources :accounts, only: [:show]
-  resources :stores
-  resources :groups
-  resources :users do
-    collection do
-      get "new_student"
-      post "create_student"
+  resources :groups do
+    resources :students
+    resources :stores
+    resources :accounts
+    resources :jobs
+    resources :transactions, only: [:new, :create] do
+      member do
+        get "new_buy"
+        post "create_buy"
+        get "new_sell"
+        post "create_sell"
+      end
     end
   end
+
+  resources :users
 
   match "switch_user" => "root#switch_user"
   root to: "root#index"

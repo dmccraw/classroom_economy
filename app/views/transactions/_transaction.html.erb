@@ -1,0 +1,9 @@
+<tr>
+  <td><%= transaction.id %></td>
+  <td><%= transaction.from_account.display_name %></td>
+  <td><%= transaction.to_account.display_name %></td>
+  <td><%= number_to_currency(transaction.amount) %></td>
+  <td><%= transaction.description %></td>
+  <td><%= I18n.l transaction.occurred_on, format: :medium %></td>
+  <td><%= I18n.l transaction.created_at, format: :medium %> by <%= transaction.user.display_name %></td>
+</tr>

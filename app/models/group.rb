@@ -16,6 +16,8 @@ class Group < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
   has_many :users, :through => :memberships, :source => :user
   has_many :accounts, dependent: :destroy
+  has_many :jobs
+  has_many :job_assignments
 
   attr_accessible :name, :user_id
 
@@ -41,11 +43,25 @@ class Group < ActiveRecord::Base
     Store.where(group_id: self.id)
   end
 
+  def member_of?(user)
+    members.each do |member|
+      if user.id == member.id
+        return true
+      end
+    end
+    false
+  end
+
+  def group_account
+    Account.where(group_id: self.id, owner_type: "Store", owner_id: user_id).first
+  end
+
   private
 
   def create_store
     # every group has their own account
     store = Store.create(name: "#{self.name} Store", group_id: self.id)
+    store.account.update_attributes(balance: 1000000.00)
     store_owner = StoreOwner.create(user_id: self.user_id, store_id: store.id)
   end
 

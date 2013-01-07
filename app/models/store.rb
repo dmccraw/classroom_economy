@@ -16,9 +16,21 @@ class Store < ActiveRecord::Base
   has_one :account, as: :owner
   belongs_to :group
 
-  attr_accessible :description, :name, :group_id
+  attr_accessible :description, :name, :group_id, :balance
 
   after_create :create_account
+
+  def edit_store?(user)
+    return true if user.admin?
+    return owner?(user)
+  end
+
+  def owner?(user)
+    users.each do |local_user|
+      return true if local_user == user
+    end
+    false
+  end
 
   private
 

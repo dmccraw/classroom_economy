@@ -12,7 +12,7 @@
     <h2>Account</h2>
     <p>
       <b>Balance:</b>
-      <%= number_to_currency(@user.account(get_current_group_id).balance) %>
+      <%= number_to_currency(@user.account(@group.id).balance) %>
     </p>
 
     <h2>Stores</h2>
@@ -24,7 +24,7 @@
         <th></th>
         <th></th>
       </thead>
-    <% stores = @user.stores.where(group_id: get_current_group_id) %>
+    <% stores = @user.stores.where(group_id: @group.id) %>
     <% if stores.any? %>
       <tbody>
         <% stores.each do |store| %>
@@ -33,7 +33,7 @@
             <td><%= store.description %></td>
             <td><%= number_to_currency(store.account.balance) %></td>
             <td>Transactions</td>
-            <td><%= link_to "Edit", edit_store_path(store, user_id: @user.id) %></td>
+            <td><%= link_to "Edit", edit_group_store_path(@group, store, user_id: @user.id) %></td>
           </tr>
         <% end %>
       </tbody>
@@ -43,7 +43,7 @@
       </tr>
     <% end %>
     </table>
-    <%= link_to 'Open Store', new_store_path(group_id: @user.groups.first.id, user_id: @user.id) if current_user == @user %>
+    <%= link_to 'Open Store', new_group_store_path(@group, user_id: @user.id) if current_user == @user %>
   </div>
 
 <%#= link_to 'Edit', edit_user_path(@user) %> |

@@ -1,0 +1,23 @@
+<% current_nav = "info" unless defined?(current_nav) %>
+<center>
+  <h1><%= @group.name %></h1>
+  <p>
+    <%= @group.user.display_name %>
+  </p>
+  <hr>
+</center>
+<ul class="nav nav-pills">
+  <li <%= 'class=active' if current_nav == "info" %>>
+    <%= link_to "Info", group_path(@group)  %>
+  </li>
+  <li <%= 'class=active' if current_nav == "students" %>>
+    <%= link_to "Students", group_students_path(@group)  %>
+  </li>
+  <li <%= 'class=active' if current_nav == "stores" %>>
+    <%= link_to "Stores", group_stores_path(@group)  %>
+  </li>
+  <li <%= 'class=active' if current_nav == "jobs" %>>
+    <%= link_to "Jobs", group_jobs_path(@group)  %>
+  </li>
+</ul>
+<hr>

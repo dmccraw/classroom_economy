@@ -1,0 +1,19 @@
+
+<table class="table table-striped table-bordered">
+  <thead>
+    <th>Id</th>
+    <th>From</th>
+    <th>To</th>
+    <th>Amount</th>
+    <th>Description</th>
+    <th>Occurred On</th>
+    <th>Entered On</th>
+  </thead>
+  <tbody>
+  <% if transactions.count > 0 %>
+    <%= render partial: transactions %>
+  <% else %>
+    <tr><td colspan="100">No transactions for this account.</td></tr>
+  <% end %>
+  </tbody>
+</table>

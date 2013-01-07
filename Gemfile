@@ -29,6 +29,8 @@ gem 'pg'
 
 gem 'factory_girl_rails'
 
+gem 'cancan'
+
 group :test do
   gem 'shoulda'
   gem 'shoulda-context'

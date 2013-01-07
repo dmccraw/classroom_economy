@@ -1,6 +1,8 @@
 <h2>Sign in</h2>
 
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+
+  <%= f.hidden_field :user_type, value: 2 %>
   <div><%= f.label :login, "Email/Username" %>
   <%= f.email_field :login %></div>
 
