@@ -1,0 +1,26 @@
+<%= form_for([@group, @job_assignment]) do |f| %>
+
+  <%= render partial: "/shared/errors", locals: { o: @job_assignment } %>
+
+  <div class="field">
+    <%= f.label :user_id %>
+    <% if params[:user_id].present? %>
+      <%= @user.display_name %>
+      <%= f.hidden_field :user_id, value: params[:user_id] %>
+    <% else %>
+      <%= f.select :user_id, options_from_collection_for_select(@users, :id, :display_name) %>
+    <% end %>
+  </div>
+  <div class="field">
+    <%= f.label :job_id %>
+    <% if params[:job_id].present? %>
+      <%= @job.title %>
+      <%= f.hidden_field :job_id, value: params[:job_id] %>
+    <% else %>
+      <%= f.select :job_id, options_from_collection_for_select(@jobs, :id, :title) %>
+    <% end %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

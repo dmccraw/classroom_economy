@@ -23,8 +23,11 @@
           <td><%= link_to(job.title, group_job_path(@group, job)) %></td>
           <td><%= job.description %></td>
           <td><%= number_to_currency(job.salary) %></td>
-          <td><%= job.job_assignments.each {|ja| ja.user.display_name }.join(", ") %></td>
-          <td><%= link_to "Assign" %></td>
+          <td>
+            <% students = job.job_assignments.map {|ja| ja.user.display_name }.join(", ") %>
+            <%= students %>
+          </td>
+          <td><%= link_to "Assign", new_group_job_assignment_path(@group, job_id: job.id) %></td>
           <td><%= link_to 'Edit', edit_group_job_path(@group,job) %></td>
           <td><%= link_to 'Destroy', [@group,job], method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>

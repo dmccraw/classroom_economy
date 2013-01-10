@@ -29,5 +29,5 @@
 
 <div class="well">
   <h2>Transactions</h2>
-  <%= render partial: '/transactions/transactions', locals: { transactions: @account.transactions } %>
+  <%= render partial: '/transactions/transactions', locals: { transactions: @account.transactions, account_id: @account.id } %>
 </div>

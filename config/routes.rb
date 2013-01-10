@@ -8,13 +8,12 @@ ClassroomEconomy::Application.routes.draw do
     resources :accounts
     resources :jobs
     resources :transactions, only: [:new, :create] do
-      member do
-        get "new_buy"
-        post "create_buy"
-        get "new_sell"
-        post "create_sell"
+      collection do
+        get "new_class_transaction"
+        post "create_class_transaction"
       end
     end
+    resources :job_assignments, only: [:new, :create, :destroy]
   end
 
   resources :users

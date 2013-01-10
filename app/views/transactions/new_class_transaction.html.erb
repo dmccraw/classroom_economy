@@ -1,0 +1,44 @@
+<center><h1>Transfer Funds</h1></center>
+<%= form_tag create_class_transaction_group_transactions_path(@group) do %>
+
+  <%= render partial: "/shared/errors", locals: { o: @transaction } %>
+
+  <%= hidden_field_tag :from_account_id, params[:from_account_id] %>
+  <%= hidden_field_tag :to_account_id, params[:to_account_id] %>
+
+  <div class="well">
+    <table class="table">
+      <tr>
+        <td><b>Transfer:</b></td><td>$<%= text_field_tag :amount %></td>
+      </tr>
+      <tr>
+        <td><b>To:</b></td>
+        <td>
+          <% if params[:to_account_id].present? %>
+            <%= @to_account.display_name %>
+          <% else %>
+            Entire class
+            <%#= f.select :to_account_id, options_from_collection_for_select(@to_accounts, :id, :display_name) %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td><b>From:</b></td>
+        <td>
+          <% if params[:from_account_id].present? %>
+            <%= @from_account.display_name %>
+          <% else %>
+            Entire class
+            <%#= f.select :from_account_id, options_from_collection_for_select(@from_accounts, :id, :display_name) %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td><b>Description:</b></td>
+        <td><%= text_field_tag :description %></td>
+      </tr>
+    </table>
+
+    <%= submit_tag "Submit", class: "btn" %>
+  </div>
+<% end %>

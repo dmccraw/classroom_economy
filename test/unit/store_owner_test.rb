@@ -3,8 +3,8 @@
 # Table name: store_owners
 #
 #  id         :integer          not null, primary key
-#  user_id    :integer
-#  store_id   :integer
+#  user_id    :integer          not null
+#  store_id   :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

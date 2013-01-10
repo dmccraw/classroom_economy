@@ -1,3 +1,7 @@
 <%= render partial: "/groups/top", locals: { current_nav: "info" } %>
 
-<p>Some Info stuff here</p>
+<% if current_user.teacher? %>
+  <%= render partial: "teacher" %>
+<% elsif current_user.student? %>
+  <%= render partial: "student" %>
+<% end %>

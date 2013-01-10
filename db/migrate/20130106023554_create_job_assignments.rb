@@ -3,10 +3,12 @@ class CreateJobAssignments < ActiveRecord::Migration
     create_table :job_assignments do |t|
       t.references :job
       t.references :user
+      t.references :group
 
       t.timestamps
     end
     add_index :job_assignments, :job_id
+    add_index :job_assignments, :group_id
     add_index :job_assignments, :user_id
   end
 end

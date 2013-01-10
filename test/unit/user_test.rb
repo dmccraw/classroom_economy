@@ -3,10 +3,10 @@
 # Table name: users
 #
 #  id                     :integer          not null, primary key
-#  first_name             :string(255)
-#  last_name              :string(255)
-#  username               :string(255)
-#  user_type              :integer
+#  first_name             :string(255)      not null
+#  last_name              :string(255)      not null
+#  username               :string(255)      not null
+#  user_type              :integer          not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  email                  :string(255)      default(""), not null

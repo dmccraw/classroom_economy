@@ -22,7 +22,7 @@
   </thead>
   <tbody>
     <% if @group.stores.count > 0 %>
-      <% @group.stores.each do |store| %>
+      <% @group.stores.order("name").each do |store| %>
         <tr>
           <td><%= link_to(store.name, group_store_path(@group, store)) %></td>
           <td>

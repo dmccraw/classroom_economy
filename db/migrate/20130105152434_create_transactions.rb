@@ -3,6 +3,7 @@ class CreateTransactions < ActiveRecord::Migration
     create_table :transactions do |t|
       t.references :from_account, :null => false
       t.references :to_account,   :null => false
+      t.references :group,        :null => false
       t.float :amount,           :null => false
       t.string :description,      :null => false
       t.datetime :occurred_on,    :null => false
@@ -14,5 +15,6 @@ class CreateTransactions < ActiveRecord::Migration
     add_index :transactions, :from_account_id
     add_index :transactions, :to_account_id
     add_index :transactions, :user_id
+    add_index :transactions, :group_id
   end
 end

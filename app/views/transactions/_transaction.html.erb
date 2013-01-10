@@ -1,4 +1,14 @@
-<tr>
+<% cls = nil
+  if local_assigns.has_key?(:account_id)
+    if account_id == transaction.to_account_id
+      cls = "class='up'"
+    else
+      cls = "class='down'"
+    end
+  end
+%>
+
+<tr <%= cls %>>
   <td><%= transaction.id %></td>
   <td><%= transaction.from_account.display_name %></td>
   <td><%= transaction.to_account.display_name %></td>

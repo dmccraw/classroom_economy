@@ -60,3 +60,30 @@
 <% if can? :update, @student %>
   <%= link_to 'Open Store', new_group_store_path(student_id: @student.id) if current_user == @student %>
 <% end %>
+
+<h2>Jobs</h2>
+<table class="table table-striped table-bordered">
+  <thead>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Monthly Salary</th>
+  </thead>
+<% if @student.job_assignments.any? %>
+  <tbody>
+    <% @student.job_assignments.each do |job_assignment| %>
+      <tr>
+        <td><%= job_assignment.job.title %></td>
+        <td><%= job_assignment.job.description %></td>
+        <td><%= number_to_currency(job_assignment.job.salary) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+<% else %>
+  <tr>
+    <td colspan="100">This <%= @student.display_user_type %> does not have a job.</td>
+  </tr>
+<% end %>
+</table>
+<% if can? :update, @student %>
+  <%= link_to 'Open Store', new_group_store_path(student_id: @student.id) if current_user == @student %>
+<% end %>

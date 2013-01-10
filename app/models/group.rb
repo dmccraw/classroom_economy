@@ -3,8 +3,8 @@
 # Table name: groups
 #
 #  id         :integer          not null, primary key
-#  name       :string(255)
-#  user_id    :integer
+#  name       :string(255)      not null
+#  user_id    :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -18,6 +18,7 @@ class Group < ActiveRecord::Base
   has_many :accounts, dependent: :destroy
   has_many :jobs
   has_many :job_assignments
+  has_many :transactions
 
   attr_accessible :name, :user_id
 
@@ -54,6 +55,10 @@ class Group < ActiveRecord::Base
 
   def group_account
     Account.where(group_id: self.id, owner_type: "Store", owner_id: user_id).first
+  end
+
+  def transactions
+    Transaction.where("to_account_id IN (:account_ids) OR from_account_id in (:account_ids)", account_ids: accounts.map() {|a| a.id})
   end
 
   private

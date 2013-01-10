@@ -3,9 +3,10 @@
 # Table name: stores
 #
 #  id          :integer          not null, primary key
-#  name        :string(255)
-#  group_id    :integer
+#  name        :string(255)      not null
 #  description :text
+#  approved    :boolean
+#  group_id    :integer          not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
