@@ -4,10 +4,17 @@ ClassroomEconomy::Application.routes.draw do
 
   resources :groups do
     resources :students
-    resources :stores
+    resources :stores do
+      member do
+        get "approve"
+        get "deny"
+      end
+      resources :store_owners, only: [:new, :create, :destroy]
+      resources :store_managers
+    end
     resources :accounts
     resources :jobs
-    resources :transactions, only: [:new, :create] do
+    resources :transactions do
       collection do
         get "new_class_transaction"
         post "create_class_transaction"

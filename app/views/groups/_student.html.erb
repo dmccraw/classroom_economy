@@ -1,15 +1,13 @@
 <div class="row-fluid">
 
   <div class="span8">
-    <h2>Account</h2>
+    <h3>Personal Account</h3>
     <p>
-      <b>Balance:</b>
-      <%= number_to_currency(current_user.account(@group.id).balance) %>
-    </p>
-
+      <h4>Balance: <%= number_to_currency(current_user.account(@group.id).balance) %></h4>
+      <%= link_to "All Transactions" %>
     <hr>
 
-    <h2>Last 20 Transactions</h2>
+    <h3>Last 20 Transactions</h3>
     <table class="table table-striped table-bordered">
       <thead>
         <th>ID</th>
@@ -28,29 +26,13 @@
         <% end %>
       </tbody>
     </table>
-    <%= link_to "All Transactions" %>
-
-    <hr>
-
-    <h2>Stores</h2>
-    <table class="table table-striped table-bordered">
-      <thead>
-        <th>Name</th>
-      </thead>
-      <tbody>
-        <tr>
-          <td colspan="100">You have no stores open.</td>
-        </tr>
-      </tbody>
-    </table>
-    <hr>
   </div>
 
   <div class="span4 pull-right">
-    <h2>Actions</h2>
+    <h3>Actions</h3>
     <%= link_to "Transfer Funds", new_group_transaction_path(@group, from_account_id: current_user.account(@group.id).id), class: "btn btn-success", style: "width: 140px;" %>
     <hr>
-    <h2>Jobs</h2>
+    <h3>Jobs</h3>
     <table class="table table-striped table-bordered">
       <thead>
         <th>Name</th>
@@ -61,7 +43,7 @@
         <% if job_assignments.count > 0 %>
           <% job_assignments.each do |assignment| %>
             <tr>
-              <td><%= assignment.job.name %></td>
+              <td><%= assignment.job.title %></td>
               <td><%= number_to_currency(assignment.job.salary) %></td>
             </tr>
           <% end %>
@@ -70,6 +52,33 @@
         <% end %>
       </tbody>
     </table>
+    <hr>
+    <h3>Stores</h3>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <th>Name</th>
+      </thead>
+      <tbody>
+          <% if current_user.stores.count > 0 %>
+            <% current_user.stores.each do |store| %>
+              <tr>
+                <td>
+                  <%= link_to store.name, group_store_path(@group, store)  %>
+                  <%= "<p class='text-error'>(Not Approved)</p>".html_safe unless store.approved %>
+                </td>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr>
+              <td colspan="100">You have no stores open.</td>
+            </tr>
+          <% end %>
+      </tbody>
+    </table>
+    <div class="pull-right">
+      <%= link_to('Open Store', new_group_store_path(@group, user_id: current_user.id), class: "btn btn-info") %>
+    </div>
   </div>
+
 </div>
 

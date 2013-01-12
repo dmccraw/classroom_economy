@@ -6,6 +6,7 @@ class TransactionsController < ApplicationController
   # GET /transactions/new.json
   def new
     @transaction = Transaction.new
+    @transaction.group_id = @group.id
 
     @from_accounts = @group.accounts
     @to_accounts = @group.accounts
@@ -31,6 +32,7 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.new(params[:transaction])
     @transaction.user_id = current_user.id
     @transaction.occurred_on = DateTime.now
+    @transaction.group_id = @group.id
 
     @from_accounts = @group.accounts
     @to_accounts = @group.accounts
@@ -107,7 +109,8 @@ class TransactionsController < ApplicationController
               from_account_id: member.account(@group.id).id,
               to_account_id: params[:to_account_id],
               amount: @transaction.amount,
-              description: @transaction.description
+              description: @transaction.description,
+              group_id: @group.id
             )
           else
             new_transaction = Transaction.create!(
@@ -116,7 +119,8 @@ class TransactionsController < ApplicationController
               to_account_id: member.account(@group.id).id,
               from_account_id: params[:from_account_id],
               amount: @transaction.amount,
-              description: @transaction.description
+              description: @transaction.description,
+              group_id: @group.id
             )
           end
         end
@@ -132,7 +136,6 @@ class TransactionsController < ApplicationController
         format.json { @transaction.errors }
       end
     end
-
   end
 
   private

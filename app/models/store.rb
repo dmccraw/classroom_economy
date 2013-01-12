@@ -5,7 +5,7 @@
 #  id          :integer          not null, primary key
 #  name        :string(255)      not null
 #  description :text
-#  approved    :boolean
+#  approved    :boolean,         default: false
 #  group_id    :integer          not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -13,13 +13,20 @@
 
 class Store < ActiveRecord::Base
   has_many :users, through: :store_owners
-  has_many :store_owners
-  has_one :account, as: :owner
+  has_many :store_owners, dependent: :destroy
+  has_many :store_managers, dependent: :destroy
+  has_one :account, as: :owner, dependent: :destroy
   belongs_to :group
 
-  attr_accessible :description, :name, :group_id, :balance
+  attr_accessible :description, :name, :group_id, :balance, :approved
 
   after_create :create_account
+
+  scope :approved, where(approved: true)
+  scope :unapproved, where(approved: false)
+
+  # validations
+  validates :name, uniqueness: { scope: :group_id }
 
   def edit_store?(user)
     return true if user.admin?
@@ -38,4 +45,5 @@ class Store < ActiveRecord::Base
   def create_account
     Account.create(owner_id: self.id, owner_type: self.class.to_s, group_id: group_id)
   end
+
 end

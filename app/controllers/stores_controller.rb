@@ -52,10 +52,10 @@ class StoresController < ApplicationController
         if params[:user_id].present?
           StoreOwner.create(user_id: params[:user_id], store_id: @store.id)
           @user = User.find(params[:user_id])
-          format.html { redirect_to group_stores_path(@group,@store), notice: 'Store was successfully created.' }
+          format.html { redirect_to group_stores_path(@group), notice: 'Store was successfully created.' }
           format.json { render json: @store, status: :created, location: @store }
         else
-          format.html { redirect_to group_stores_path(@group,@store), notice: 'Store was successfully created.' }
+          format.html { redirect_to group_stores_path(@group), notice: 'Store was successfully created.' }
           format.json { render json: @store, status: :created, location: @store }
         end
       else
@@ -99,7 +99,36 @@ class StoresController < ApplicationController
     @store.destroy
 
     respond_to do |format|
-      format.html { redirect_to group_stores_path(@group), notice: 'Store was successfully destroyed.' }
+      format.html { redirect_to group_stores_path(@group), notice: 'Store was destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  def approve
+    @store = @group.stores.find(params[:id])
+
+    authorize! :modify, @store
+
+    @store.update_attributes(approved: true)
+    respond_to do |format|
+      if @store.update_attributes(approved: true)
+        format.html { redirect_to group_path(@group), notice: "Store \"#{@store.name}\" was approved." }
+        format.json { head :no_content }
+      else
+        format.html { render action: "show" }
+        format.json { render json: @store.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def deny
+    @store = @group.stores.find(params[:id])
+
+    authorize! :destroy, @store
+
+    @store.destroy
+    respond_to do |format|
+      format.html { redirect_to group_path(@group), notice: 'Store was denied.' }
       format.json { head :no_content }
     end
   end

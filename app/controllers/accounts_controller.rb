@@ -12,6 +12,8 @@ class AccountsController < ApplicationController
     end
   end
 
+
+
   private
 
   def get_group

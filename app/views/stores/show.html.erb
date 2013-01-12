@@ -2,19 +2,33 @@
 
 <center>
   <h1><%= @store.name %><h1>
+  <h4><%= @store.description %></h4>
 </center>
 <hr>
-<h4><%= @store.description %></h4>
-<br/>
+<div class="row-fluid">
+  <div class="span6">
+    <b>Current Balance:</b>
+    <%= number_to_currency(@store.account.balance) %>
+  </div>
+  <div class="span6 pull-right">
+    <b><%= @store.store_owners.count > 1 ? "Owners:" : "Owner:" %></b>
+    <%= @store.store_owners.map {|so| so.user.display_name}.join(", ") %></br></br>
 
-<b>Current Balance:</b>
-<%= number_to_currency(@store.account.balance) %>
-<% if @store.edit_store?(current_user) %>
-  <br/><br/>
-  <%= link_to 'Edit Store', edit_group_store_path(@group, @store) %>
-<% end %>
+    <b><%= @store.store_managers.count > 1 ? "Managers:" : "Manager:" %></b>
+    <% if @store.store_managers.count > 0 %>
+      <%= @store.store_managers.map {|so| so.user.display_name}.join(", ") %>
+    <% else %>
+      There are no managers for this store.
+    <% end %>
+    </br></br>
+    Store Actions: <%= link_to "Add Owner", new_group_store_store_owner_path(@group, @store) %> |
+    <%= link_to "Add Manager", new_group_store_store_manager_path(@group, @store) %> |
+    <%= link_to 'Edit Store', edit_group_store_path(@group, @store) %>
+  </div>
+</div>
 
 <% if @store.owner?(current_user) || (current_user.teacher? && @group.can_access?(current_user)) %>
+  <hr>
   <center>
     <%= link_to "Buy Something", new_group_transaction_path(@group, from_account_id: @store.account.id), class: "btn btn-danger" %>
     |

@@ -23,7 +23,7 @@ class Transaction < ActiveRecord::Base
   belongs_to :group
 
   # access
-  attr_accessible :from_account_id, :to_account_id, :amount, :description, :disputed, :occurred_on, :user_id
+  attr_accessible :from_account_id, :to_account_id, :amount, :description, :disputed, :occurred_on, :user_id, :group_id
 
   # validations
   validates :from_account_id, presence: true
@@ -33,10 +33,18 @@ class Transaction < ActiveRecord::Base
   validates :user_id, presence: true
   validates :occurred_on, presence: true
 
+  validate :diferent_from_to_accounts
+
   # callbacks
   after_create :transfer_funds
 
   private
+
+  def diferent_from_to_accounts
+    if from_account_id == to_account_id
+      errors.add(:base, "To and From accounts must be different")
+    end
+  end
 
   def transfer_funds
     from_account.update_attributes(balance: from_account.balance - amount)

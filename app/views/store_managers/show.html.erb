@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Store:</b>
+  <%= @store_manager.store_id %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @store_manager.user_id %>
+</p>
+
+<p>
+  <b>Manage level:</b>
+  <%= @store_manager.manage_level %>
+</p>
+
+
+<%= link_to 'Edit', edit_store_manager_path(@store_manager) %> |
+<%= link_to 'Back', store_managers_path %>

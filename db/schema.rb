@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130106023554) do
+ActiveRecord::Schema.define(:version => 20130112180000) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "owner_id"
@@ -35,10 +35,12 @@ ActiveRecord::Schema.define(:version => 20130106023554) do
   create_table "job_assignments", :force => true do |t|
     t.integer  "job_id"
     t.integer  "user_id"
+    t.integer  "group_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
+  add_index "job_assignments", ["group_id"], :name => "index_job_assignments_on_group_id"
   add_index "job_assignments", ["job_id"], :name => "index_job_assignments_on_job_id"
   add_index "job_assignments", ["user_id"], :name => "index_job_assignments_on_user_id"
 
@@ -63,6 +65,17 @@ ActiveRecord::Schema.define(:version => 20130106023554) do
   add_index "memberships", ["group_id"], :name => "index_memberships_on_group_id"
   add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
 
+  create_table "store_managers", :force => true do |t|
+    t.integer  "store_id_id"
+    t.integer  "user_id_id"
+    t.integer  "manage_level"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "store_managers", ["store_id_id"], :name => "index_store_managers_on_store_id_id"
+  add_index "store_managers", ["user_id_id"], :name => "index_store_managers_on_user_id_id"
+
   create_table "store_owners", :force => true do |t|
     t.integer  "user_id",    :null => false
     t.integer  "store_id",   :null => false
@@ -74,11 +87,12 @@ ActiveRecord::Schema.define(:version => 20130106023554) do
   add_index "store_owners", ["user_id"], :name => "index_store_owners_on_user_id"
 
   create_table "stores", :force => true do |t|
-    t.string   "name",        :null => false
+    t.string   "name",                           :null => false
     t.text     "description"
-    t.integer  "group_id",    :null => false
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.boolean  "approved",    :default => false, :null => false
+    t.integer  "group_id",                       :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
   add_index "stores", ["group_id"], :name => "index_stores_on_group_id"
@@ -86,6 +100,7 @@ ActiveRecord::Schema.define(:version => 20130106023554) do
   create_table "transactions", :force => true do |t|
     t.integer  "from_account_id",                    :null => false
     t.integer  "to_account_id",                      :null => false
+    t.integer  "group_id",                           :null => false
     t.float    "amount",                             :null => false
     t.string   "description",                        :null => false
     t.datetime "occurred_on",                        :null => false
@@ -96,6 +111,7 @@ ActiveRecord::Schema.define(:version => 20130106023554) do
   end
 
   add_index "transactions", ["from_account_id"], :name => "index_transactions_on_from_account_id"
+  add_index "transactions", ["group_id"], :name => "index_transactions_on_group_id"
   add_index "transactions", ["to_account_id"], :name => "index_transactions_on_to_account_id"
   add_index "transactions", ["user_id"], :name => "index_transactions_on_user_id"
 

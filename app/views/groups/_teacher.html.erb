@@ -7,40 +7,59 @@
     <p>There are 20 days until payday.</p>
     <hr>
 
-    <h2>Disputed Transactions</h2>
-    <table class="table table-striped table-bordered">
-      <thead>
-        <th>ID</th>
-        <th>Amount</th>
-        <th>To</th>
-        <th>From</th>
-      </thead>
-      <tbody>
-        <% transactions = @group.transactions.where(disputed: true) %>
-        <% if transactions.count > 1 %>
+    <h3>Disputed Transactions</h3>
+    <% transactions = @group.transactions.where(disputed: true) %>
+    <% if transactions.count > 1 %>
+      <table class="table table-striped table-bordered">
+        <thead>
+          <th>ID</th>
+          <th>Amount</th>
+          <th>To</th>
+          <th>From</th>
+        </thead>
+        <tbody>
+          <% transactions.each do |transaction| %>
+            <tr>
+              <td><%= transaction.id %></td>
+              <td><%= number_to_currency(transaction.amount) %></td>
+              <td><%= transaction.to_account.owner.display_name %></td>
+              <td><%= transaction.from_account.owner.display_name %></td>
 
-        <% else %>
-          <tr>
-            <td colspan="100">You have no disputed transactions.</td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <h4>You have no disputed transactions.</h4>
+    <% end %>
     <hr>
-    <h2>Requested Stores</h2>
-    <table class="table table-striped table-bordered">
-      <thead>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Student</th>
-        <th></th>
-      </thead>
-      <tbody>
-        <tr>
-          <td colspan="100">You have no requested stores.</td>
-        </tr></tbody>
-    </table>
-
+    <h3>Requested Stores</h3>
+    <% if @group.stores.unapproved.count > 0 %>
+      <table class="table table-striped table-bordered">
+        <thead>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Student</th>
+          <th></th>
+        </thead>
+        <tbody>
+          <% @group.stores.unapproved.each do |store| %>
+            <tr>
+              <td><%= store.name %></td>
+              <td><%= store.description %></td>
+              <td><%= display_store_owners(store) %></td>
+              <td>
+                <%= link_to("Approve", approve_group_store_path(@group, store)) %>
+                |
+                <%= link_to("Deny", deny_group_store_path(@group, store), data: { confirm: "Are you sure you want to deny this store?"} ) %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <h4>You have no requested stores.</h4>
+    <% end %>
   </div>
 
   <div class="span4 pull-right">
@@ -54,66 +73,68 @@
       </div>
     </div>
 
-  <h2>Highest Accounts</h2>
-  <table class="table table-striped table-bordered">
-    <thead>
-      <th>Account Balance</th>
-      <th>Owner</th>
-    </thead>
-    <tbody>
-      <% if accounts.count > 0 %>
-        <% accounts[0..5].each do |account| %>
+    <h2>Highest Accounts</h2>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <th>Account Balance</th>
+        <th>Owner</th>
+      </thead>
+      <tbody>
+        <% if accounts.count > 0 %>
+          <% accounts[0..5].each do |account| %>
+            <tr>
+              <td><%= number_to_currency(account.balance) %></td>
+              <td>
+                <%=
+                  if account.owner_type == "Store"
+                    link_to(account.display_name, group_store_path(@group, account.owner))
+                  elsif account.owner_type == "User"
+                    link_to(account.display_name, group_student_path(@group, account.owner))
+                  end
+                %>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
           <tr>
-            <td><%= number_to_currency(account.balance) %></td>
-            <td>
-              <%=
-                if account.owner_type == "Store"
-                  link_to(account.display_name, group_store_path(@group, account.owner))
-                elsif account.owner_type == "User"
-                  link_to(account.display_name, group_student_path(@group, account.owner))
-                end
-              %>
-            </td>
+            <td colspan="100">You have no students defined in this group</td>
           </tr>
         <% end %>
-      <% else %>
-        <tr>
-          <td colspan="100">You have no students defined in this group</td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
 
-  <h2>Lowest Accounts</h2>
-  <table class="table table-striped table-bordered">
-    <thead>
-      <th>Account Balance</th>
-      <th>Owner</th>
-    </thead>
-    <tbody>
-      <% if accounts.count > 0 %>
-        <% accounts[-5..-1].reverse_each do |account| %>
+    <h2>Lowest Accounts</h2>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <th>Account Balance</th>
+        <th>Owner</th>
+      </thead>
+      <tbody>
+        <% if accounts.count > 0 %>
+          <% accounts.reverse.each_with_index do |account,index| %>
+            <tr>
+              <td><%= number_to_currency(account.balance) %></td>
+              <td>
+                <%=
+                  if account.owner_type == "Store"
+                    link_to(account.display_name, group_store_path(@group, account.owner))
+                  elsif account.owner_type == "User"
+                    link_to(account.display_name, group_student_path(@group, account.owner))
+                  end
+                %>
+              </td>
+            </tr>
+          <% break if index > 4 %>
+          <% end %>
+        <% else %>
           <tr>
-            <td><%= number_to_currency(account.balance) %></td>
-            <td>
-              <%=
-                if account.owner_type == "Store"
-                  link_to(account.display_name, group_store_path(@group, account.owner))
-                elsif account.owner_type == "User"
-                  link_to(account.display_name, group_student_path(@group, account.owner))
-                end
-              %>
-            </td>
+            <td colspan="100">You have no students defined in this group</td>
           </tr>
         <% end %>
-      <% else %>
-        <tr>
-          <td colspan="100">You have no students defined in this group</td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
   </div>
+
   <hr>
   <h2>Last 20 Transactions</h2>
   <%= render partial: '/transactions/transactions', locals: { transactions: @group.transactions.limit(20).order("created_at DESC") } %>

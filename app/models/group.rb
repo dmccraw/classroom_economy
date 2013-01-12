@@ -11,13 +11,12 @@
 
 class Group < ActiveRecord::Base
   belongs_to :user
-  has_one :store
 
   has_many :memberships, dependent: :destroy
   has_many :users, :through => :memberships, :source => :user
   has_many :accounts, dependent: :destroy
-  has_many :jobs
-  has_many :job_assignments
+  has_many :jobs, dependent: :destroy
+  has_many :job_assignments, dependent: :destroy
   has_many :transactions
 
   attr_accessible :name, :user_id
@@ -40,8 +39,16 @@ class Group < ActiveRecord::Base
     members
   end
 
+  def store
+    Store.where(group_id: self.id).order("created_at ASC").limit(1).first
+  end
+
   def stores
     Store.where(group_id: self.id)
+  end
+
+  def student_stores
+    Store.where(group_id: self.id).order("created_at ASC").offset(1)
   end
 
   def member_of?(user)
@@ -65,7 +72,7 @@ class Group < ActiveRecord::Base
 
   def create_store
     # every group has their own account
-    store = Store.create(name: "#{self.name} Store", group_id: self.id)
+    store = Store.create(name: "#{self.name} Store", group_id: self.id, approved: true)
     store.account.update_attributes(balance: 1000000.00)
     store_owner = StoreOwner.create(user_id: self.user_id, store_id: store.id)
   end

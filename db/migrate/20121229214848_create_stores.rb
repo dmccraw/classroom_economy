@@ -3,6 +3,7 @@ class CreateStores < ActiveRecord::Migration
     create_table :stores do |t|
       t.string :name,       :null => false
       t.text :description
+      t.boolean :approved,  :null => false, :default => false
       t.references :group,  :null => false
 
       t.timestamps
