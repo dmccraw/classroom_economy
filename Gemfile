@@ -31,6 +31,7 @@ gem 'factory_girl_rails'
 
 gem 'cancan'
 gem 'will_paginate'
+gem 'thin'
 
 group :test do
   gem 'shoulda'
