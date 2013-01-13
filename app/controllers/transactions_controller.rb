@@ -2,6 +2,21 @@ class TransactionsController < ApplicationController
 
   before_filter :get_group
 
+  def index
+    if params[:account_id]
+      @transactions = @group.account_transactions(params[:account_id]).page(params[:page]).order("created_at DESC")
+      @account = @group.accounts.find(params[:account_id])
+    else
+      @transactions = @group.transactions.page(params[:page]).order("created_at DESC")
+    end
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @transactions }
+    end
+
+  end
+
   # GET /transactions/new
   # GET /transactions/new.json
   def new
@@ -84,13 +99,13 @@ class TransactionsController < ApplicationController
     if params[:from_account_id].present?
       @from_account = Account.find_by_id(params[:from_account_id])
       @transaction.from_account_id = params[:from_account_id]
-      @transaction.to_account_id = @group.accounts.first.id
+      @transaction.to_account_id = @group.accounts.where("owner_id <> ?",current_user.id).first.id
       transaction_attributes[:from_account_id] = params[:from_account_id]
     end
     if params[:to_account_id].present?
       @to_account = Account.find_by_id(params[:to_account_id])
       @transaction.to_account_id = params[:to_account_id]
-      @transaction.from_account_id = @group.accounts.first.id
+      @transaction.from_account_id = @group.accounts.where("owner_id <> ?",current_user.id).first.id
       transaction_attributes[:to_account_id] = params[:to_account_id]
     end
 

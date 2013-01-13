@@ -45,9 +45,6 @@ class Ability
             end
           end
         end
-        puts "------------------------------------"
-        puts _user.inspect
-        puts can_manage.inspect
         can_manage
       end
 

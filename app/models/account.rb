@@ -20,14 +20,26 @@ class Account < ActiveRecord::Base
 
   before_save :set_initial_balance
 
+  scope :users, where("owner_type = ?", "User")
+  scope :stores, where("owner_type = ?", "Store")
+
+  def user?
+    self.owner_type == "User"
+  end
+
+  def store?
+    self.owner_type == "Store"
+  end
+
+
   def transactions
     Transaction.where("from_account_id = :id OR to_account_id = :id", id: self.id)
   end
 
   def display_name
-    if owner_type == "User"
+    if user?
       owner.display_name
-    elsif owner_type == "Store"
+    elsif store?
       owner.name
     else
       "Unknown Account"

@@ -1,11 +1,7 @@
-<% nav = @account.owner_type == "Store" ? "stores" : "students" %>
-<%= render partial: "/groups/top", locals: { current_nav: nav } %>
+<%# nav = @account.owner_type == "Store" ? "stores" : "students" %>
+<%= render partial: "/groups/top", locals: { current_nav: "accounts" } %>
 
-<% if @account.owner_type == "Store" %>
-  <h2>Account for <%= @account.owner.name %></h2>
-<% elsif @account.owner_type == "User" %>
-  <h2>Account for <%= @account.owner.display_name %></h2>
-<% end %>
+<h2>Account for <%= @account.display_name %></h2>
 <hr>
 <p>
   <b>Class:</b>
@@ -20,14 +16,15 @@
     <% end %>
   </p>
 <% end %>
-
 <p>
   <b>Balance:</b>
   <%= number_to_currency(@account.balance) %>
 </p>
+<p>
+</p>
+
 <hr>
 
-<div class="well">
-  <h2>Transactions</h2>
-  <%= render partial: '/transactions/transactions', locals: { transactions: @account.transactions, account_id: @account.id } %>
-</div>
+<h2>Last 20 Transactions</h2>
+<%= link_to "All Transactions", group_transactions_path(@group, account_id: @account.id), class: "btn"  %><br/><br/>
+<%= render partial: '/transactions/transactions', locals: { transactions: @account.transactions.order("created_at DESC").limit(20), account_id: @account.id } %>

@@ -68,6 +68,10 @@ class Group < ActiveRecord::Base
     Transaction.where("to_account_id IN (:account_ids) OR from_account_id in (:account_ids)", account_ids: accounts.map() {|a| a.id})
   end
 
+  def account_transactions(account_id)
+    Transaction.where("to_account_id = (:account_id) OR from_account_id = (:account_id)", account_id: account_id)
+  end
+
   private
 
   def create_store

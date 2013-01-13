@@ -1,6 +1,6 @@
 <%= render partial: "/groups/top", locals: { current_nav: "jobs" } %>
 
-<div class="pull-right"><%= link_to "Create Job", new_group_job_path(@group), class: "btn btn-info" %></div>
+<div class="pull-right"><%= link_to "Create Job", new_group_job_path(@group), class: "btn btn-success" %></div>
 <h2>Jobs</h2>
 <br/>
 <p>This is a list of jobs that are available for your class. You can add new jobs, edit existing jobs, see which students have which jobs and assign new jobs. All jobs get paid on the first of the month automatically.</p>
@@ -27,9 +27,9 @@
             <% students = job.job_assignments.map {|ja| ja.user.display_name }.join(", ") %>
             <%= students %>
           </td>
-          <td><%= link_to "Assign", new_group_job_assignment_path(@group, job_id: job.id) %></td>
-          <td><%= link_to 'Edit', edit_group_job_path(@group,job) %></td>
-          <td><%= link_to 'Destroy', [@group,job], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to "Assign", new_group_job_assignment_path(@group, job_id: job.id), class: "btn" %></td>
+          <td><%= link_to 'Edit', edit_group_job_path(@group,job), class: "btn btn-info" %></td>
+          <td><%= link_to 'Destroy', [@group,job], method: :delete, data: { confirm: "This will delete this job and remove it from any assigned students. Are you sure? This can\'t be undone." }, class: "btn btn-danger" %></td>
         </tr>
       <% end %>
     <% else %>

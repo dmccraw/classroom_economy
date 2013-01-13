@@ -1,40 +1,75 @@
 <%= render partial: "/groups/top", locals: { current_nav: "stores" } %>
 
+<div class="pull-right">
+  <%= link_to 'Edit Store Info', edit_group_store_path(@group, @store), class: "btn btn-info" %>
+
+</div>
+
+<h1><%= @store.name %><h1>
+<h4><%= @store.description %></h4>
+<hr>
 <center>
-  <h1><%= @store.name %><h1>
-  <h4><%= @store.description %></h4>
+  <%= link_to "Buy Something", new_group_transaction_path(@group, from_account_id: @store.account.id), class: "btn btn-danger" %>
+  |
+  <%= link_to "Sell Something", new_group_transaction_path(@group, to_account_id: @store.account.id), class: "btn btn-success" %>
 </center>
 <hr>
-<div class="row-fluid">
-  <div class="span6">
-    <b>Current Balance:</b>
-    <%= number_to_currency(@store.account.balance) %>
-  </div>
-  <div class="span6 pull-right">
-    <b><%= @store.store_owners.count > 1 ? "Owners:" : "Owner:" %></b>
-    <%= @store.store_owners.map {|so| so.user.display_name}.join(", ") %></br></br>
-
-    <b><%= @store.store_managers.count > 1 ? "Managers:" : "Manager:" %></b>
-    <% if @store.store_managers.count > 0 %>
-      <%= @store.store_managers.map {|so| so.user.display_name}.join(", ") %>
-    <% else %>
-      There are no managers for this store.
-    <% end %>
-    </br></br>
-    Store Actions: <%= link_to "Add Owner", new_group_store_store_owner_path(@group, @store) %> |
-    <%= link_to "Add Manager", new_group_store_store_manager_path(@group, @store) %> |
-    <%= link_to 'Edit Store', edit_group_store_path(@group, @store) %>
-  </div>
-</div>
+<b>Current Balance:</b>
+<%= number_to_currency(@store.account.balance) %>
 
 <% if @store.owner?(current_user) || (current_user.teacher? && @group.can_access?(current_user)) %>
   <hr>
-  <center>
-    <%= link_to "Buy Something", new_group_transaction_path(@group, from_account_id: @store.account.id), class: "btn btn-danger" %>
-    |
-    <%= link_to "Sell Something", new_group_transaction_path(@group, to_account_id: @store.account.id), class: "btn btn-success" %>
-  </center>
-  <hr>
-  <h2>Transactions</h2>
-  <%= render partial: '/transactions/transactions', locals: { transactions: @store.account.transactions } %>
+  <h2>Last 20 Transactions</h2>
+  <p><%= link_to "All Transactions", group_transactions_path(@group, account_id: @store.account.id), class: "btn"  %>
+  <%= render partial: '/transactions/transactions', locals: { transactions: @store.account.transactions.limit(20).order("created_at DESC") } %>
 <% end %>
+
+<hr>
+<div class="pull-right">
+  <%= link_to "Add Owner", new_group_store_store_owner_path(@group, @store), class: "btn btn-success" %>
+</div>
+<h3>Owners</h3>
+<table class="table table-striped table-bordered">
+  <thead>
+    <th>Name</th>
+    <% if @store.store_owners.count > 1 %>
+      <th></th>
+    <% end %>
+  </thead>
+  <tbody>
+    <% @store.store_owners.each do |store_owner| %>
+      <tr>
+        <td><%= store_owner.user.display_name %></td>
+        <% if @store.store_owners.count > 1 %>
+          <td>
+            <%= link_to "Remove Owner", group_store_owner_path(@group, store_owner), action: "delete", data: { confirm: "Are you sure you want to remove this owner? This can't be undone."} %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<hr>
+<div class="pull-right">
+  <%= link_to "Add Manager", new_group_store_store_manager_path(@group, @store), class: "btn btn-success" %>
+</div>
+<h3>Managers</h3>
+<p>Managers have the ability to buy stuff and sell stuff for the store.</p>
+<table class="table table-striped table-bordered">
+  <thead>
+    <th>Name</th>
+    <th></th>
+  </thead>
+  <tbody>
+    <% @store.store_managers.each do |store_manager| %>
+      <tr>
+        <td><%= store_manager.user.display_name %></td>
+        <td>
+          <%= link_to "Remove Manager", group_store_store_manager_path(@group, @store, store_manager), action: "delete", data: { confirm: "Are you sure you want to remove this manager? This can't be undone."}, class: "btn btn-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

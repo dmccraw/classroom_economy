@@ -60,6 +60,7 @@
     <% else %>
       <h4>You have no requested stores.</h4>
     <% end %>
+    <hr>
   </div>
 
   <div class="span4 pull-right">
@@ -134,9 +135,5 @@
       </tbody>
     </table>
   </div>
-
-  <hr>
-  <h2>Last 20 Transactions</h2>
-  <%= render partial: '/transactions/transactions', locals: { transactions: @group.transactions.limit(20).order("created_at DESC") } %>
 
 </div>

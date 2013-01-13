@@ -1,9 +1,9 @@
 <% cls = nil
   if local_assigns.has_key?(:account_id)
     if account_id == transaction.to_account_id
-      cls = "class='up'"
+      cls = "class=success"
     else
-      cls = "class='down'"
+      cls = "class=error"
     end
   end
 %>

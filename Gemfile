@@ -30,6 +30,7 @@ gem 'pg'
 gem 'factory_girl_rails'
 
 gem 'cancan'
+gem 'will_paginate'
 
 group :test do
   gem 'shoulda'

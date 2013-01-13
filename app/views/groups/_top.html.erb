@@ -1,6 +1,6 @@
 <% current_nav = "info" unless defined?(current_nav) %>
 
-<ul class="nav nav-pills">
+<ul class="nav nav-tabs">
   <li <%= 'class=active' if current_nav == "info" %>>
     <%= link_to "Info", group_path(@group)  %>
   </li>
@@ -13,11 +13,10 @@
   <li <%= 'class=active' if current_nav == "jobs" %>>
     <%= link_to "Jobs", group_jobs_path(@group)  %>
   </li>
-  <li <%= 'class=accounts' if current_nav == "accounts" %>>
+  <li <%= 'class=active' if current_nav == "accounts" %>>
     <%= link_to "Accounts", group_accounts_path(@group)  %>
   </li>
-  <li <%= 'class=transactions' if current_nav == "transactions" %>>
+  <li <%= 'class=active' if current_nav == "transactions" %>>
     <%= link_to "Transactions", group_transactions_path(@group)  %>
   </li>
 </ul>
-<hr>

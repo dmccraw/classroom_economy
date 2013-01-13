@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
   validates_length_of :password, :within => Devise.password_length, :allow_blank => true
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :passwstoreord, :password_confirmation, :remember_me
   attr_accessible :first_name, :last_name, :user_type, :username, :login
 
   # relationships
@@ -48,6 +48,7 @@ class User < ActiveRecord::Base
   has_many :accounts, as: :owner, dependent: :destroy
   has_many :stores, through: :store_owners
   has_many :store_owners, dependent: :destroy
+  has_many :store_managers, dependent: :destroy
   has_many :memberships, dependent: :destroy
   has_many :job_assignments
   # has_many :transactions

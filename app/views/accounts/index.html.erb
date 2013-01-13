@@ -1,0 +1,39 @@
+<%= render partial: "/groups/top", locals: { current_nav: "accounts" } %>
+<h2>Accounts</h2>
+<p>This is a list of the accounts for this class.</p>
+
+<h3>Listing Student Accounts</h3>
+
+<table class="table table-striped table-bordered">
+  <tr>
+    <th>Owner</th>
+    <th>Balance</th>
+    <th></th>
+  </tr>
+
+<% @user_accounts.each do |account| %>
+  <tr>
+    <td><%= link_to(account.display_name, group_account_path(@group, account)) %></td>
+    <td><%= number_to_currency account.balance %></td>
+    <td><%= link_to "Transactions", group_transactions_path(@group, account_id: account), class: "btn"  %> </td>
+  </tr>
+<% end %>
+</table>
+
+<h3>Listing Store Accounts</h3>
+
+<table class="table table-striped table-bordered">
+  <tr>
+    <th>Owner</th>
+    <th>Balance</th>
+    <th></th>
+  </tr>
+
+<% @store_accounts.each do |account| %>
+  <tr>
+    <td><%= link_to(account.display_name, group_account_path(@group, account)) %></td>
+    <td><%= number_to_currency account.balance %></td>
+    <td><%= link_to "Transactions", group_transactions_path(@group, account_id: account), class: "btn" %> </td>
+  </tr>
+<% end %>
+</table>

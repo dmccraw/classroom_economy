@@ -1,0 +1,47 @@
+<%# local_params = {} %>
+<%# local_params[:account_id] = account_id if local_assigns.has_key?(:account_id) %>
+
+<%= render partial: "/groups/top", locals: { current_nav: "transactions" } %>
+<h2>Transactions</h2>
+<h3>Listing Transactions <%= "for #{@account.display_name}" if @account %></h3>
+
+<%= will_paginate @transactions %>
+<table class="table table-striped table-bordered">
+  <thead>
+    <th>ID</th>
+    <th>From</th>
+    <th>To</th>
+    <th>Amount</th>
+    <th>Description</th>
+    <th>Occurred On</th>
+    <th>Entered On</th>
+  </thead>
+  <tbody>
+  <% if @transactions.count > 0 %>
+    <% @transactions.each do |transaction| %>
+      <%
+        cls = nil
+        if params[:account_id]
+          if params[:account_id].to_i == transaction.to_account_id
+            cls = "class=success"
+          else
+            cls = "class=error"
+          end
+        end
+      %>
+      <tr <%= cls %>>
+        <td><%= transaction.id %></td>
+        <td><%= link_to(transaction.from_account.display_name, group_account_path(@group, transaction.from_account)) %></td>
+        <td><%= link_to(transaction.to_account.display_name, group_account_path(@group, transaction.to_account)) %></td>
+        <td><%= number_to_currency(transaction.amount) %></td>
+        <td><%= transaction.description %></td>
+        <td><%= I18n.l transaction.occurred_on, format: :medium %></td>
+        <td><%= I18n.l transaction.created_at, format: :medium %> by <%= transaction.user.display_name %></td>
+      </tr>
+    <% end %>
+  <% else %>
+    <tr><td colspan="100">No transactions for this account.</td></tr>
+  <% end %>
+  </tbody>
+</table>
+<%= will_paginate @transactions %>

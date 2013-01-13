@@ -1,6 +1,6 @@
 <%= render partial: "/groups/top", locals: { current_nav: "stores" } %>
 
-<div class="pull-right"><%= link_to('New Store', new_group_store_path(@group, user_id: current_user.id), class: "btn btn-info") %></div>
+<div class="pull-right"><%= link_to('Open Store', new_group_store_path(@group, user_id: current_user.id), class: "btn btn-success") %></div>
 <h2>Stores</h2>
 </br>
 <p>
@@ -32,7 +32,7 @@
       </td>
       <% if can? :update, Store %>
         <td><%= number_to_currency(@group.store.account.balance) %></td>
-        <td><%= link_to 'Edit', edit_group_store_path(@group, @group.store) %></td>
+        <td><%= link_to 'Edit', edit_group_store_path(@group, @group.store), class: "btn btn-info" %></td>
       <% end %>
     </tr>
   </tbody>
@@ -61,8 +61,10 @@
           </td>
           <% if can? :update, Store %>
             <td><%= number_to_currency(store.account.balance) %></td>
-            <td><%= link_to 'Edit', edit_group_store_path(@group, store) %>
-              | <%= link_to 'Destroy', [@group,store], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td>
+              <%= link_to 'Edit', edit_group_store_path(@group, store), class: "btn btn-info" %>
+              <%= link_to 'Destroy', [@group,store], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+            </td>
           <% end %>
         </tr>
       <% end %>

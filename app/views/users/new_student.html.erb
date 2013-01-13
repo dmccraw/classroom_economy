@@ -1,17 +1,8 @@
 <h1>New Student</h1>
 
 <%= form_for(@user, url: create_student_users_path, method: "post" ) do |f| %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
-      <ul>
-      <% @user.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render partial: "/shared/errors", locals: { o: @user } %>
 
   <%= hidden_field_tag :group_id, params[:group_id] %>
   <div class="field">

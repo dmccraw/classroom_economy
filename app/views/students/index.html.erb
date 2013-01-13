@@ -4,12 +4,12 @@
 
 <%= render partial: "/groups/top", locals: { current_nav: "students" } %>
 
-<div class= "pull-right"><%= link_to('Add Student', new_group_student_path(group_id: @group.id), class: "btn btn-info") if can? :create, User %></div>
+<div class= "pull-right"><%= link_to('Add Student', new_group_student_path(group_id: @group.id), class: "btn btn-success") if can? :create, User %></div>
 <h2>Students</h2>
 <br/>
 <p>This is a list of students in this class.
   <% if can? :update, User %>
-    From here you can add new students, edit, delete or navigate to a specific student.
+    From here you can add new students, edit student information, delete or navigate to a specific student.
   <% end %>
 </p>
 </br>
@@ -44,7 +44,6 @@
             <td>
               <% jobs = member.job_assignments.where(group_id: @group.id).map { |ja| ja.job.title }.join(", ") %>
               <%= jobs.present? ? jobs : "None" %>
-              <br><%= link_to "Assign Job", new_group_job_assignment_path(@group, user_id: member.id) %>
             </td>
             <% if can_deposit || can_withdraw %>
               <td>
@@ -72,8 +71,9 @@
             <% end %>
             <% if can_update %>
               <td>
-                <%= link_to 'Edit', edit_group_student_path(@group, member) %>
-                | <%= link_to "Delete", group_student_path(@group, member), method: "delete", data: { confirm: "Are you sure? This action can't be undone!"} %>
+                <%= link_to 'Edit Info', edit_group_student_path(@group, member) %><br/>
+                <%= link_to "Assign Job", new_group_job_assignment_path(@group, user_id: member.id) %><br/>
+                <%= link_to "Delete", group_student_path(@group, member), method: "delete", data: { confirm: "Are you sure? This action can't be undone!"} %>
               </td>
             <% end %>
             <td><%= link_to "Emulate User", switch_user_path(user_id: member.id) %></td>
