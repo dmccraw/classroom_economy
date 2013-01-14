@@ -66,15 +66,15 @@ ActiveRecord::Schema.define(:version => 20130112180000) do
   add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
 
   create_table "store_managers", :force => true do |t|
-    t.integer  "store_id_id"
-    t.integer  "user_id_id"
+    t.integer  "store_id"
+    t.integer  "user_id"
     t.integer  "manage_level"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
 
-  add_index "store_managers", ["store_id_id"], :name => "index_store_managers_on_store_id_id"
-  add_index "store_managers", ["user_id_id"], :name => "index_store_managers_on_user_id_id"
+  add_index "store_managers", ["store_id"], :name => "index_store_managers_on_store_id"
+  add_index "store_managers", ["user_id"], :name => "index_store_managers_on_user_id"
 
   create_table "store_owners", :force => true do |t|
     t.integer  "user_id",    :null => false

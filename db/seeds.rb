@@ -6,20 +6,23 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-teacher = User.create(
+teacher = User.new(
   first_name: "Test",
   last_name: "Teacher",
-  password: "password",
   email: "teacher@test.com",
   user_type: 2
 )
-User.create(
+teacher.password = "password"
+teacher.save!
+
+user = User.create(
   first_name: "Test",
   last_name: "Admin",
-  password: "password",
   email: "admin@test.com",
   user_type: 10
 )
+user.password = "password"
+user.save!
 
 group = Group.create(
   name: "Test Class",
@@ -29,9 +32,10 @@ group = Group.create(
 student = User.create(
   first_name: "Test",
   last_name: "Student",
-  password: "password",
   user_type: 1
 )
+student.password = "password"
+student.save!
 
 Membership.create(
   user_id: student.id,
