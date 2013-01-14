@@ -45,23 +45,27 @@ class UserTest < ActiveSupport::TestCase
 
   end
 
-  test "groups" do
-
-  end
-
-  test "accounts" do
-    # teacher = FactoryGirl.create(:)
-  end
-
   test "stores" do
-    group = FactoryGirl.create(:group)
     user = FactoryGirl.create(:user)
+    group = FactoryGirl.create(:group, user_id: user.id)
 
     store = FactoryGirl.create(:store, group_id: group.id)
     store_owner = FactoryGirl.create(:store_owner, user_id: user.id, store_id: store.id)
-    puts user.stores.inspect
-    puts store.inspect
-    assert user.stores == [store]
+    # puts user.stores.inspect
+    # puts store.inspect
+    assert_equal(user.stores, [store])
+  end
+
+  test "in_group_with?" do
+    user = FactoryGirl.create(:user)
+    group = FactoryGirl.create(:group, user_id: user.id)
+    membership = FactoryGirl.create(:membership, group_id: group.id, user_id: user.id)
+    user2 = FactoryGirl.create(:user)
+    membership2 = FactoryGirl.create(:membership, group_id: group.id, user_id: user2.id)
+    user3 = FactoryGirl.create(:user)
+
+    assert_equal(true, user.in_group_with?(user2))
+    assert_false user.in_group_with?(user3)
   end
 
 end

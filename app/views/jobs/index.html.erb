@@ -17,10 +17,10 @@
     <th></th>
   </thead>
   <tbody>
-    <% if @group.jobs.count > 0 %>
-      <% @group.jobs.each do |job| %>
+    <% if @jobs.count > 0 %>
+      <% @jobs.each do |job| %>
         <tr>
-          <td><%= link_to(job.title, group_job_path(@group, job)) %></td>
+          <td><b><%= job.title %></b></td>
           <td><%= job.description %></td>
           <td><%= number_to_currency(job.salary) %></td>
           <td>

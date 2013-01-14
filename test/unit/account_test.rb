@@ -19,7 +19,7 @@ class AccountTest < ActiveSupport::TestCase
     group = FactoryGirl.create(:group)
     puts group.store.inspect
     puts group.store.account.inspect
-    assert group.store.account.balance == 0.0, "Initial balance is #{group.store.account.balance.inspect}"
+    assert_equal(group.store.account.balance, 1000000.0)
   end
 
 end

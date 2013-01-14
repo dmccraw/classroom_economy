@@ -13,7 +13,7 @@ ClassroomEconomy::Application.routes.draw do
       resources :store_managers
     end
     resources :accounts
-    resources :jobs
+    resources :jobs, except: [:show]
     resources :transactions do
       collection do
         get "new_class_transaction"

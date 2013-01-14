@@ -3,10 +3,6 @@
 
 <h2>Account for <%= @account.display_name %></h2>
 <hr>
-<p>
-  <b>Class:</b>
-  <%= @account.group.name %>
-</p>
 <% if @account.owner_type == "Store" %>
   <p>
     <b><%= @account.owner.users.count == 1 ? "Owner:": "Owners:" %></b>

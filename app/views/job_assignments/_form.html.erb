@@ -7,6 +7,7 @@
     <% if params[:user_id].present? %>
       <%= @user.display_name %>
       <%= f.hidden_field :user_id, value: params[:user_id] %>
+      <%= hidden_field_tag :user_id, params[:user_id] %>
     <% else %>
       <%= f.select :user_id, options_from_collection_for_select(@users, :id, :display_name) %>
     <% end %>
@@ -16,6 +17,7 @@
     <% if params[:job_id].present? %>
       <%= @job.title %>
       <%= f.hidden_field :job_id, value: params[:job_id] %>
+      <%= hidden_field_tag :job_id, params[:job_id] %>
     <% else %>
       <%= f.select :job_id, options_from_collection_for_select(@jobs, :id, :title) %>
     <% end %>

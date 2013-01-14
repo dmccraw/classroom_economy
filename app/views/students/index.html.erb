@@ -20,10 +20,10 @@
     <% if can_update %>
       <th>Account Balance</th>
     <% end %>
-    <th>Jobs</th>
     <% if can_deposit || can_withdraw %>
       <th></th>
     <% end %>
+    <th>Jobs</th>
     <% if can_update %>
       <th></th>
     <% end %>
@@ -34,17 +34,13 @@
       <% @group.users.order("first_name").each do |member| %>
         <% if member.student? %>
           <tr>
-            <td><%= link_to(member.display_name, group_student_path(@group,member)) %></td>
+            <td><b><%= link_to(member.display_name, group_student_path(@group,member)) %></b></td>
             <td><%= member.last_sign_in_at != nil ? I18n.l(member.last_sign_in_at, format: :medium) : "Never" %></td>
             <% if can_update %>
               <td>
                 <%= number_to_currency(member.account(@group.id).balance) %>
               </td>
             <% end %>
-            <td>
-              <% jobs = member.job_assignments.where(group_id: @group.id).map { |ja| ja.job.title }.join(", ") %>
-              <%= jobs.present? ? jobs : "None" %>
-            </td>
             <% if can_deposit || can_withdraw %>
               <td>
               <div style="padding:1px;">
@@ -69,11 +65,19 @@
               </div>
               </td>
             <% end %>
+            <td>
+              <% jobs = member.job_assignments.where(group_id: @group.id).map { |ja| ja.job.title }.join(", ") %>
+              <%= jobs.present? ? jobs : "None" %>
+              <br/>
+              <%= link_to "Assign Job", new_group_job_assignment_path(@group, user_id: member.id), class: "btn btn-small", style: "width:80px;" if can_update %>
+
+            </td>
             <% if can_update %>
               <td>
-                <%= link_to 'Edit Info', edit_group_student_path(@group, member) %><br/>
-                <%= link_to "Assign Job", new_group_job_assignment_path(@group, user_id: member.id) %><br/>
-                <%= link_to "Delete", group_student_path(@group, member), method: "delete", data: { confirm: "Are you sure? This action can't be undone!"} %>
+                <div style="padding:1px;">
+                  <%= link_to 'Edit Info', edit_group_student_path(@group, member), class: "btn btn-small btn-info", style: "width:80px;" %>
+                </div>
+                <%= link_to "Delete", group_student_path(@group, member), method: "delete", data: { confirm: "Are you sure? This will delete this student, their accounts, stores and all transactions regarding them.This action can't be undone!"}, class: "btn btn-small btn-danger", style: "width:80px;" %>
               </td>
             <% end %>
             <td><%= link_to "Emulate User", switch_user_path(user_id: member.id) %></td>

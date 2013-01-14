@@ -1,51 +1,68 @@
 <%= render partial: "/groups/top", locals: { current_nav: "students" } %>
-
+<% can_update = can? :update, @student %>
+<% is_self = current_user == @student %>
+<% can_delete = can? :delete, @student %>
 <% account = @student.account(@group.id) %>
-<div class=" well pull-right">
-  <%= link_to "Edit Student Info", edit_group_student_path(@group, @student), class: "btn btn-info"  %>
-  <%= link_to "Delete Student", group_student_path(@group, @student), method: "delete", data: { confirm: "Are you sure you want to delete this student? This method can't be undone!"}, class: "btn btn-danger"  %>
-</div>
+
+<% if can_update %>
+  <div class=" well pull-right">
+    <%= link_to "Edit Student Info", edit_group_student_path(@group, @student), class: "btn btn-info"  %>
+    <%= link_to "Delete Student", group_student_path(@group, @student), method: "delete", data: { confirm: "Are you sure you want to delete this student? This method can't be undone!"}, class: "btn btn-danger"  %>
+  </div>
+<% end %>
+
 <p>
   <h2><%= @student.display_name %></h2>
 </p>
 
-<p>
-  <b>Email:</b>
-  <%= @student.email %>
-</p>
+<% if can_update || is_self %>
+  <p>
+    <b>Email:</b>
+    <%= @student.email %>
+  </p>
+  <hr>
+<% end %>
+
+<% if can_update || is_self %>
+  <h2>Account</h2>
+  <p>
+    <b>Balance:</b>
+    <%= number_to_currency(account.balance) %>
+  </p>
+  <h3>Last 5 Transactions</h3>
+  <%= render partial: '/transactions/transactions', locals: { transactions: account.transactions.limit(5).order("created_at DESC") } %>
+  <p>
+    <%= link_to "All Transactions", group_transactions_path(@group, account_id: account.id), class: "btn" %>
+  </p>
+<% end %>
 <hr>
 
-<h2>Account</h2>
-<p>
-  <b>Balance:</b>
-  <%= number_to_currency(account.balance) %>
-</p>
-<h3>Last 5 Transactions</h3>
-<%= render partial: '/transactions/transactions', locals: { transactions: account.transactions.limit(5).order("created_at DESC") } %>
-<p>
-  <%= link_to "All Transactions", group_transactions_path(@group, account_id: account.id), class: "btn" %>
-</p>
-<hr>
+<% if can_update %>
+  <div class="pull-right">
+    <%= link_to "Add Job", new_group_job_assignment_path(@group, user_id: @student.id), class: "btn btn-success"  %>
+  </div>
+<% end %>
 
-<div class="pull-right">
-  <%= link_to "Add Job", new_group_job_assignment_path(@group, user_id: @student.id), class: "btn btn-success"  %>
-</div>
 <h2>Jobs</h2>
 <table class="table table-striped table-bordered">
   <thead>
     <th>Name</th>
     <th>Description</th>
     <th>Monthly Salary</th>
-    <th></th>
+    <% if can_update %>
+      <th></th>
+    <% end %>
   </thead>
 <% if @student.job_assignments.any? %>
   <tbody>
     <% @student.job_assignments.each do |job_assignment| %>
       <tr>
-        <td><%= job_assignment.job.title %></td>
+        <td><b><%= job_assignment.job.title %></b></td>
         <td><%= job_assignment.job.description %></td>
         <td><%= number_to_currency(job_assignment.job.salary) %></td>
-        <td><%= link_to "Unassign Job", group_job_assignment_path(job_assignment), method: "delete", data: { confirm: "Are you sure? This action can't be undone!"}, class: "btn btn-danger"  %></td>
+        <% if can_update %>
+          <td><%= link_to "Unassign Job", group_job_assignment_path(job_assignment), method: "delete", data: { confirm: "Are you sure? This action can't be undone!"}, class: "btn btn-danger"  %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -55,27 +72,37 @@
   </tr>
 <% end %>
 </table>
+<hr>
 
+<% if is_self %>
+  <div class="pull-right">
+    <%= link_to 'Open Store', new_group_store_path(student_id: @student.id), class: "btn btn-success" %>
+  </div>
+<% end %>
 
 <h2>Stores</h2>
 <table class="table table-striped table-bordered">
   <thead>
     <th>Name</th>
     <th>Description</th>
-    <th>Balance</th>
-    <th></th>
-    <th></th>
+    <% if can_update || is_self %>
+      <th>Balance</th>
+      <th></th>
+      <th></th>
+    <% end %>
   </thead>
 <% stores = @student.stores.where(group_id: @group.id) %>
 <% if stores.any? %>
   <tbody>
     <% stores.each do |store| %>
       <tr>
-        <td><%= store.name %></td>
+        <td><b><%= link_to(store.name, group_store_path(@group, store)) %></b></td>
         <td><%= store.description %></td>
-        <td><%= number_to_currency(store.account.balance) %></td>
-        <td><%= link_to "Transactions", group_transactions_path(@group, account_id: store.account.id), class: "btn"  %></td>
-        <td><%= link_to "Edit", edit_group_store_path(@group, store), class: "btn btn-info" %></td>
+        <% if can_update || is_self %>
+          <td><%= number_to_currency(store.account.balance) %></td>
+          <td><%= link_to "Transactions", group_transactions_path(@group, account_id: store.account.id), class: "btn"  %></td>
+          <td><%= link_to "Edit", edit_group_store_path(@group, store), class: "btn btn-info" %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -85,4 +112,4 @@
   </tr>
 <% end %>
 </table>
-<%= link_to 'Open Store', new_group_store_path(student_id: @student.id) if current_user == @student %>
+

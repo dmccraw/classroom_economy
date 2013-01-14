@@ -17,11 +17,11 @@
       </thead>
       <tbody>
         <% transactions = current_user.account(@group.id).transactions.limit(20).order("created_at DESC") %>
-        <% if transactions.count > 1 %>
+        <% if transactions.count > 0 %>
           <%= render partial: transactions, locals: { account_id: current_user.account(@group.id).id} %>
         <% else %>
           <tr>
-            <td colspan="100">You have no disputed transactions.</td>
+            <td colspan="100">You have no transactions.</td>
           </tr>
         <% end %>
       </tbody>

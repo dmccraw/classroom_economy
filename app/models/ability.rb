@@ -26,11 +26,11 @@ class Ability
     # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
     if user.admin?
       can :manage, :all
-
     elsif user.teacher?
       can :manage, Group do |group|
         group.user_id == user.id
       end
+
       can :manage, User do |_user|
         unless can_manage = (_user.id == user.id) # can manage self
           unless can_manage = _user.new_record?
@@ -61,15 +61,18 @@ class Ability
       end
 
     elsif user.student?
-      # can :manage, User do |_user|
-      #   user.id == _user.id # user can manage self
-      # end
-      can :show, Group do |group|
-        group.member_of?(user)
+      can :read, User do |_user|
+Rails.logger.red(_user.inspect)
+        can_read = false
+        # only read users in same groups
+        unless can_read = user.in_group_with?(_user)
+
+        end
+        can_read
       end
 
-      can :manage, User do |_user|
-        user.id == _user.id
+      can :show, Group do |group|
+        group.member_of?(user)
       end
 
       can :show, Store do |store|

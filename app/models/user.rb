@@ -40,8 +40,8 @@ class User < ActiveRecord::Base
   validates_length_of :password, :within => Devise.password_length, :allow_blank => true
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :passwstoreord, :password_confirmation, :remember_me
-  attr_accessible :first_name, :last_name, :user_type, :username, :login
+  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :first_name, :last_name, :user_type, :username, :login, :time_zone
 
   # relationships
   # has_many :groups, through: :memberships
@@ -51,6 +51,7 @@ class User < ActiveRecord::Base
   has_many :store_managers, dependent: :destroy
   has_many :memberships, dependent: :destroy
   has_many :job_assignments
+  has_many :groups, through: :memberships
   # has_many :transactions
 
   # validations
@@ -91,6 +92,19 @@ class User < ActiveRecord::Base
     "#{self.first_name} #{self.last_name}"
   end
 
+  def in_group_with?(user)
+# Rails.logger.red(user.inspect)
+    user.groups.each do |user_group|
+Rails.logger.red(user.inspect)
+      self.groups.each do |group|
+Rails.logger.red(group.inspect)
+        return true if group.id == user_group.id
+        return true if group.user_id == self.id
+      end
+    end
+    false
+  end
+
   def display_user_type
     case self.user_type
     when USER_TYPE_TEACHER
@@ -119,6 +133,7 @@ class User < ActiveRecord::Base
   end
 
   def in_group?(group)
+    return true if group.user_id == self.id
     groups.each do |_group|
       if group.id == _group.id
         return true

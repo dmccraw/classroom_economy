@@ -20,4 +20,16 @@ class JobAssignment < ActiveRecord::Base
   validates :job_id, presence: true
   validates :user_id, presence: true
   validates :group_id, presence: true
+
+  validate :unique_job_and_user
+
+  private
+
+  def unique_job_and_user
+    if self.new_record?
+      if job_assignment = JobAssignment.where(job_id: self.job_id, user_id: self.user_id)
+        errors.add(:base, "The student is already assigned to this job.")
+      end
+    end
+  end
 end

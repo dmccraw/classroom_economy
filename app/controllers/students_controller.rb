@@ -4,6 +4,8 @@ class StudentsController < ApplicationController
   def index
     @students = @group.users.all
 
+    authorize! :read, @students.first
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @students }
@@ -14,6 +16,8 @@ class StudentsController < ApplicationController
   # GET /users/1.json
   def show
     @student = @group.users.find(params[:id])
+
+    authorize! :read, @student
 
     respond_to do |format|
       format.html # show.html.erb
@@ -52,7 +56,7 @@ class StudentsController < ApplicationController
       if @student.save
         Membership.create(user_id: @student.id, group_id: @group.id)
 
-        format.html { redirect_to group_students_path(@group), notice: 'User was successfully created.' }
+        format.html { redirect_to group_students_path(@group), notice: "#{@student.display_name} was successfully created." }
         format.json { render json: @student, status: :created, location: @student }
       else
         format.html { render action: "new" }
@@ -70,7 +74,7 @@ class StudentsController < ApplicationController
 
     respond_to do |format|
       if @student.update_attributes(params[:user])
-        format.html { redirect_to group_students_path(@group), notice: 'User was successfully updated.' }
+        format.html { redirect_to group_students_path(@group), notice: "#{@student.display_name} was successfully updated." }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -89,7 +93,7 @@ class StudentsController < ApplicationController
     @student.destroy
 
     respond_to do |format|
-      format.html { redirect_to group_students_path }
+      format.html { redirect_to group_students_path, notice: "#{@student.display_name} was successfully deleted." }
       format.json { head :no_content }
       format.js { render text: "location.reload(true);"}
     end
