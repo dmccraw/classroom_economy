@@ -1,11 +1,12 @@
 <%= render partial: "/groups/top", locals: { current_nav: "stores" } %>
+<% can_update = can? :update, @group.stores.first %>
 
-<div class="pull-right"><%= link_to('Open Store', new_group_store_path(@group, user_id: current_user.id), class: "btn btn-success") %></div>
+<div class="pull-right"><%= link_to('Open Store', new_group_store_path(@group, user_id: current_user.id), class: "btn") %></div>
 <h2>Stores</h2>
 </br>
 <p>
   This is a list of stores that are in this class. The teacher has a store that is the class store and students can open their own stores with the approval of the teacher.
-  <% if can? :update, Store %>
+  <% if can_update %>
     You can add new stores, edit, delete or navigate to a specific student
   <% end %>
 </p>
@@ -16,11 +17,9 @@
   <thead>
     <th>Name</th>
     <th>Owners</th>
-    <% if can? :update, Store %>
-      <th>Account Balance</th>
-      <th></th>
-      <th></th>
-    <% end %>
+    <th>Account Balance</th>
+    <th></th>
+    <th></th>
   </thead>
   <tbody>
     <tr>
@@ -30,9 +29,12 @@
           <%= link_to(owner.user.display_name, group_student_path(@group, owner.user)) %>&nbsp;
         <% end %>
       </td>
-      <% if can? :update, Store %>
+      <% if can? :update, @group.store %>
         <td><%= number_to_currency(@group.store.account.balance) %></td>
-        <td><%= link_to 'Edit', edit_group_store_path(@group, @group.store), class: "btn btn-info" %></td>
+        <td><%= link_to 'Edit', edit_group_store_path(@group, @group.store), class: "btn" %></td>
+      <% else %>
+        <td>Unknown</td>
+        <td></td>
       <% end %>
     </tr>
   </tbody>
@@ -44,10 +46,8 @@
   <thead>
     <th>Name</th>
     <th>Owners</th>
-    <% if can? :update, Store %>
-      <th>Account Balance</th>
-      <th></th>
-    <% end %>
+    <th>Account Balance</th>
+    <th></th>
   </thead>
   <tbody>
     <% if @group.student_stores.approved.count > 0 %>
@@ -59,12 +59,15 @@
               <%= link_to(owner.user.display_name, group_student_path(@group, owner.user)) %>&nbsp;
             <% end %>
           </td>
-          <% if can? :update, Store %>
+          <% if can? :update, store %>
             <td><%= number_to_currency(store.account.balance) %></td>
             <td>
-              <%= link_to 'Edit', edit_group_store_path(@group, store), class: "btn btn-info" %>
-              <%= link_to 'Destroy', [@group,store], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+              <%= link_to 'Edit', edit_group_store_path(@group, store), class: "btn" %>
+              <%= link_to 'Close', [@group,store], method: :delete, data: { confirm: 'This will permanently close the store and transfer all the money back to the school bank. Are you sure?' }, class: "btn" %>
             </td>
+          <% else %>
+            <td>Unknown</td>
+            <td></td>
           <% end %>
         </tr>
       <% end %>

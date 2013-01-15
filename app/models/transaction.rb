@@ -33,16 +33,27 @@ class Transaction < ActiveRecord::Base
   validates :user_id, presence: true
   validates :occurred_on, presence: true
 
-  validate :diferent_from_to_accounts
+  validate :different_from_to_accounts
 
   # callbacks
   after_create :transfer_funds
 
   private
 
-  def diferent_from_to_accounts
+  def different_from_to_accounts
     if from_account_id == to_account_id
       errors.add(:base, "To and From accounts must be different")
+    end
+  end
+
+  def store_approved
+    if from_account.store? || to_account.store?
+      if from_account.store? && !from_account.owner.approved
+        errors.add(:from_account, "From store has not been approved.")
+      end
+      if to_account.store? && !to_account.owner.approved
+        errors.add(:to_account, "From store has not been approved.")
+      end
     end
   end
 

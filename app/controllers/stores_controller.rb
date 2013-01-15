@@ -7,6 +7,8 @@ class StoresController < ApplicationController
   def index
     @stores = @group.stores.all
 
+    authorize! :index, Store
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @stores }
@@ -17,6 +19,8 @@ class StoresController < ApplicationController
   # GET /stores/1.json
   def show
     @store = @group.stores.find(params[:id])
+
+    authorize! :read, @store
 
     respond_to do |format|
       format.html # show.html.erb
@@ -39,13 +43,15 @@ class StoresController < ApplicationController
   def edit
     @store = @group.stores.find(params[:id])
 
-    authorize! :modify, @store
+    authorize! :update, @store
   end
 
   # POST /stores
   # POST /stores.json
   def create
     @store = @group.stores.new(params[:store])
+
+    authorize! :create, @store
 
     respond_to do |format|
       if @store.save
@@ -70,7 +76,7 @@ class StoresController < ApplicationController
   def update
     @store = @group.stores.find(params[:id])
 
-    authorize! :modify, @store
+    authorize! :update, @store
 
     respond_to do |format|
       if @store.update_attributes(params[:store])

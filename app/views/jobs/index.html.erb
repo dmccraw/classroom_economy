@@ -1,6 +1,13 @@
 <%= render partial: "/groups/top", locals: { current_nav: "jobs" } %>
 
-<div class="pull-right"><%= link_to "Create Job", new_group_job_path(@group), class: "btn btn-success" %></div>
+<%
+  can_update = false
+  can_udpate = can? :update, @jobs.first if @jobs.count > 0
+%>
+
+<% if can_update %>
+  <div class="pull-right"><%= link_to "Create Job", new_group_job_path(@group), class: "btn" %></div>
+<% end %>
 <h2>Jobs</h2>
 <br/>
 <p>This is a list of jobs that are available for your class. You can add new jobs, edit existing jobs, see which students have which jobs and assign new jobs. All jobs get paid on the first of the month automatically.</p>
@@ -12,9 +19,11 @@
     <th>Description</th>
     <th>Monthly Salary</th>
     <th>Students Assigned</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <% if can_update %>
+      <th></th>
+      <th></th>
+      <th></th>
+    <% end %>
   </thead>
   <tbody>
     <% if @jobs.count > 0 %>
@@ -27,9 +36,11 @@
             <% students = job.job_assignments.map {|ja| ja.user.display_name }.join(", ") %>
             <%= students %>
           </td>
-          <td><%= link_to "Assign", new_group_job_assignment_path(@group, job_id: job.id), class: "btn" %></td>
-          <td><%= link_to 'Edit', edit_group_job_path(@group,job), class: "btn btn-info" %></td>
-          <td><%= link_to 'Destroy', [@group,job], method: :delete, data: { confirm: "This will delete this job and remove it from any assigned students. Are you sure? This can\'t be undone." }, class: "btn btn-danger" %></td>
+          <% if can_update %>
+            <td><%= link_to "Assign", new_group_job_assignment_path(@group, job_id: job.id), class: "btn" %></td>
+            <td><%= link_to 'Edit', edit_group_job_path(@group,job), class: "btn" %></td>
+            <td><%= link_to 'Destroy', [@group,job], method: :delete, data: { confirm: "This will delete this job and remove it from any assigned students. Are you sure? This can\'t be undone." }, class: "btn" %></td>
+          <% end %>
         </tr>
       <% end %>
     <% else %>

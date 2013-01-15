@@ -7,6 +7,8 @@ class JobsController < ApplicationController
   def index
     @jobs = @group.jobs.order("title")
 
+    authorize! :index, Job
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @jobs }
@@ -29,6 +31,8 @@ class JobsController < ApplicationController
   def new
     @job = @group.jobs.new
 
+    authorize! :create, @job
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @job }
@@ -44,6 +48,8 @@ class JobsController < ApplicationController
   # POST /jobs.json
   def create
     @job = @group.jobs.new(params[:job])
+
+    authorize! :create, @job
 
     respond_to do |format|
       if @job.save

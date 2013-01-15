@@ -10,6 +10,8 @@ class TransactionsController < ApplicationController
       @transactions = @group.transactions.page(params[:page]).order("created_at DESC")
     end
 
+    #authorize! :index, Account
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @transactions }

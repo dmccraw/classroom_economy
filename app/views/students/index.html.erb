@@ -4,7 +4,7 @@
 
 <%= render partial: "/groups/top", locals: { current_nav: "students" } %>
 
-<div class= "pull-right"><%= link_to('Add Student', new_group_student_path(group_id: @group.id), class: "btn btn-success") if can? :create, User %></div>
+<div class= "pull-right"><%= link_to('Add Student', new_group_student_path(group_id: @group.id), class: "btn") if can? :create, User %></div>
 <h2>Students</h2>
 <br/>
 <p>This is a list of students in this class.
@@ -49,7 +49,7 @@
                       from_account_id: @group.group_account.id,
                       to_account_id: member.account(@group.id).id
                     ),
-                    class: "btn btn-success", style: "width:120px;"
+                    class: "btn", style: "width:120px;"
                   ) if can_deposit
                 %>
               </div>
@@ -59,7 +59,7 @@
                       to_account_id: @group.group_account.id,
                       from_account_id: member.account(@group.id).id
                     ),
-                    class: "btn btn-danger", style: "width:120px;"
+                    class: "btn", style: "width:120px;"
                   ) if can_withdraw
                 %>
               </div>
@@ -75,9 +75,9 @@
             <% if can_update %>
               <td>
                 <div style="padding:1px;">
-                  <%= link_to 'Edit Info', edit_group_student_path(@group, member), class: "btn btn-small btn-info", style: "width:80px;" %>
+                  <%= link_to 'Edit Info', edit_group_student_path(@group, member), class: "btn btn-small", style: "width:80px;" %>
                 </div>
-                <%= link_to "Delete", group_student_path(@group, member), method: "delete", data: { confirm: "Are you sure? This will delete this student, their accounts, stores and all transactions regarding them.This action can't be undone!"}, class: "btn btn-small btn-danger", style: "width:80px;" %>
+                <%= link_to "Delete", group_student_path(@group, member), method: "delete", data: { confirm: "Are you sure? This will delete this student, their accounts, stores and all transactions regarding them.This action can't be undone!"}, class: "btn btn-small", style: "width:80px;" %>
               </td>
             <% end %>
             <td><%= link_to "Emulate User", switch_user_path(user_id: member.id) %></td>

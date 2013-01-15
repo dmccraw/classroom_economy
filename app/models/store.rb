@@ -40,6 +40,13 @@ class Store < ActiveRecord::Base
     false
   end
 
+  def manager?(user)
+    store_managers.each do |store_manager|
+      return true if user.id == store_manager.user_id
+    end
+    false
+  end
+
   private
 
   def create_account

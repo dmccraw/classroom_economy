@@ -105,6 +105,13 @@ Rails.logger.red(group.inspect)
     false
   end
 
+  def in_group?(group_id)
+    groups.each do |group|
+      return true if group_id == group.id
+    end
+    return false
+  end
+
   def display_user_type
     case self.user_type
     when USER_TYPE_TEACHER
@@ -137,6 +144,19 @@ Rails.logger.red(group.inspect)
     groups.each do |_group|
       if group.id == _group.id
         return true
+      end
+    end
+    false
+  end
+
+  def owns_or_manages_account?(account)
+    return true if account.user_id == self.id
+    if account.store?
+      store_owners.each do |store_owner|
+        return true if account.owner_id == self.id
+      end
+      store_managers.each do |store_manager|
+        return true if store_manager.store.account_id == account.id
       end
     end
     false

@@ -28,7 +28,7 @@ class Ability
       can :manage, :all
     elsif user.teacher?
       can :manage, Group do |group|
-        group.user_id == user.id
+        group.user_id == user.id || job.new_record?
       end
 
       can :manage, User do |_user|
@@ -48,21 +48,20 @@ class Ability
         can_manage
       end
 
+      can :manage, Job do |job|
+        user.in_group?(job.group_id) || job.new_record?
+      end
+
       can :manage, Store do |store|
-        can_update = false
-        # if store is in a group of the teacher
-        user.groups.each do |group|
-          if store.group_id == group.id
-            can_update = true
-            break
-          end
-        end
-        can_update
+        user.in_group?(store.group_id) || job.new_record?
+      end
+
+      can :manage, Account do |account|
+        user.in_group?(account.group_id) || job.new_record?
       end
 
     elsif user.student?
       can :read, User do |_user|
-Rails.logger.red(_user.inspect)
         can_read = false
         # only read users in same groups
         unless can_read = user.in_group_with?(_user)
@@ -75,6 +74,10 @@ Rails.logger.red(_user.inspect)
         group.member_of?(user)
       end
 
+      can :index, Store do |store|
+        true
+      end
+
       can :show, Store do |store|
         can_show = false
         user.groups.each do |group|
@@ -84,6 +87,21 @@ Rails.logger.red(_user.inspect)
         end
         can_show
       end
+
+
+      can :update, Store do |store|
+        store.owner?(user)
+      end
+
+      # can read jobs in their own group
+      can :read, Job do |job|
+        user.in_group?(job.group_id)
+      end
+
+      can :read, Account do |account|
+        user.owns_or_manages_account?(account)
+      end
+
     end
   end
 end

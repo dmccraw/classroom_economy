@@ -6,8 +6,8 @@
 
 <% if can_update %>
   <div class=" well pull-right">
-    <%= link_to "Edit Student Info", edit_group_student_path(@group, @student), class: "btn btn-info"  %>
-    <%= link_to "Delete Student", group_student_path(@group, @student), method: "delete", data: { confirm: "Are you sure you want to delete this student? This method can't be undone!"}, class: "btn btn-danger"  %>
+    <%= link_to "Edit Student Info", edit_group_student_path(@group, @student), class: "btn"  %>
+    <%= link_to "Delete Student", group_student_path(@group, @student), method: "delete", data: { confirm: "Are you sure you want to delete this student? This method can't be undone!"}, class: "btn"  %>
   </div>
 <% end %>
 
@@ -39,7 +39,7 @@
 
 <% if can_update %>
   <div class="pull-right">
-    <%= link_to "Add Job", new_group_job_assignment_path(@group, user_id: @student.id), class: "btn btn-success"  %>
+    <%= link_to "+ Add Job", new_group_job_assignment_path(@group, user_id: @student.id), class: "btn"  %>
   </div>
 <% end %>
 
@@ -61,7 +61,7 @@
         <td><%= job_assignment.job.description %></td>
         <td><%= number_to_currency(job_assignment.job.salary) %></td>
         <% if can_update %>
-          <td><%= link_to "Unassign Job", group_job_assignment_path(job_assignment), method: "delete", data: { confirm: "Are you sure? This action can't be undone!"}, class: "btn btn-danger"  %></td>
+          <td><%= link_to "Unassign Job", group_job_assignment_path(job_assignment), method: "delete", data: { confirm: "Are you sure? This action can't be undone!"}, class: "btn"  %></td>
         <% end %>
       </tr>
     <% end %>
@@ -76,7 +76,7 @@
 
 <% if is_self %>
   <div class="pull-right">
-    <%= link_to 'Open Store', new_group_store_path(student_id: @student.id), class: "btn btn-success" %>
+    <%= link_to 'Open Store', new_group_store_path(student_id: @student.id), class: "btn" %>
   </div>
 <% end %>
 
@@ -101,7 +101,7 @@
         <% if can_update || is_self %>
           <td><%= number_to_currency(store.account.balance) %></td>
           <td><%= link_to "Transactions", group_transactions_path(@group, account_id: store.account.id), class: "btn"  %></td>
-          <td><%= link_to "Edit", edit_group_store_path(@group, store), class: "btn btn-info" %></td>
+          <td><%= link_to "Edit", edit_group_store_path(@group, store), class: "btn" %></td>
         <% end %>
       </tr>
     <% end %>
