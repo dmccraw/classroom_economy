@@ -5,7 +5,7 @@
 <h2>Transactions</h2>
 <h3>Listing Transactions <%= "for #{@account.display_name}" if @account %></h3>
 
-<%= will_paginate @transactions %>
+<%= will_paginate @transactions if @transactions %>
 <table class="table table-striped table-bordered">
   <thead>
     <th>ID</th>
@@ -17,7 +17,7 @@
     <th>Entered On</th>
   </thead>
   <tbody>
-  <% if @transactions.count > 0 %>
+  <% if @transactions && @transactions.count > 0 %>
     <% @transactions.each do |transaction| %>
       <%
         cls = nil
@@ -44,4 +44,4 @@
   <% end %>
   </tbody>
 </table>
-<%= will_paginate @transactions %>
+<%= will_paginate @transactions if @transactions %>

@@ -25,4 +25,5 @@ class TransactionTest < ActiveSupport::TestCase
   should validate_numericality_of(:amount)
   should validate_presence_of(:user_id)
   should validate_presence_of(:occurred_on)
+
 end

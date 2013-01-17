@@ -34,6 +34,7 @@ class Transaction < ActiveRecord::Base
   validates :occurred_on, presence: true
 
   validate :different_from_to_accounts
+  validate :occurred_in_the_past
 
   # callbacks
   after_create :transfer_funds
@@ -55,6 +56,10 @@ class Transaction < ActiveRecord::Base
         errors.add(:to_account, "From store has not been approved.")
       end
     end
+  end
+
+  def occurred_in_the_past
+    errors.add(:occurred_on, "Occurred on must be in the past") if self.occurred_on > DateTime.now
   end
 
   def transfer_funds

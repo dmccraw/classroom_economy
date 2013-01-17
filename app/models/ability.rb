@@ -49,7 +49,7 @@ class Ability
       end
 
       can :manage, Job do |job|
-        user.in_group?(job.group_id) || job.new_record?
+        user.in_group?(job.group) || job.new_record?
       end
 
       can :manage, Store do |store|
@@ -87,7 +87,6 @@ class Ability
         end
         can_show
       end
-
 
       can :update, Store do |store|
         store.owner?(user)

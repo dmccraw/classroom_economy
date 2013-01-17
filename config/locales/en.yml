@@ -8,5 +8,11 @@ en:
       short: "%I:%M %p"
       medium: "%m/%d/%Y %I:%M %p"
       long: "%A, %B %d, %Y %I:%M:%S %p"
+      date: "%m/%d/%Y"
     am: "AM"
     pm: "PM"
+  date:
+    formats:
+      short: "%m/%d/%Y"
+      long: "%A, %B %d, %Y"
+

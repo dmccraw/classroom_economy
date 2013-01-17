@@ -14,6 +14,9 @@
         <th>Amount</th>
         <th>To</th>
         <th>From</th>
+        <th>Description</th>
+        <th>Occurred On</th>
+        <th>Entered</th>
       </thead>
       <tbody>
         <% transactions = current_user.account(@group.id).transactions.limit(20).order("created_at DESC") %>

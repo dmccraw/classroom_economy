@@ -4,10 +4,22 @@ class TransactionsController < ApplicationController
 
   def index
     if params[:account_id]
-      @transactions = @group.account_transactions(params[:account_id]).page(params[:page]).order("created_at DESC")
-      @account = @group.accounts.find(params[:account_id])
+      allow = current_user.teacher? || current_user.admin?
+      unless allow
+        account_ids = current_user.owns_or_manages_accounts(@group)
+        allow = account_ids.detect { |id| params[:account_id].to_i == id }
+      end
+      if allow
+        @transactions = @group.account_transactions(params[:account_id]).page(params[:page]).order("created_at DESC")
+        @account = @group.accounts.find(params[:account_id])
+      end
     else
-      @transactions = @group.transactions.page(params[:page]).order("created_at DESC")
+      if current_user.teacher? || current_user.admin?
+        @transactions = @group.transactions.page(params[:page]).order("created_at DESC")
+      else
+        account_ids = current_user.owns_or_manages_accounts(@group)
+        @transactions = Transaction.where("to_account_id IN (:account_ids) OR from_account_id in (:account_ids)", account_ids: account_ids).page(params[:page]).order("created_at DESC")
+      end
     end
 
     #authorize! :index, Account
@@ -27,6 +39,7 @@ class TransactionsController < ApplicationController
 
     @from_accounts = @group.accounts
     @to_accounts = @group.accounts
+    @transaction.occurred_on = Date.today
 
     if params[:from_account_id].present?
       @from_account = Account.find_by_id(params[:from_account_id])

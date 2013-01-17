@@ -1,3 +1,11 @@
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#datepicker').datepicker({
+        format: 'mm/dd/yyyy'
+    });
+  });
+</script>
+
 <center><h1>Transfer Funds</h1></center>
 <%= form_tag create_class_transaction_group_transactions_path(@group) do %>
 
@@ -36,6 +44,12 @@
       <tr>
         <td><b>Description:</b></td>
         <td><%= text_field_tag :description %></td>
+      </tr>
+      <tr>
+        <td><b>Occurred On:</br></td>
+        <td>
+          <%= text_field_tag :datepicker, I18n.l(DateTime.now, format: :date) %>
+        </td>
       </tr>
     </table>
 

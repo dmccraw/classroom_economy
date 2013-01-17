@@ -149,14 +149,22 @@ Rails.logger.red(group.inspect)
     false
   end
 
+  def owns_or_manages_accounts(group)
+    account_ids = [account(group).id]
+    account_ids += store_owners.map {|so| so.store.account.id }
+    account_ids += store_managers.map {|so| so.store.account.id }
+    account_ids
+  end
+
   def owns_or_manages_account?(account)
-    return true if account.user_id == self.id
+    return true if account.owner_id == self.id && account.owner_type == self.class.to_s
+
     if account.store?
       store_owners.each do |store_owner|
         return true if account.owner_id == self.id
       end
       store_managers.each do |store_manager|
-        return true if store_manager.store.account_id == account.id
+        return true if store_manager.store.account.id == account.id
       end
     end
     false
@@ -165,8 +173,6 @@ Rails.logger.red(group.inspect)
   def account(group_id)
     Account.where(owner_id: self.id, owner_type: self.class.to_s, group_id: group_id).first
   end
-
-
 
   # devise login with username or email
   # https://github.com/plataformatec/devise/wiki/How-To:-Allow-users-to-sign-in-using-their-username-or-email-address
