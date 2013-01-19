@@ -139,15 +139,15 @@ Rails.logger.red(group.inspect)
     end
   end
 
-  def in_group?(group)
-    return true if group.user_id == self.id
-    groups.each do |_group|
-      if group.id == _group.id
-        return true
-      end
-    end
-    false
-  end
+  # def in_group?(group)
+  #   return true if group.user_id == self.id
+  #   groups.each do |_group|
+  #     if group.id == _group.id
+  #       return true
+  #     end
+  #   end
+  #   false
+  # end
 
   def owns_or_manages_accounts(group)
     account_ids = [account(group).id]
@@ -190,10 +190,10 @@ private
   def generate_username
     if self.username.blank?
       return false if self.first_name.blank?|| self.last_name.blank?
-      uname = "#{self.first_name[0]}#{self.last_name}"
+      uname = "#{self.first_name[0]}#{self.last_name}".downcase
       count = 1
       while user = User.find_by_username(uname)
-        uname = "#{self.first_name[0]}#{self.last_name}_#{count}"
+        uname = "#{self.first_name[0]}#{self.last_name}_#{count}".downcase
         count += 1
       end
       self.username = uname

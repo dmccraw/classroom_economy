@@ -26,15 +26,15 @@
     <th>Jobs</th>
     <% if can_update %>
       <th></th>
+      <th>Username</th>
     <% end %>
-      <th></th>
   </thead>
   <tbody>
     <% if @group.users.count > 0 %>
       <% @group.users.order("first_name").each do |member| %>
         <% if member.student? %>
           <tr>
-            <td><b><%= link_to(member.display_name, group_student_path(@group,member)) %></b></td>
+            <td><b style="text-decoration:underline;"><%= link_to(member.display_name, group_student_path(@group,member)) %></b></td>
             <td><%= member.last_sign_in_at != nil ? I18n.l(member.last_sign_in_at, format: :medium) : "Never" %></td>
             <% if can_update %>
               <td>
@@ -73,14 +73,9 @@
 
             </td>
             <% if can_update %>
-              <td>
-                <div style="padding:1px;">
-                  <%= link_to 'Edit Info', edit_group_student_path(@group, member), class: "btn btn-small", style: "width:80px;" %>
-                </div>
-                <%= link_to "Delete", group_student_path(@group, member), method: "delete", data: { confirm: "Are you sure? This will delete this student, their accounts, stores and all transactions regarding them.This action can't be undone!"}, class: "btn btn-small", style: "width:80px;" %>
-              </td>
+              <td><%= link_to "Emulate User", switch_user_path(user_id: member.id) %></td>
+              <td><%= member.username %></td>
             <% end %>
-            <td><%= link_to "Emulate User", switch_user_path(user_id: member.id) %></td>
           </tr>
         <% end %>
       <% end %>

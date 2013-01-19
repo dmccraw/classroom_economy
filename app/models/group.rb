@@ -21,7 +21,7 @@ class Group < ActiveRecord::Base
 
   attr_accessible :name, :user_id
 
-  validates :name, presence: true
+  validates_uniqueness_of :name, :scope => :user_id
 
   after_create :create_store
 
@@ -61,7 +61,8 @@ class Group < ActiveRecord::Base
   end
 
   def group_account
-    Account.where(group_id: self.id, owner_type: "Store", owner_id: user_id).first
+    # Account.where(group_id: self.id, owner_type: "Store", owner_id: store_id).first
+    store.account
   end
 
   def transactions

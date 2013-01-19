@@ -49,7 +49,8 @@ class Ability
       end
 
       can :manage, Job do |job|
-        user.in_group?(job.group) || job.new_record?
+# Rails.logger.red("job can manage #{job.inspect}")
+        user.in_group?(job.group_id) || job.new_record?
       end
 
       can :manage, Store do |store|

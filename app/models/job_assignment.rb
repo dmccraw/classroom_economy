@@ -27,7 +27,8 @@ class JobAssignment < ActiveRecord::Base
 
   def unique_job_and_user
     if self.new_record?
-      if job_assignment = JobAssignment.where(job_id: self.job_id, user_id: self.user_id)
+      if job_assignment = JobAssignment.where(job_id: self.job_id, user_id: self.user_id).first
+        Rails.logger.red(job_assignment.inspect)
         errors.add(:base, "The student is already assigned to this job.")
       end
     end

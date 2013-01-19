@@ -9,6 +9,6 @@
     <%= f.text_field :name %>
   </div>
   <div class="actions">
-    <%= f.submit @group.new_record? ? "Create" : "Update" class: "btn" %>
+    <%= f.submit (@group.new_record? ? "Create" : "Update"), class: "btn" %>
   </div>
 <% end %>

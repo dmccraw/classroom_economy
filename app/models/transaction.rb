@@ -59,7 +59,9 @@ class Transaction < ActiveRecord::Base
   end
 
   def occurred_in_the_past
-    errors.add(:occurred_on, "Occurred on must be in the past") if self.occurred_on > DateTime.now
+    if self.occurred_on
+      errors.add(:occurred_on, "Occurred on must be in the past") if self.occurred_on > DateTime.now
+    end
   end
 
   def transfer_funds

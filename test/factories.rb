@@ -14,3 +14,7 @@ end
 FactoryGirl.define do
   sequence(:last_name) { |n| "Last_#{n}"}
 end
+
+FactoryGirl.define do
+  sequence(:group_name) { |n| "Class_#{n}"}
+end

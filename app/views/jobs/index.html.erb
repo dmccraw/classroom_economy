@@ -2,7 +2,11 @@
 
 <%
   can_update = false
-  can_udpate = can? :update, @jobs.first if @jobs.count > 0
+  if @jobs.count > 0
+    can_udpate = can? :update, @jobs.first
+  else
+    can_update = current_user.teacher? || current_user.admin?
+  end
 %>
 
 <% if can_update %>

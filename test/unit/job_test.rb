@@ -14,7 +14,11 @@
 require 'test_helper'
 
 class JobTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  should belong_to(:group)
+  should have_many(:job_assignments)
+
+  should validate_presence_of(:title)
+  should validate_presence_of(:description)
+  should validate_presence_of(:salary)
+  should validate_presence_of(:group_id)
 end

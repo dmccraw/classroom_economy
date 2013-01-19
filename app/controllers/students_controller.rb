@@ -4,7 +4,7 @@ class StudentsController < ApplicationController
   def index
     @students = @group.users.all
 
-    authorize! :read, @students.first
+    # authorize! :read, @students.first
 
     respond_to do |format|
       format.html # index.html.erb

@@ -1,7 +1,7 @@
 
 FactoryGirl.define do
   factory :group do
-    name "Test Class"
+    name {generate(:group_name)}
     user
 
     # after(:create) do |group, evaluator|
