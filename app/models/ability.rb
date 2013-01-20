@@ -28,7 +28,7 @@ class Ability
       can :manage, :all
     elsif user.teacher?
       can :manage, Group do |group|
-        group.user_id == user.id || job.new_record?
+        group.user_id == user.id || group.new_record?
       end
 
       can :manage, User do |_user|
@@ -49,16 +49,20 @@ class Ability
       end
 
       can :manage, Job do |job|
-# Rails.logger.red("job can manage #{job.inspect}")
         user.in_group?(job.group_id) || job.new_record?
       end
 
       can :manage, Store do |store|
-        user.in_group?(store.group_id) || job.new_record?
+
+        user.in_group?(store.group_id) || store.new_record?
       end
 
       can :manage, Account do |account|
-        user.in_group?(account.group_id) || job.new_record?
+        user.in_group?(account.group_id) || account.new_record?
+      end
+
+      can :manage, Dispute do |dispute|
+        user.in_group?(dispute.group_id) || dispute.new_record?
       end
 
     elsif user.student?
@@ -71,7 +75,7 @@ class Ability
         can_read
       end
 
-      can :show, Group do |group|
+      can :read, Group do |group|
         group.member_of?(user)
       end
 
@@ -100,6 +104,10 @@ class Ability
 
       can :read, Account do |account|
         user.owns_or_manages_account?(account)
+      end
+
+      can :create, Dispute do |dispute|
+        user.in_group?(dispute.group_id) || dispute.new_record?
       end
 
     end

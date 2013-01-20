@@ -27,7 +27,7 @@
   <h2>Account</h2>
   <p>
     <b>Balance:</b>
-    <%= number_to_currency(account.balance) %>
+    <%= display_balance(account.balance) %>
   </p>
   <h3>Last 5 Transactions</h3>
   <%= render partial: '/transactions/transactions', locals: { transactions: account.transactions.limit(5).order("created_at DESC") } %>
@@ -59,7 +59,7 @@
       <tr>
         <td><b><%= job_assignment.job.title %></b></td>
         <td><%= job_assignment.job.description %></td>
-        <td><%= number_to_currency(job_assignment.job.salary) %></td>
+        <td><%= display_balance(job_assignment.job.salary) %></td>
         <% if can_update %>
           <td><%= link_to "Unassign Job", group_job_assignment_path(job_assignment), method: "delete", data: { confirm: "Are you sure? This action can't be undone!"}, class: "btn"  %></td>
         <% end %>
@@ -99,7 +99,7 @@
         <td><b><%= link_to(store.name, group_store_path(@group, store)) %></b></td>
         <td><%= store.description %></td>
         <% if can_update || is_self %>
-          <td><%= number_to_currency(store.account.balance) %></td>
+          <td><%= display_balance(store.account.balance) %></td>
           <td><%= link_to "Transactions", group_transactions_path(@group, account_id: store.account.id), class: "btn"  %></td>
           <td><%= link_to "Edit", edit_group_store_path(@group, store), class: "btn" %></td>
         <% end %>

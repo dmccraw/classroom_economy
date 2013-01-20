@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>User:</b>
+  <%= @dispute.user %>
+</p>
+
+<p>
+  <b>Transaction:</b>
+  <%= @dispute.transaction %>
+</p>
+
+<p>
+  <b>Reason:</b>
+  <%= @dispute.reason %>
+</p>
+
+<p>
+  <b>Result:</b>
+  <%= @dispute.result %>
+</p>
+
+<p>
+  <b>Result reason:</b>
+  <%= @dispute.result_reason %>
+</p>
+
+
+<%= link_to 'Edit', edit_group_dispute_path(@group,@dispute) %> |
+<%= link_to 'Back', group_disputes_path(@group) %>

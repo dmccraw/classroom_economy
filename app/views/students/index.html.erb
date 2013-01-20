@@ -38,7 +38,7 @@
             <td><%= member.last_sign_in_at != nil ? I18n.l(member.last_sign_in_at, format: :medium) : "Never" %></td>
             <% if can_update %>
               <td>
-                <%= number_to_currency(member.account(@group.id).balance) %>
+                <%= display_balance(member.account(@group.id).balance) %>
               </td>
             <% end %>
             <% if can_deposit || can_withdraw %>

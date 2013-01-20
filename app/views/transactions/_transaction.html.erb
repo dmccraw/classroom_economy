@@ -12,7 +12,7 @@
   <td><%= transaction.id %></td>
   <td><%= transaction.from_account.display_name %></td>
   <td><%= transaction.to_account.display_name %></td>
-  <td><%= number_to_currency(transaction.amount) %></td>
+  <td><%= display_balance(transaction.amount) %></td>
   <td><%= transaction.description %></td>
   <td><%= I18n.l transaction.occurred_on.to_date, format: :short %></td>
   <td><%= I18n.l transaction.created_at, format: :medium %> by <%= transaction.user.display_name %></td>

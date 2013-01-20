@@ -5,7 +5,7 @@
 #  id          :integer          not null, primary key
 #  name        :string(255)      not null
 #  description :text
-#  approved    :boolean,         default: false
+#  approved    :boolean          default(FALSE), not null
 #  group_id    :integer          not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null

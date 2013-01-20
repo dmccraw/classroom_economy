@@ -30,7 +30,7 @@
         <% end %>
       </td>
       <% if can? :update, @group.store %>
-        <td><%= number_to_currency(@group.store.account.balance) %></td>
+        <td><%= display_balance(@group.store.account.balance) %></td>
         <td><%= link_to 'Edit', edit_group_store_path(@group, @group.store), class: "btn" %></td>
       <% else %>
         <td>Unknown</td>
@@ -60,7 +60,7 @@
             <% end %>
           </td>
           <% if can? :update, store %>
-            <td><%= number_to_currency(store.account.balance) %></td>
+            <td><%= display_balance(store.account.balance) %></td>
             <td>
               <%= link_to 'Edit', edit_group_store_path(@group, store), class: "btn" %>
               <%= link_to 'Close', [@group,store], method: :delete, data: { confirm: 'This will permanently close the store and transfer all the money back to the school bank. Are you sure?' }, class: "btn" %>

@@ -15,6 +15,7 @@
     <th>Description</th>
     <th>Occurred On</th>
     <th>Entered On</th>
+    <th>Dispute</th>
   </thead>
   <tbody>
   <% if @transactions && @transactions.count > 0 %>
@@ -33,10 +34,11 @@
         <td><%= transaction.id %></td>
         <td><%= link_to(transaction.from_account.display_name, group_account_path(@group, transaction.from_account)) %></td>
         <td><%= link_to(transaction.to_account.display_name, group_account_path(@group, transaction.to_account)) %></td>
-        <td><%= number_to_currency(transaction.amount) %></td>
+        <td><%= display_balance(transaction.amount) %></td>
         <td><%= transaction.description %></td>
         <td><%= I18n.l transaction.occurred_on, format: :medium %></td>
         <td><%= I18n.l transaction.created_at, format: :medium %> by <%= transaction.user.display_name %></td>
+        <td><%= link_to "Dispute", new_group_dispute_path(@group, transaction_id: transaction) %></td>
       </tr>
     <% end %>
   <% else %>

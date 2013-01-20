@@ -19,4 +19,12 @@
   <li <%= 'class=active' if current_nav == "transactions" %>>
     <%= link_to "Transactions", group_transactions_path(@group)  %>
   </li>
+  <% unless current_user.student? %>
+    <li <%= 'class=active' if current_nav == "disputes" %>>
+      <%= link_to "Disputes", group_disputes_path(@group)  %>
+    </li>
+    <li <%= 'class=active' if current_nav == "charges" %>>
+      <%#= link_to "Charges", group_disputes_path(@group)  %>
+    </li>
+  <% end %>
 </ul>

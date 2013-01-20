@@ -26,7 +26,7 @@
 <% end %>
 <% if can_update %>
   <b>Current Balance:</b>
-  <%= number_to_currency(@store.account.balance) %>
+  <%= display_balance(@store.account.balance) %>
   <hr>
 <% end %>
 

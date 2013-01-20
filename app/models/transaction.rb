@@ -5,11 +5,11 @@
 #  id              :integer          not null, primary key
 #  from_account_id :integer          not null
 #  to_account_id   :integer          not null
+#  group_id        :integer          not null
 #  amount          :float            not null
 #  description     :string(255)      not null
 #  occurred_on     :datetime         not null
 #  user_id         :integer          not null
-#  group_id         :integer          not null
 #  disputed        :boolean          default(FALSE), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
@@ -21,6 +21,7 @@ class Transaction < ActiveRecord::Base
   belongs_to :to_account, class_name: "Account"
   belongs_to :user
   belongs_to :group
+  has_one :dispute
 
   # access
   attr_accessible :from_account_id, :to_account_id, :amount, :description, :disputed, :occurred_on, :user_id, :group_id

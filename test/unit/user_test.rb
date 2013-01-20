@@ -23,14 +23,16 @@
 #  confirmed_at           :datetime
 #  confirmation_sent_at   :datetime
 #  unconfirmed_email      :string(255)
+#  time_zone              :string(255)
 #
 
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
 
-  should have_many(:groups)
-  # should have_many(:transactions)
+  # should have_many(:groups)
+  should have_many(:transactions)
+  should have_many(:disputes)
 
   test "valid_email" do
     # make sure if teacher or admin that an email is valid
@@ -54,6 +56,21 @@ class UserTest < ActiveSupport::TestCase
     # # puts user.stores.inspect
     # # puts store.inspect
     # assert_equal(user.stores, [store])
+  end
+
+  test "in_group" do
+    user = FactoryGirl.create(:user)
+    group1 = FactoryGirl.create(:group, user_id: user.id)
+    group2 = FactoryGirl.create(:group)
+    membership = FactoryGirl.create(:membership, user_id: user.id, group_id: group2.id)
+    group3 = FactoryGirl.create(:group)
+
+    assert user.in_group?(group1.id)
+    assert user.in_group?(group2.id)
+    assert_nil user.in_group?(group3.id)
+
+
+
   end
 
   test "in_group_with?" do

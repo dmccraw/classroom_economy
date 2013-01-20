@@ -1,5 +1,7 @@
 ClassroomEconomy::Application.routes.draw do
 
+
+
   devise_for :users, :controllers => { :registrations => "registrations" }
 
   resources :groups do
@@ -20,6 +22,7 @@ ClassroomEconomy::Application.routes.draw do
         post "create_class_transaction"
       end
     end
+    resources :disputes, except: [:show]
     resources :job_assignments, only: [:new, :create, :destroy]
   end
 

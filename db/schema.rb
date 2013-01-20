@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130114012650) do
+ActiveRecord::Schema.define(:version => 20130120034719) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "owner_id"
@@ -24,6 +24,23 @@ ActiveRecord::Schema.define(:version => 20130114012650) do
 
   add_index "accounts", ["group_id"], :name => "index_accounts_on_group_id"
   add_index "accounts", ["owner_id"], :name => "index_accounts_on_owner_id"
+
+  create_table "disputes", :force => true do |t|
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.integer  "transaction_id"
+    t.integer  "group_id"
+    t.string   "reason"
+    t.integer  "result"
+    t.string   "result_reason"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "disputes", ["group_id"], :name => "index_disputes_on_group_id"
+  add_index "disputes", ["owner_id"], :name => "index_disputes_on_owner_id"
+  add_index "disputes", ["owner_type"], :name => "index_disputes_on_owner_type"
+  add_index "disputes", ["transaction_id"], :name => "index_disputes_on_transaction_id"
 
   create_table "groups", :force => true do |t|
     t.string   "name",       :null => false

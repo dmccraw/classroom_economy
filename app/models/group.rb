@@ -18,9 +18,11 @@ class Group < ActiveRecord::Base
   has_many :jobs, dependent: :destroy
   has_many :job_assignments, dependent: :destroy
   has_many :transactions
+  has_many :disputes
 
   attr_accessible :name, :user_id
 
+  validates :name, presence: true, length: { maximum: 255 }
   validates_uniqueness_of :name, :scope => :user_id
 
   after_create :create_store

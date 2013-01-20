@@ -12,6 +12,8 @@ class TransactionsController < ApplicationController
       if allow
         @transactions = @group.account_transactions(params[:account_id]).page(params[:page]).order("created_at DESC")
         @account = @group.accounts.find(params[:account_id])
+      else
+        authorize! :manage, @group
       end
     else
       if current_user.teacher? || current_user.admin?

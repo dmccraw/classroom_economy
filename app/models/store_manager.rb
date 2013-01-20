@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: store_managers
+#
+#  id           :integer          not null, primary key
+#  store_id     :integer
+#  user_id      :integer
+#  manage_level :integer
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+
 class StoreManager < ActiveRecord::Base
   belongs_to :store
   belongs_to :user

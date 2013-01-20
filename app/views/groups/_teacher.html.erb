@@ -21,7 +21,7 @@
           <% transactions.each do |transaction| %>
             <tr>
               <td><%= transaction.id %></td>
-              <td><%= number_to_currency(transaction.amount) %></td>
+              <td><%= display_balance(transaction.amount) %></td>
               <td><%= transaction.to_account.owner.display_name %></td>
               <td><%= transaction.from_account.owner.display_name %></td>
 
@@ -84,7 +84,7 @@
         <% if accounts.count > 0 %>
           <% accounts[0..5].each do |account| %>
             <tr>
-              <td><%= number_to_currency(account.balance) %></td>
+              <td><%= display_balance(account.balance) %></td>
               <td>
                 <%=
                   if account.owner_type == "Store"
@@ -114,7 +114,7 @@
         <% if accounts.count > 0 %>
           <% accounts.reverse.each_with_index do |account,index| %>
             <tr>
-              <td><%= number_to_currency(account.balance) %></td>
+              <td><%= display_balance(account.balance) %></td>
               <td>
                 <%=
                   if account.owner_type == "Store"

@@ -3,11 +3,11 @@
   <div class="span8">
     <h3>Personal Account</h3>
     <p>
-      <h4>Balance: <%= number_to_currency(current_user.account(@group.id).balance) %></h4>
+      <h4>Balance: <%= display_balance(current_user.account(@group.id).balance) %></h4>
     <hr>
 
     <h3>Last 20 Transactions</h3>
-    <%= link_to "All Transactions", group_transaction_path(@group, account_id: current_user.account(@group.id)), class: "btn" %><br/><br/>
+    <%= link_to "All Transactions", group_transactions_path(@group, account_id: current_user.account(@group.id)), class: "btn" %><br/><br/>
     <table class="table table-striped table-bordered">
       <thead>
         <th>ID</th>
@@ -33,7 +33,12 @@
 
   <div class="span4 pull-right">
     <h3>Actions</h3>
-    <%= link_to "Transfer Funds", new_group_transaction_path(@group, from_account_id: current_user.account(@group.id).id), class: "btn", style: "width: 140px;" %>
+    <%= if current_user.account(@group.id).balance > 0
+         link_to "Transfer Funds", new_group_transaction_path(@group, from_account_id: current_user.account(@group.id).id), class: "btn", style: "width: 140px;"
+        else
+          "Insufficient Funds for a transfer."
+        end
+      %>
     <hr>
     <h3>My Jobs</h3>
     <table class="table table-striped table-bordered">
@@ -47,7 +52,7 @@
           <% job_assignments.each do |assignment| %>
             <tr>
               <td><%= assignment.job.title %></td>
-              <td><%= number_to_currency(assignment.job.salary) %></td>
+              <td>display_balance(assignment.job.salary) %></td>
             </tr>
           <% end %>
         <% else %>

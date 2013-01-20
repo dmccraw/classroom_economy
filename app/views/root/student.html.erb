@@ -9,7 +9,7 @@
 <%# account = current_user.account(current_group_id) %>
 <p>
   <b>Balance:</b>
-  <%= number_to_currency(account.balance) %> |
+  <%= display_balance(account.balance) %> |
   <%= link_to("View Account", account_path(account)) %>
 </p>
 <p>Last 5 transactions</p>
@@ -43,7 +43,7 @@
       <tr>
         <td><%= link_to(store.name, store_path(store)) %></td>
         <td><%= store.description %></td>
-        <td><%= number_to_currency(store.account.balance) %></td>
+        <td><%= display_balance(store.account.balance) %></td>
         <td><%= link_to "Edit", group_edit_store_path(@group, store, user_id: current_user.id) %></td>
       </tr>
     <% end %>

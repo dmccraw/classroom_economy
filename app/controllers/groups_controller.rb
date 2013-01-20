@@ -20,7 +20,7 @@ class GroupsController < ApplicationController
   def show
     @group = Group.find(params[:id])
 
-    authorize! :show, @group
+    authorize! :read, @group
 
     respond_to do |format|
       format.html # show.html.erb

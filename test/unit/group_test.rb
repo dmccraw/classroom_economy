@@ -14,6 +14,7 @@ require 'test_helper'
 class GroupTest < ActiveSupport::TestCase
 
   should validate_presence_of(:name)
+  should ensure_length_of(:name).is_at_most(255)
 
   test "test account creation" do
     teacher = FactoryGirl.create(:user)

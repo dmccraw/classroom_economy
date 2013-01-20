@@ -23,6 +23,7 @@
 #  confirmed_at           :datetime
 #  confirmation_sent_at   :datetime
 #  unconfirmed_email      :string(255)
+#  time_zone              :string(255)
 #
 
 class User < ActiveRecord::Base
@@ -51,8 +52,9 @@ class User < ActiveRecord::Base
   has_many :store_managers, dependent: :destroy
   has_many :memberships, dependent: :destroy
   has_many :job_assignments
-  has_many :groups, through: :memberships
-  # has_many :transactions
+  has_many :disputes, as: :owner
+  # has_many :groups, through: :memberships
+  has_many :transactions
 
   # validations
   validates :user_type, presence: true
@@ -106,10 +108,8 @@ Rails.logger.red(group.inspect)
   end
 
   def in_group?(group_id)
-    groups.each do |group|
-      return true if group_id == group.id
-    end
-    return false
+    Rails.logger.red(groups.inspect)
+    groups.detect{ |g| g.id == group_id.to_i }
   end
 
   def display_user_type
@@ -126,7 +126,12 @@ Rails.logger.red(group.inspect)
   def groups
     case user_type
     when USER_TYPE_TEACHER
-      Group.find_all_by_user_id(self.id)
+      _groups = Group.find_all_by_user_id(self.id)
+      # find groups through memberships
+      memberships.each do |membership|
+        _groups << membership.group
+      end
+      _groups
     when USER_TYPE_ADMIN
       Group.all
     when USER_TYPE_STUDENT

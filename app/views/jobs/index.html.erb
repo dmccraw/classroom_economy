@@ -4,6 +4,7 @@
   can_update = false
   if @jobs.count > 0
     can_udpate = can? :update, @jobs.first
+
   else
     can_update = current_user.teacher? || current_user.admin?
   end
@@ -35,7 +36,7 @@
         <tr>
           <td><b><%= job.title %></b></td>
           <td><%= job.description %></td>
-          <td><%= number_to_currency(job.salary) %></td>
+          <td><%= display_balance(job.salary) %></td>
           <td>
             <% students = job.job_assignments.map {|ja| ja.user.display_name }.join(", ") %>
             <%= students %>
