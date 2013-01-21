@@ -1,6 +1,9 @@
-<h1>Editing dispute</h1>
+<h1>Handle Dispute</h1>
+
+<% unless current_user.student? %>
+  <p>This is where you decide whether to approve a dispute or deny it. If you approve a dispute then a second transaction will be created the will transfer the amount out of the from account and back into the to account. The account </p>
+<% end %>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', [@group,@dispute] %> |
 <%= link_to 'Back', group_disputes_path(@group) %>

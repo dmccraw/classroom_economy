@@ -10,15 +10,18 @@
 #  reason         :string(255)
 #  result         :integer
 #  result_reason  :string(255)
+#  result_transaction_id :integer
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #
 
+
 class Dispute < ActiveRecord::Base
   # associations
   belongs_to :transaction
+  belongs_to :result_transaction, class_name: "Transaction"
   belongs_to :group
-  belongs_to :owner
+  belongs_to :owner, polymorphic: true
 
   # validations
   validates :owner_id, presence: true
@@ -31,5 +34,43 @@ class Dispute < ActiveRecord::Base
   # attr_accessible
   attr_accessible :reason, :result, :result_reason, :transaction_id, :owner_id, :owner_type, :group_id
 
+  # callbacks
+  after_save :transfer_funds
+
+  # this is so that the transfer funds can have the current user in it
+  attr_accessor :current_user_id
+
+  # reasons
+  APPROVE = 1
+  DENY = 2
+
+  def display_reason
+    case self.reason
+    when APPROVE
+      "Approved"
+    when DENY
+      "Denied"
+    end
+  end
+
+  private
+
+  # transfer funds if the result has been set
+  def transfer_funds
+    if self.result == APPROVE && self.result_transaction_id == nil
+      if transaction = Transaction.new(
+          group_id: self.group_id,
+          from_account_id: self.transaction.to_account_id,
+          to_account_id: self.transaction.from_account_id,
+          amount: self.transaction.amount,
+          description: "Dispute of Transaction #{self.transaction.id} was approved. #{self.reason}",
+          user_id: self.current_user_id,
+          occurred_on: DateTime.now
+        )
+      transaction.save!
+        update_attribute(:result_transaction_id, transaction.id)
+      end
+    end
+  end
 
 end

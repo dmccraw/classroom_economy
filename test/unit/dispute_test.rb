@@ -20,6 +20,7 @@ class DisputeTest < ActiveSupport::TestCase
   should belong_to :transaction
   should belong_to :group
   should belong_to :owner
+  should belong_to :result_transaction
 
   should validate_presence_of(:owner_id)
   should validate_presence_of(:owner_type)
@@ -30,7 +31,13 @@ class DisputeTest < ActiveSupport::TestCase
   should ensure_length_of(:reason).is_at_most(255)
   should ensure_length_of(:result_reason).is_at_most(255)
 
-  # test "the truth" do
-  #   assert true
-  # end
+  test "should transfer_funds" do
+    dispute = FactoryGirl.create(:user_dispute)
+    dispute.result = Dispute::APPROVE
+    dispute.result_reason = "Test"
+    dispute.current_user_id = FactoryGirl.create(:user).id
+    assert dispute.save
+    assert dispute.result_transaction
+  end
+
 end

@@ -9,6 +9,8 @@ FactoryGirl.define do
     reason "MyString"
     result 1
     result_reason "MyString"
+    result_transaction_id nil
+    current_user_id nil
 
     factory :user_dispute do
       after(:build) { |dispute|
@@ -22,6 +24,9 @@ FactoryGirl.define do
         end
         unless dispute.transaction_id
           dispute.transaction = FactoryGirl.create(:transaction)
+        end
+        unless dispute.current_user_id
+          dispute.current_user_id = FactoryGirl.create(:user).id
         end
       }
     end

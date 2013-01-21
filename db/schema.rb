@@ -30,16 +30,18 @@ ActiveRecord::Schema.define(:version => 20130120034719) do
     t.string   "owner_type"
     t.integer  "transaction_id"
     t.integer  "group_id"
-    t.string   "reason"
+    t.text     "reason"
     t.integer  "result"
-    t.string   "result_reason"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.text     "result_reason"
+    t.integer  "result_transaction_id"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
   end
 
   add_index "disputes", ["group_id"], :name => "index_disputes_on_group_id"
   add_index "disputes", ["owner_id"], :name => "index_disputes_on_owner_id"
   add_index "disputes", ["owner_type"], :name => "index_disputes_on_owner_type"
+  add_index "disputes", ["result_transaction_id"], :name => "index_disputes_on_result_transaction_id"
   add_index "disputes", ["transaction_id"], :name => "index_disputes_on_transaction_id"
 
   create_table "groups", :force => true do |t|

@@ -21,7 +21,7 @@ class Transaction < ActiveRecord::Base
   belongs_to :to_account, class_name: "Account"
   belongs_to :user
   belongs_to :group
-  has_one :dispute
+  has_many :disputes
 
   # access
   attr_accessible :from_account_id, :to_account_id, :amount, :description, :disputed, :occurred_on, :user_id, :group_id

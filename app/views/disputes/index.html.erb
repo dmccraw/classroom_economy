@@ -11,20 +11,19 @@
     <th>Transaction</th>
     <th>Reason</th>
     <th></th>
-    <th></th>
-    <th></th>
   </thead>
   <% if @disputes.count > 0 %>
     <% @disputes.each do |dispute| %>
       <tr>
-        <td><%= dispute.user.display_name %></td>
+        <td><%= dispute.owner.display_name %></td>
         <td>
-          From: <%= dispute.transation.from_account.display_name %><br/>
-          To: <%= dispute.transation.to_account.display_name %><br/>
+          From: <%= dispute.transaction.from_account.display_name %><br/>
+          To: <%= dispute.transaction.to_account.display_name %><br/>
           Amount: <%= number_to_currency(dispute.transaction.amount) %><br/>
           Description: <%= dispute.transaction.description %>
         </td>
-        <td><%= link_to "Handle dispute", edit_group_dispute(@group, dispute) %></td>
+        <td><%= dispute.reason %></td>
+        <td><%= link_to "Handle dispute", edit_group_dispute_path(@group, dispute) %></td>
       </tr>
     <% end %>
   <% else %>

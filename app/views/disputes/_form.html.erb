@@ -1,3 +1,4 @@
+
 <%= form_for([@group, @dispute]) do |f| %>
 
   <%= render partial: "/shared/errors", locals: { o: @dispute } %>
@@ -7,24 +8,41 @@
   <%= f.hidden_field :group_id %>
   <%= f.hidden_field :transaction_id %>
 
-  Display Transaction info
-
+  <hr>
   <div class="field">
-    <%= f.label :reason %>
-    <%= f.text_field :reason %>
+    <strong><%= label_tag :transaction, "Transaction", class: "bold" %></strong>
+    <%= render partial: "/transactions/transactions", locals: { transactions: [@dispute.transaction] } %>
+  </div>
+  <div class="field">
+    <b><%= f.label :reason, nil, class: "bold"  %></b>
+    <% unless current_user.teacher? %>
+      <%= f.text_area :reason, class: "input-xxlarge", rows: 5 %>
+    <% else %>
+      <p><%= @dispute.reason %></p>
+    <% end %>
   </div>
 
-  <% unless current_user.student? %>
+  <% if current_user.student? && @dispute.result %>
     <div class="field">
-      <%= f.label :result %>
-      <%= f.number_field :result %>
+      <b><%= f.label :result, nil, class: "bold"  %>
+      <p><%= @dispute.display_reesult %></p>
     </div>
     <div class="field">
-      <%= f.label :result_reason %>
-      <%= f.text_field :result_reason %>
+      <%= f.label :result_reason, nil, class: "bold"  %>
+      <p><%= @dispute.result_reason %></p>
+    </div>
+  <% else %>
+    <hr>
+    <div class="field">
+      <b><%= f.label :result, nil, class: "bold"  %></b>
+      <%= f.select :result, options_for_select([["Deny", Dispute::DENY], ["Approve", Dispute::APPROVE]]) %>
+    </div>
+    <div class="field">
+      <%= f.label :result_reason, "Result Reason", class: "bold"  %>
+      <%= f.text_area :result_reason, class: "input-xxlarge", rows: 5 %>
     </div>
   <% end %>
-
+  <hr>
   <div class="actions">
     <%= f.submit class: "btn" %>
   </div>

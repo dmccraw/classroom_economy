@@ -12,7 +12,10 @@
     <%= f.text_field :last_name %>
   </div>
   <div class="field">
-    <%= f.label :email %>
+    <%= f.label :email, "Email" %>
+      <% if @user.user_type == User::USER_TYPE_STUDENT %>
+        (optional)
+      <% end %>
     <%= f.text_field :email %>
   </div>
   <% if current_user.admin? %>

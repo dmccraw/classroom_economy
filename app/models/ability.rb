@@ -27,20 +27,20 @@ class Ability
     if user.admin?
       can :manage, :all
     elsif user.teacher?
-      can :manage, Group do |group|
-        group.user_id == user.id || group.new_record?
-      end
+      # can :manage, Group do |group|
+      #   group.user_id == user.id || group.new_record?
+      # end
+      can :manage, Group, user_id: user.id
+      can :manage, User, id: user.id
 
       can :manage, User do |_user|
-        unless can_manage = (_user.id == user.id) # can manage self
-          unless can_manage = _user.new_record?
+        unless can_manage = _user.new_record?
 
-            unless can_manage
-              # if user is part of one of their groups
-              user.groups.each do |group|
-                if group.member_of?(_user)
-                  can_manage = true
-                end
+          unless can_manage
+            # if user is part of one of their groups
+            user.groups.each do |group|
+              if group.member_of?(_user)
+                can_manage = true
               end
             end
           end
@@ -53,7 +53,6 @@ class Ability
       end
 
       can :manage, Store do |store|
-
         user.in_group?(store.group_id) || store.new_record?
       end
 
@@ -62,6 +61,7 @@ class Ability
       end
 
       can :manage, Dispute do |dispute|
+Rails.logger.red("dispute = #{dispute}")
         user.in_group?(dispute.group_id) || dispute.new_record?
       end
 

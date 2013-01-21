@@ -20,7 +20,7 @@ require 'test_helper'
 class TransactionTest < ActiveSupport::TestCase
 
   should belong_to(:user)
-  should have_one(:dispute)
+  should have_many(:disputes)
 
   should validate_presence_of(:from_account_id)
   should validate_presence_of(:to_account_id)
