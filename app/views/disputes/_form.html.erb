@@ -22,15 +22,17 @@
     <% end %>
   </div>
 
-  <% if current_user.student? && @dispute.result %>
-    <div class="field">
-      <b><%= f.label :result, nil, class: "bold"  %>
-      <p><%= @dispute.display_reesult %></p>
-    </div>
-    <div class="field">
-      <%= f.label :result_reason, nil, class: "bold"  %>
-      <p><%= @dispute.result_reason %></p>
-    </div>
+  <% if current_user.student? %>
+    <% if @dispute.result %>
+      <div class="field">
+        <b><%= f.label :result, nil, class: "bold"  %>
+        <p><%= @dispute.display_result %></p>
+      </div>
+      <div class="field">
+        <%= f.label :result_reason, nil, class: "bold"  %>
+        <p><%= @dispute.result_reason %></p>
+      </div>
+    <% end %>
   <% else %>
     <hr>
     <div class="field">

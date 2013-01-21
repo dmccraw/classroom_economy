@@ -7,7 +7,7 @@ class DisputesController < ApplicationController
   def index
     @disputes = @group.disputes.all
 
-    # authorize! :show, @disputes
+    # authorize! :read, @disputes
 
     respond_to do |format|
       format.html # index.html.erb
@@ -18,7 +18,7 @@ class DisputesController < ApplicationController
   def show
     @dispute = Dispute.find(params[:id])
 
-    authorize! :show, @dispute
+    authorize! :read, @dispute
 
     respond_to do |format|
       format.html # show.html.erb

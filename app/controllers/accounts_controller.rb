@@ -89,6 +89,6 @@ class AccountsController < ApplicationController
 
   def get_group
     @group = Group.find(params[:group_id])
-    authorize! :view, @group
+    authorize! :read, @group
   end
 end

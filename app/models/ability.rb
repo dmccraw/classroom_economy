@@ -61,7 +61,6 @@ class Ability
       end
 
       can :manage, Dispute do |dispute|
-Rails.logger.red("dispute = #{dispute}")
         user.in_group?(dispute.group_id) || dispute.new_record?
       end
 
@@ -83,14 +82,14 @@ Rails.logger.red("dispute = #{dispute}")
         true
       end
 
-      can :show, Store do |store|
-        can_show = false
+      can [:read, :create], Store do |store|
+        can_read = false
         user.groups.each do |group|
           if store.group_id == group.id
-            can_show = true
+            can_read = true
           end
         end
-        can_show
+        can_read
       end
 
       can :update, Store do |store|
@@ -103,6 +102,7 @@ Rails.logger.red("dispute = #{dispute}")
       end
 
       can :read, Account do |account|
+
         user.owns_or_manages_account?(account)
       end
 

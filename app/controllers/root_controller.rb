@@ -3,6 +3,7 @@ class RootController < ApplicationController
     case current_user.user_type
     when User::USER_TYPE_STUDENT
       if current_user.groups.count == 1
+        flash.keep
         redirect_to group_path(id: current_user.groups.first.id)
       else
         render "student"
@@ -10,6 +11,7 @@ class RootController < ApplicationController
       end
     when User::USER_TYPE_TEACHER
       if current_user.groups.count == 1
+        flash.keep
         redirect_to group_path(id: current_user.groups.first.id)
       else
         render "teacher"

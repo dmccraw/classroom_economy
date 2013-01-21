@@ -6,13 +6,13 @@
 
   <div class="field">
     <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, class: "input-xlarge" %>
   </div>
   <div class="field">
     <%= f.label :description %>
-    <%= f.text_area :description %>
+    <%= f.text_area :description, class: "input-xxlarge", rows: 5 %>
   </div>
   <div class="actions">
-    <%= f.submit (@store.new_record? ? "Save" : "Update"), class: "btn" %>
+    <%= f.submit (@store.new_record? ? "Open Store" : "Update"), class: "btn" %>
   </div>
 <% end %>

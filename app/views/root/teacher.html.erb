@@ -1,9 +1,30 @@
 <% if current_user.groups.any? %>
   <h3>Please select class to view:</h3>
-  <br/>
-  <% current_user.groups.each do |group| %>
-    <p><%= link_to(group.name, group_path(group)) %></p>
-  <% end %>
+
+
+  <table class="table table-striped table-bordered">
+    <thead>
+      <th>Name</th>
+      <th></th>
+      <th></th>
+    </thead>
+    <tbody>
+      <% current_user.groups.each do |group| %>
+        <tr>
+          <td>
+            <%= link_to(group.name, group_path(group)) %>
+          </td>
+          <td>
+            <%= link_to "Edit", edit_group_path(group), class: "btn" %>
+          </td>
+          <td>
+            <%= link_to "Delete", group_path(group), class: "btn", method: "delete", data: { confirm: "Are you sure you want to delete this group? All the students, jobs, stores and transactions will be removed. This can't be undone."} %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
 <% else %>
   <div class="well">
     <p>

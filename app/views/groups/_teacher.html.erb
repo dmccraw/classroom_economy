@@ -8,23 +8,25 @@
     <hr>
 
     <h3>Disputed Transactions</h3>
-    <% transactions = @group.transactions.where(disputed: true) %>
-    <% if transactions.count > 1 %>
+    <% disputes = @group.disputes %>
+    <% if disputes.count > 1 %>
       <table class="table table-striped table-bordered">
         <thead>
           <th>ID</th>
           <th>Amount</th>
           <th>To</th>
           <th>From</th>
+          <th></th>
         </thead>
         <tbody>
-          <% transactions.each do |transaction| %>
+          <% disputes.each do |dispute| %>
             <tr>
-              <td><%= transaction.id %></td>
-              <td><%= display_balance(transaction.amount) %></td>
-              <td><%= transaction.to_account.owner.display_name %></td>
-              <td><%= transaction.from_account.owner.display_name %></td>
-
+              <td><%= dispute.transaction.id %></td>
+              <td><%= display_balance(dispute.transaction.amount) %></td>
+              <td><%= dispute.transaction.to_account.owner.display_name %></td>
+              <td><%= dispute.transaction.from_account.owner.display_name %></td>
+              <td><%= dispute.reason %></td>
+              <td><%= link_to "Handle Dispute", group_dispute_path(@group, dispute) %>
             </tr>
           <% end %>
         </tbody>
