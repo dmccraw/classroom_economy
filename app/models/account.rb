@@ -37,13 +37,7 @@ class Account < ActiveRecord::Base
   end
 
   def display_name
-    if user?
-      owner.display_name
-    elsif store?
-      owner.name
-    else
-      "Unknown Account"
-    end
+    owner.display_name
   end
 
   private

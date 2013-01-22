@@ -47,6 +47,10 @@ class Store < ActiveRecord::Base
     false
   end
 
+  def display_name
+    self.name
+  end
+
   private
 
   def create_account

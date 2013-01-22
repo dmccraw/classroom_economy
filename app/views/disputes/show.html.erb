@@ -1,30 +1,28 @@
-<p id="notice"><%= notice %></p>
+<%= render partial: "/groups/top", locals: { current_nav: "disputes" } %>
 
-<p>
-  <b>User:</b>
-  <%= @dispute.user %>
-</p>
+<h2>Dispute</h2>
+<hr>
 
-<p>
-  <b>Transaction:</b>
-  <%= @dispute.transaction %>
-</p>
+<strong><%= label_tag :transaction, "Transaction", class: "bold" %></strong>
+<%= render partial: "/transactions/transactions", locals: { transactions: [@dispute.transaction] } %>
 
-<p>
-  <b>Reason:</b>
-  <%= @dispute.reason %>
-</p>
+<table class="table">
+  <tr>
+    <td width="100px;"><strong>Requester:</strong></td>
+    <td><%= @dispute.owner.display_name %></td>
+  </tr>
+  <tr>
+    <td width="100px;"><strong>Reason:</strong></td>
+    <td><%= @dispute.reason  %></td>
+  </tr>
+  <tr>
+    <td><strong>Result:</strong></td>
+    <td><%= @dispute.display_result %></td>
+  </tr>
+  <tr>
+    <td><strong>Result reason:</strong></td>
+    <td><%= @dispute.result_reason %></td>
+  </tr>
+</table>
 
-<p>
-  <b>Result:</b>
-  <%= @dispute.result %>
-</p>
-
-<p>
-  <b>Result reason:</b>
-  <%= @dispute.result_reason %>
-</p>
-
-
-<%= link_to 'Edit', edit_group_dispute_path(@group,@dispute) %> |
-<%= link_to 'Back', group_disputes_path(@group) %>
+<%= link_to 'Back', group_transactions_path(@group) %>

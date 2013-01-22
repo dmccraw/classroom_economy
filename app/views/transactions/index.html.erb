@@ -38,7 +38,12 @@
         <td><%= transaction.description %></td>
         <td><%= I18n.l transaction.occurred_on, format: :medium %></td>
         <td><%= I18n.l transaction.created_at, format: :medium %> by <%= transaction.user.display_name %></td>
-        <td><%= link_to "Dispute", new_group_dispute_path(@group, transaction_id: transaction) %></td>
+        <td>
+          <% if transaction.disputes.count > 0 %>
+            <%= link_to "Disputed", group_dispute_path(@group, transaction.disputes.first)  %>
+          <% else %>
+            <%= link_to "Dispute", new_group_dispute_path(@group, transaction_id: transaction)  %></td>
+          <% end %>
       </tr>
     <% end %>
   <% else %>

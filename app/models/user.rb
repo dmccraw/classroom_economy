@@ -95,11 +95,8 @@ class User < ActiveRecord::Base
   end
 
   def in_group_with?(user)
-# Rails.logger.red(user.inspect)
     user.groups.each do |user_group|
-Rails.logger.red(user.inspect)
       self.groups.each do |group|
-Rails.logger.red(group.inspect)
         return true if group.id == user_group.id
         return true if group.user_id == self.id
       end
@@ -108,7 +105,6 @@ Rails.logger.red(group.inspect)
   end
 
   def in_group?(group_id)
-    Rails.logger.red(groups.inspect)
     groups.detect{ |g| g.id == group_id.to_i }
   end
 

@@ -5,8 +5,11 @@ class DisputesController < ApplicationController
   # GET /disputes
   # GET /disputes.json
   def index
-    @disputes = @group.disputes.all
+    @disputes = @group.disputes.page(params[:page]).all
 
+    if current_user.student?
+      raise CanCan::AccessDenied.new("Unable to access this page")
+    end
     # authorize! :read, @disputes
 
     respond_to do |format|
@@ -111,8 +114,6 @@ class DisputesController < ApplicationController
 
   def get_group
     @group = Group.find(params[:group_id])
-Rails.logger.red(1)
     authorize! :read, @group
-Rails.logger.red(2)
   end
 end

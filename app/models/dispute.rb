@@ -44,8 +44,8 @@ class Dispute < ActiveRecord::Base
   APPROVE = 1
   DENY = 2
 
-  def display_reason
-    case self.reason
+  def display_result
+    case self.result
     when APPROVE
       "Approved"
     when DENY
@@ -57,17 +57,17 @@ class Dispute < ActiveRecord::Base
 
   # transfer funds if the result has been set
   def transfer_funds
-    if self.result == APPROVE && self.result_transaction_id == nil
-      if transaction = Transaction.new(
+    if self.result != nil && self.result_transaction_id == nil
+      if transaction = Transaction.create(
           group_id: self.group_id,
           from_account_id: self.transaction.to_account_id,
           to_account_id: self.transaction.from_account_id,
           amount: self.transaction.amount,
-          description: "Dispute of Transaction #{self.transaction.id} was approved. #{self.reason}",
+          description: "Dispute of Transaction #{self.transaction.id} was #{self.result == Dispute::APPROVE ? "approved" : "denied"}. \"#{self.reason}\"",
           user_id: self.current_user_id,
           occurred_on: DateTime.now
         )
-      transaction.save!
+        transaction.save!
         update_attribute(:result_transaction_id, transaction.id)
       end
     end
