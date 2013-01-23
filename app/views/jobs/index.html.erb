@@ -1,13 +1,7 @@
 <%= render partial: "/groups/top", locals: { current_nav: "jobs" } %>
 
 <%
-  can_update = false
-  if @jobs.count > 0
-    can_udpate = can? :update, @jobs.first
-
-  else
-    can_update = current_user.teacher? || current_user.admin?
-  end
+  can_update = current_user.teacher? || current_user.admin?
 %>
 
 <% if can_update %>

@@ -94,5 +94,6 @@ class JobsController < ApplicationController
 
   def get_group
     @group = Group.find(params[:group_id])
+    authorize! :read, @group
   end
 end
