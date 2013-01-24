@@ -6,6 +6,24 @@
   stores = Store.all
 %>
 <h1>Admin View</h1><br/>
+
+<h3>Classes</h3>
+<table class="table table-striped">
+  <thead>
+    <th>Name</th>
+    <th>Owner</th>
+    <th>Created At</th>
+  </thead>
+  <% groups.each do |group| %>
+    <tr>
+      <td><%= link_to group.name, group_path(group) %></td>
+      <td><%= group.user.display_name %></td>
+      <td><%= I18n.l(group.created_at) %></td>
+    </tr>
+  <% end %>
+</table>
+<br/>
+
 <h3>Teachers</h3>
 <table class="table table-striped">
   <thead>
@@ -15,7 +33,7 @@
   </thead>
   <% teachers.each do |teacher| %>
     <tr>
-      <td><%= teacher.display_name %><td>
+      <td><%= teacher.display_name %></td>
       <td><%= teacher.email %></td>
       <td><%= I18n.l(teacher.created_at) %></td>
     </tr>
@@ -27,12 +45,14 @@
   <thead>
     <th>Name</th>
     <th>Email</th>
+    <th>Username</th>
     <th>Created At</th>
   </thead>
   <% students.each do |student| %>
     <tr>
-      <td><%= student.display_name %><td>
+      <td><%= student.display_name %></td>
       <td><%= student.email %></td>
+      <td><%= student.username %></td>
       <td><%= I18n.l(student.created_at) %></td>
     </tr>
   <% end %>
@@ -47,25 +67,9 @@
   </thead>
   <% admins.each do |admin| %>
     <tr>
-      <td><%= admin.display_name %><td>
+      <td><%= admin.display_name %></td>
       <td><%= admin.email %></td>
       <td><%= I18n.l(admin.created_at) %></td>
-    </tr>
-  <% end %>
-</table>
-<br/>
-<h3>Classes</h3>
-<table class="table table-striped">
-  <thead>
-    <th>Name</th>
-    <th>Owner</th>
-    <th>Created At</th>
-  </thead>
-  <% groups.each do |group| %>
-    <tr>
-      <td><%= group.name %></td>
-      <td><%= group.user.display_name %></td>
-      <td><%= I18n.l(group.created_at) %></td>
     </tr>
   <% end %>
 </table>

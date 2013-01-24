@@ -33,7 +33,7 @@
 <% if can_update || @store.manager?(current_user) %>
   <h2>Last 20 Transactions</h2>
   <p><%= link_to "All Transactions", group_transactions_path(@group, account_id: @store.account.id), class: "btn"  %>
-  <%= render partial: '/transactions/transactions', locals: { transactions: @store.account.transactions.limit(20).order("created_at DESC") } %>
+  <%= render partial: '/transactions/transactions', locals: { transactions: @store.account.transactions.limit(20).order("created_at DESC"), account_id: @store.account.id } %>
   <hr>
 <% end %>
 
@@ -56,7 +56,7 @@
         <td><%= store_owner.user.display_name %></td>
         <% if @store.store_owners.count > 1 && can_update %>
           <td>
-            <%= link_to "Remove Owner", group_store_owner_path(@group, store_owner), action: "delete", data: { confirm: "Are you sure you want to remove this owner? This can't be undone."} %>
+            <%= link_to "Remove Owner", group_store_store_owner_path(@group, @store, store_owner), method: :delete, data: { confirm: "Are you sure you want to remove this owner? This can't be undone."}, class: "btn" %>
           </td>
         <% end %>
       </tr>
@@ -86,7 +86,7 @@
           <td><%= store_manager.user.display_name %></td>
           <% if can_update   %>
             <td>
-              <%= link_to "Remove Manager", group_store_store_manager_path(@group, @store, store_manager), action: "delete", data: { confirm: "Are you sure you want to remove this manager? This can't be undone."}, class: "btn" %>
+              <%= link_to "Remove Manager", group_store_store_manager_path(@group, @store, store_manager), method: :delete, data: { confirm: "Are you sure you want to remove this manager? This can't be undone."}, class: "btn" %>
             </td>
           <% end %>
         </tr>

@@ -20,6 +20,7 @@ class TransactionsController < ApplicationController
         @transactions = @group.transactions.page(params[:page]).order("created_at DESC")
       else
         account_ids = current_user.owns_or_manages_accounts(@group)
+
         @transactions = Transaction.where("to_account_id IN (:account_ids) OR from_account_id in (:account_ids)", account_ids: account_ids).page(params[:page]).order("created_at DESC")
       end
     end

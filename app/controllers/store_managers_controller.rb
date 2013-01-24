@@ -30,6 +30,8 @@ class StoreManagersController < ApplicationController
     @store_manager = StoreManager.new(store_id: @store.id)
     @users = @group.users
 
+    authorize! :create, @store_manager
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @store_manager }
@@ -48,6 +50,8 @@ class StoreManagersController < ApplicationController
     @store_manager = StoreManager.new(params[:store_manager])
     @users = @group.users
 
+    authorize! :create, @store_manager
+
     respond_to do |format|
       if @store_manager.save
         format.html { redirect_to group_store_path(@group, @store), notice: 'Store manager was successfully created.' }
@@ -64,6 +68,8 @@ class StoreManagersController < ApplicationController
   def update
     @store_manager = StoreManager.find(params[:id])
 
+    authorize! :udpate, @store_manager
+
     respond_to do |format|
       if @store_manager.update_attributes(params[:store_manager])
         format.html { redirect_to group_store_path(@group,@store), notice: 'Store manager was successfully updated.' }
@@ -79,10 +85,12 @@ class StoreManagersController < ApplicationController
   # DELETE /store_managers/1.json
   def destroy
     @store_manager = StoreManager.find(params[:id])
-    @store_manager.destroy
 
+    authorize! :destroy, @store_manager
+
+    @store_manager.destroy
     respond_to do |format|
-      format.html { redirect_to group_store_path(@group, @store) }
+      format.html { redirect_to group_store_path(@group, @store_manager.store), notice: "Store Manager #{@store_manager.user.display_name} was removed." }
       format.json { head :no_content }
     end
   end
@@ -92,6 +100,8 @@ class StoreManagersController < ApplicationController
   def get_group_and_store
     @group = Group.find(params[:group_id])
     @store = Store.find(params[:store_id])
+
+    authorize! :read, @group
   end
 
 end

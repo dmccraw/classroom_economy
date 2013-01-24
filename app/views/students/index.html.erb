@@ -24,6 +24,7 @@
       <th></th>
     <% end %>
     <th>Jobs</th>
+    <th>Stores</th>
     <% if can_update %>
       <th></th>
       <th>Username</th>
@@ -69,7 +70,12 @@
               <% jobs = member.job_assignments.where(group_id: @group.id).map { |ja| ja.job.title }.join(", ") %>
               <%= jobs.present? ? jobs : "None" %>
               <br/>
-
+            </td>
+            <td>
+              <% member.stores.each_with_index do |store, index| %>
+                <%= ", " unless index == 0 %>
+                <%= link_to store.display_name, group_store_path(@group, store) %>
+              <% end %>
             </td>
             <% if can_update %>
 
@@ -87,8 +93,6 @@
                       <%= link_to "Edit Student Info", edit_group_student_path(@group, member) %>
                     </li>
                 </div>
-                <br/>
-                <%= link_to "Emulate User", switch_user_path(user_id: member.id) %>
               </td>
               <td><%= member.username %></td>
             <% end %>

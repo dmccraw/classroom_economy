@@ -37,7 +37,7 @@
         </li>
         <% if current_user.admin? %>
           <li>
-          <%= link_to('Admin', users_path) %>
+          <%= link_to('Admin', root_path) %>
           </li>
         <% end %>
         <li>
@@ -50,15 +50,4 @@
     <%= link_to('Sign up', new_user_registration_path)  %>
     </li>
   <% end %>
-  <li>
-    <%= link_to("A", switch_user_path(user_id: 2)) %>
-  </li>
-  <li>
-    <%= link_to("T", switch_user_path(user_id: 1)) %>
-  </li>
-  <li>
-    <%= link_to("S", switch_user_path(user_id: 3)) %>
-  </li>
-
-
 </ul>

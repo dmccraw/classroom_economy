@@ -17,6 +17,7 @@
   <thead>
     <th>Name</th>
     <th>Owners</th>
+    <th>Managers</th>
     <% unless current_user.student? %>
       <th>Account Balance</th>
       <th></th>
@@ -31,6 +32,12 @@
           <%= link_to(owner.user.display_name, group_student_path(@group, owner.user)) %>&nbsp;
         <% end %>
       </td>
+      <td>
+       <% @group.store.store_managers.each do |store_manager| %>
+          <%= link_to(store_manager.user.display_name, group_student_path(@group, store_manager.user)) %>&nbsp;
+       <% end %>
+       <%= "None" if @group.store.store_managers.count == 0 %>
+     </td>
       <% unless current_user.student? %>
         <% if can? :update, @group.store %>
           <td><%= display_balance(@group.store.account.balance) %></td>
@@ -47,6 +54,7 @@
   <thead>
     <th>Name</th>
     <th>Owners</th>
+    <th>Manager</th>
     <% unless current_user.student? %>
       <th>Account Balance</th>
       <th></th>
@@ -62,6 +70,12 @@
               <%= link_to(owner.user.display_name, group_student_path(@group, owner.user)) %>&nbsp;
             <% end %>
           </td>
+          <td>
+           <% store.store_managers.each do |store_manager| %>
+              <%= link_to(store_manager.user.display_name, group_student_path(@group, store_manager.user)) %>&nbsp;
+           <% end %>
+           <%= "None" if store.store_managers.count == 0 %>
+         </td>
           <% unless current_user.student? %>
             <% if can? :update, store %>
               <td><%= display_balance(store.account.balance) %></td>

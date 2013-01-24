@@ -1,26 +1,22 @@
-<hr>
-<% classes = "#{@store_owner.new_record? ? 'new_store_owner' : 'edit_store_owner'} form-horizontal".html_safe %>
-<%= form_for([@group,@store,@store_owner], html: { class: classes }) do |f| %>
+<div class="well">
+  <%= form_for([@group,@store,@store_owner]) do |f| %>
 
-  <%= render partial: '/shared/errors', locals: { o: @store_owner } %>
+    <%= render partial: '/shared/errors', locals: { o: @store_owner } %>
 
-  <%= f.hidden_field :store_id %>
+    <%= f.hidden_field :store_id %>
 
-  <div class="field control-group">
-    <%= label_tag :store_name, "Store Name", class: "control-label" %>
-    <div class="controls" style="padding-top: 5px;">
-      <%= @store.name %>
+    <div class="field">
+      <%= label_tag :store_name, "Store Name" %>
+      <%= @store.name %><br/><br/>
     </div>
-  </div>
-  <div class="field control-group">
-    <%= f.label :user_id, "Owner", class: "control-label" %>
-    <div class="controls">
+
+    <div class="field">
+      <%= f.label :user_id, "Owner" %>
       <%= f.select :user_id, options_from_collection_for_select(@users, :id, :display_name) %>
     </div>
-  </div>
-  <hr>
-  <div class="actions">
-    <%= f.submit (@store_owner.new_record? ? "Add Owner" : "Update"), class: "btn" %>
-    <%= link_to 'Cancel', group_store_path(@group, @store), class: "btn" %>
-  </div>
-<% end %>
+
+    <div class="actions">
+      <%= f.submit (@store_owner.new_record? ? "Add Owner" : "Update"), class: "btn" %>
+    </div>
+  <% end %>
+</div>

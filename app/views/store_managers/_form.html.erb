@@ -1,20 +1,22 @@
-<%= form_for([@group, @store, @store_manager]) do |f| %>
+<div class="well">
+  <%= form_for([@group, @store, @store_manager]) do |f| %>
 
-  <%= render partial: "/shared/errors", locals: { o: @store_manager } %>
+    <%= render partial: "/shared/errors", locals: { o: @store_manager } %>
 
-  <div class="field">
-    <%= f.label :store_id %>
-    <%= @store.name %>
-    <%= f.hidden_field :store_id %>
-  </div>
-  <div class="field">
-    <%= f.label :user_id %>
-    <%= f.select :user_id, options_from_collection_for_select(@users, :id, :display_name) %>
-  </div>
+    <div class="field">
+      <%= f.label :store_id %>
+      <%= @store.name %>
+      <%= f.hidden_field :store_id %><br/></br>
+    </div>
+    <div class="field">
+      <%= f.label :user_id %>
+      <%= f.select :user_id, options_from_collection_for_select(@users, :id, :display_name) %>
+    </div>
 
-  <%= f.hidden_field :manage_level, value: 1 %>
+    <%= f.hidden_field :manage_level, value: 1 %>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+    <div class="actions">
+      <%= f.submit nil, class: "btn" %>
+    </div>
+  <% end %>
+</div>

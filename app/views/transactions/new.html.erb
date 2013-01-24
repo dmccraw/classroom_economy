@@ -8,61 +8,61 @@
 
 
 <center><h1>Transfer Funds</h1></center>
-<hr>
-<%= form_for [@group,@transaction] , html: { class: "#{@transaction.new_record? ? "new_transaction" : "edit_transaction"} form-horizontal" } do |f| %>
+<div class="well">
+  <%= form_for [@group,@transaction] , html: { class: "#{@transaction.new_record? ? "new_transaction" : "edit_transaction"} form-horizontal" } do |f| %>
 
-  <%= render partial: "/shared/errors", locals: { o: @transaction } %>
+    <%= render partial: "/shared/errors", locals: { o: @transaction } %>
 
-  <%= hidden_field_tag :from_account_id, params[:from_account_id] %>
-  <%= hidden_field_tag :to_account_id, params[:to_account_id] %>
+    <%= hidden_field_tag :from_account_id, params[:from_account_id] %>
+    <%= hidden_field_tag :to_account_id, params[:to_account_id] %>
 
-  <div class="control-group">
-    <label class="control-label" for="transaction_amount"><b>Transfer:</b></label>
-    <div class="controls">
-      $<%= f.text_field :amount %>
+    <div class="control-group">
+      <label class="control-label" for="transaction_amount"><b>Transfer:</b></label>
+      <div class="controls">
+        $<%= f.text_field :amount %>
+      </div>
     </div>
-  </div>
 
-  <div class="control-group">
-    <label class="control-label" for="transaction_to_account_id"><b>To:</b></label>
-    <div class="controls">
-      <% if params[:to_account_id].present? %>
-        <%= f.hidden_field :to_account_id %>
-        <%= @to_account.display_name %>
-      <% else %>
-        <%= f.select :to_account_id, options_from_collection_for_select(@to_accounts, :id, :display_name) %>
-      <% end %>
+    <div class="control-group">
+      <label class="control-label" for="transaction_to_account_id"><b>To:</b></label>
+      <div class="controls">
+        <% if params[:to_account_id].present? %>
+          <%= f.hidden_field :to_account_id %>
+          <label style="padding-top:5px;"><%= @to_account.display_name %></label>
+        <% else %>
+          <%= f.select :to_account_id, accounts_for_select(@to_accounts) %>
+        <% end %>
+      </div>
     </div>
-  </div>
 
-  <div class="control-group">
-    <label class="control-label" for="transaction_from_account_id"><b>From:</b></label>
-    <div class="controls">
-      <% if params[:from_account_id].present? %>
-        <%= f.hidden_field :from_account_id %>
-        <%= @from_account.display_name %>
-      <% else %>
-        <%= f.select :from_account_id, options_from_collection_for_select(@from_accounts, :id, :display_name) %>
-      <% end %>
+    <div class="control-group">
+      <label class="control-label" for="transaction_from_account_id"><b>From:</b></label>
+      <div class="controls">
+        <% if params[:from_account_id].present? %>
+          <%= f.hidden_field :from_account_id %>
+          <label style="padding-top:5px;"><%= @from_account.display_name %></label>
+        <% else %>
+          <%= f.select :from_account_id, accounts_for_select(@from_accounts) %>
+        <% end %>
+      </div>
     </div>
-  </div>
 
-  <div class="control-group">
-    <label class="control-label" for="transaction_from_account_id"><b>Description:</b></label>
-    <div class="controls">
-      <%= f.text_area :description, class: "input-xxlarge", rows: 3 %>
+    <div class="control-group">
+      <label class="control-label" for="transaction_from_account_id"><b>Description:</b></label>
+      <div class="controls">
+        <%= f.text_area :description, class: "input-xxlarge", rows: 3 %>
+      </div>
     </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="transaction_from_account_id"><b>Occurred On:</b></label>
-    <div class="controls">
-      <%= f.text_field :occurred_on, value: I18n.l(@transaction.occurred_on, format: :date) %>
+    <div class="control-group">
+      <label class="control-label" for="transaction_from_account_id"><b>Occurred On:</b></label>
+      <div class="controls">
+        <%= f.text_field :occurred_on, value: I18n.l(@transaction.occurred_on, format: :date) %>
+      </div>
     </div>
-  </div>
-  <div class="control-group">
-    <div class="controls">
-      <%= f.submit "Submit", class: "btn" %>
+    <div class="control-group">
+      <div class="controls">
+        <%= f.submit "Submit", class: "btn" %>
+      </div>
     </div>
-  </div>
-
-<% end %>
+  <% end %>
+</div>

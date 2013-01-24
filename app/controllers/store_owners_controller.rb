@@ -18,8 +18,10 @@ class StoreOwnersController < ApplicationController
   # POST /stores.json
   def create
     @store_owner = StoreOwner.new(params[:store_owner])
-    @users = @group.users
 
+    authorize! :create, @store_owner
+
+    @users = @group.users
     respond_to do |format|
       if @store_owner.save
         format.html { redirect_to group_store_path(@group,@store), notice: 'Store Owner was successfully created.' }
@@ -36,12 +38,13 @@ class StoreOwnersController < ApplicationController
   def destroy
     @store_owner = StoreOwner.find(params[:id])
 
-    # authorize! :destroy, @store_owner
+    authorize! :destroy, @store_owner
 
     @store_owner.destroy
 
     respond_to do |format|
-      format.html { redirect_to group_store_path(@group, @store), notice: 'Store Owner was removed.' }
+      flash[:notice] = "Store Owner #{@store_owner.user.display_name} was removed."
+      format.html { redirect_to group_store_path(@group, @store) }
       format.json { head :no_content }
     end
   end
@@ -51,6 +54,8 @@ class StoreOwnersController < ApplicationController
   def get_group_and_store
     @group = Group.find(params[:group_id])
     @store = Store.find(params[:store_id])
+
+    authorize! :read, @group
   end
 
 end

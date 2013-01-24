@@ -64,6 +64,14 @@ class Ability
         user.in_group?(dispute.group_id) || dispute.new_record?
       end
 
+      can :manage, StoreOwner do |store_owner|
+        user.in_group?(store_owner.store.group_id)
+      end
+
+      can :manage, StoreManager do |store_manager|
+        user.in_group?(store_manager.store.group_id)
+      end
+
     elsif user.student?
       can :read, User do |_user|
         can_read = false
@@ -108,6 +116,18 @@ class Ability
 
       can :create, Dispute do |dispute|
         user.in_group?(dispute.group_id) || dispute.new_record?
+      end
+
+      can :read, Dispute do |dispute|
+        user.owns_or_manages_account?(dispute.transaction.to_account) || user.owns_or_manages_account?(dispute.transaction.from_account)
+      end
+
+      can [:create, :destroy], StoreOwner do |store_owner|
+        store_owner.store.owner?(user)
+      end
+
+      can :manage, StoreManager do |store_manager|
+        store_manager.store.owner?(user)
       end
 
     end

@@ -54,7 +54,7 @@
           <% job_assignments.each do |assignment| %>
             <tr>
               <td><%= assignment.job.title %></td>
-              <td>display_balance(assignment.job.salary) %></td>
+              <td><%= display_balance(assignment.job.salary) %></td>
             </tr>
           <% end %>
         <% else %>

@@ -1,18 +1,20 @@
-<%= form_for([@group,@store]) do |f| %>
+<div class="well">
+  <%= form_for([@group,@store]) do |f| %>
 
-  <%= render partial: '/shared/errors', locals: { o: @store } %>
+    <%= render partial: '/shared/errors', locals: { o: @store } %>
 
-  <%= hidden_field_tag :user_id, params[:user_id] %>
+    <%= hidden_field_tag :user_id, params[:user_id] %>
 
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name, class: "input-xlarge" %>
-  </div>
-  <div class="field">
-    <%= f.label :description %>
-    <%= f.text_area :description, class: "input-xxlarge", rows: 5 %>
-  </div>
-  <div class="actions">
-    <%= f.submit (@store.new_record? ? "Open Store" : "Update"), class: "btn" %>
-  </div>
-<% end %>
+    <div class="field">
+      <%= f.label :name %>
+      <%= f.text_field :name, class: "input-xlarge" %>
+    </div>
+    <div class="field">
+      <%= f.label :description %>
+      <%= f.text_area :description, class: "input-xxlarge", rows: 5 %>
+    </div>
+    <div class="actions">
+      <%= f.submit (@store.new_record? ? "Open Store" : "Update"), class: "btn" %>
+    </div>
+  <% end %>
+</div>

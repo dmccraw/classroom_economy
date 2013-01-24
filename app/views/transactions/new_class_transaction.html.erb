@@ -7,7 +7,8 @@
 </script>
 
 <center><h1>Transfer Funds</h1></center>
-<%= form_tag create_class_transaction_group_transactions_path(@group) do %>
+
+<%= form_tag create_class_transaction_group_transactions_path(@group), class: "form-horizontal" do %>
 
   <%= render partial: "/shared/errors", locals: { o: @transaction } %>
 
@@ -15,44 +16,54 @@
   <%= hidden_field_tag :to_account_id, params[:to_account_id] %>
 
   <div class="well">
-    <table class="table">
-      <tr>
-        <td><b>Transfer:</b></td><td>$<%= text_field_tag :amount %></td>
-      </tr>
-      <tr>
-        <td><b>To:</b></td>
-        <td>
+    <div class="control-group">
+      <label class="control-label" for="transaction_amount"><b>Transfer:</b></label>
+        <div class="controls">
+          $<%= text_field_tag :amount %>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="transaction_to_account_id"><b>To:</b></label>
+      <div class="controls">
+        <label style="padding-top:5px;">
           <% if params[:to_account_id].present? %>
             <%= @to_account.display_name %>
           <% else %>
             Entire class
-            <%#= f.select :to_account_id, options_from_collection_for_select(@to_accounts, :id, :display_name) %>
           <% end %>
-        </td>
-      </tr>
-      <tr>
-        <td><b>From:</b></td>
-        <td>
+        </label>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="transaction_from_account_id"><b>From:</b></label>
+      <div class="controls">
+        <label style="padding-top:5px;">
           <% if params[:from_account_id].present? %>
             <%= @from_account.display_name %>
           <% else %>
             Entire class
-            <%#= f.select :from_account_id, options_from_collection_for_select(@from_accounts, :id, :display_name) %>
           <% end %>
-        </td>
-      </tr>
-      <tr>
-        <td><b>Description:</b></td>
-        <td><%= text_field_tag :description %></td>
-      </tr>
-      <tr>
-        <td><b>Occurred On:</br></td>
-        <td>
-          <%= text_field_tag :datepicker, I18n.l(DateTime.now, format: :date) %>
-        </td>
-      </tr>
-    </table>
+        </label>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="transaction_from_account_id"><b>Description:</b></label>
+      <div class="controls">
+        <%= text_area_tag :description, "", class: "input-xxlarge", rows: 3 %>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="transaction_from_account_id"><b>Occurred On:</b></label>
+      <div class="controls">
+        <%= text_field_tag :datepicker, I18n.l(DateTime.now, format: :date) %>
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="controls">
+        <%= submit_tag "Submit", class: "btn" %>
+      </div>
+    </div>
 
-    <%= submit_tag "Submit", class: "btn" %>
   </div>
 <% end %>
