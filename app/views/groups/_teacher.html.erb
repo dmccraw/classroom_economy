@@ -4,7 +4,6 @@
 
   <div class="span8">
     <h2>Info</h2>
-    <p>There are 20 days until payday.</p>
     <hr>
 
     <h3>Disputed Transactions</h3>
@@ -69,7 +68,7 @@
     <h2>Class Actions</h2>
     <div class="well">
       <div style="padding: 2px;">
-        <%= link_to "Bonus Entire Class", new_class_transaction_group_transactions_path(@group, from_account_id: @group.group_account.id), class: "btn btn-block btn-success", style: "width: 150px;" %>
+        <%= link_to "Bonus Entire Class".html_safe, new_class_transaction_group_transactions_path(@group, from_account_id: @group.group_account.id), class: "btn btn-block btn-success", style: "width: 150px;" %>
       </div>
       <div style="padding: 2px;">
         <%= link_to "Fine Entire Class", new_class_transaction_group_transactions_path(@group, to_account_id: @group.group_account.id), class: "btn btn-block btn-danger", style: "width: 150px;" %>

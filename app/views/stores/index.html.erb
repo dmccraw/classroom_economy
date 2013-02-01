@@ -1,7 +1,7 @@
 <%= render partial: "/groups/top", locals: { current_nav: "stores" } %>
 <% can_update = can? :update, @group.stores.first %>
 
-<div class="pull-right"><%= link_to('Open Store', new_group_store_path(@group, user_id: current_user.id), class: "btn") %></div>
+<div class="pull-right"><%= link_to("<i class='icon-plus'></i> Open Store".html_safe, new_group_store_path(@group, user_id: current_user.id), class: "btn btn-success") %></div>
 <h2>Stores</h2>
 </br>
 <p>

@@ -117,13 +117,13 @@ class TransactionsController < ApplicationController
     if params[:from_account_id].present?
       @from_account = Account.find_by_id(params[:from_account_id])
       @transaction.from_account_id = params[:from_account_id]
-      @transaction.to_account_id = @group.accounts.where("owner_id <> ?",current_user.id).first.id
+      @transaction.to_account_id = @group.users.first.account(@group.id).id
       transaction_attributes[:from_account_id] = params[:from_account_id]
     end
     if params[:to_account_id].present?
       @to_account = Account.find_by_id(params[:to_account_id])
       @transaction.to_account_id = params[:to_account_id]
-      @transaction.from_account_id = @group.accounts.where("owner_id <> ?",current_user.id).first.id
+      @transaction.from_account_id = @group.users.first.account(@group.id).id
       transaction_attributes[:to_account_id] = params[:to_account_id]
     end
 
