@@ -3,7 +3,7 @@
 
 <% if can_update %>
   <div class="pull-right">
-    <%= link_to 'Edit Store Info', edit_group_store_path(@group, @store), class: "btn" %>
+    <%= link_to "<i class='icon-cog'></i> Edit Store Info".html_safe, edit_group_store_path(@group, @store), class: "btn btn-primary" %>
   </div>
 <% end %>
 
@@ -12,9 +12,9 @@
 <hr>
 <% if @store.approved && can_update %>
   <center>
-    <%= link_to "Buy Something", new_group_transaction_path(@group, from_account_id: @store.account.id), class: "btn" %>
+    <%= link_to "<i class='icon-minus'></i> Buy Something".html_safe, new_group_transaction_path(@group, from_account_id: @store.account.id), class: "btn btn-danger" %>
     |
-    <%= link_to "Sell Something", new_group_transaction_path(@group, to_account_id: @store.account.id), class: "btn" %>
+    <%= link_to "<i class='icon-plus'></i> Sell Something".html_safe, new_group_transaction_path(@group, to_account_id: @store.account.id), class: "btn btn-success" %>
   </center>
   <hr>
 <% end %>
@@ -39,7 +39,7 @@
 
 <% if can_update %>
   <div class="pull-right">
-    <%= link_to "Add Owner", new_group_store_store_owner_path(@group, @store), class: "btn" %>
+    <%= link_to "<i class='icon-plus'></i> Add Owner".html_safe, new_group_store_store_owner_path(@group, @store), class: "btn btn-success" %>
   </div>
 <% end %>
 <h3>Owners</h3>
@@ -56,7 +56,7 @@
         <td><%= store_owner.user.display_name %></td>
         <% if @store.store_owners.count > 1 && can_update %>
           <td>
-            <%= link_to "Remove Owner", group_store_store_owner_path(@group, @store, store_owner), method: :delete, data: { confirm: "Are you sure you want to remove this owner? This can't be undone."}, class: "btn" %>
+            <%= link_to "<i class='icon-remove-sign'></i> Remove Owner".html_safe, group_store_store_owner_path(@group, @store, store_owner), method: :delete, data: { confirm: "Are you sure you want to remove this owner? This can't be undone."}, class: "btn btn-danger" %>
           </td>
         <% end %>
       </tr>
@@ -67,7 +67,7 @@
 <hr>
 <% if can_update %>
   <div class="pull-right">
-    <%= link_to "Add Manager", new_group_store_store_manager_path(@group, @store), class: "btn" %>
+    <%= link_to "<i class='icon-plus'></i> Add Manager".html_safe, new_group_store_store_manager_path(@group, @store), class: "btn btn-success" %>
   </div>
 <% end %>
 <h3>Managers</h3>
@@ -86,7 +86,7 @@
           <td><%= store_manager.user.display_name %></td>
           <% if can_update   %>
             <td>
-              <%= link_to "Remove Manager", group_store_store_manager_path(@group, @store, store_manager), method: :delete, data: { confirm: "Are you sure you want to remove this manager? This can't be undone."}, class: "btn" %>
+              <%= link_to "<i class='icon-remove-sign'></i> Remove Manager".html_safe, group_store_store_manager_path(@group, @store, store_manager), method: :delete, data: { confirm: "Are you sure you want to remove this manager? This can't be undone."}, class: "btn btn-danger" %>
             </td>
           <% end %>
         </tr>
