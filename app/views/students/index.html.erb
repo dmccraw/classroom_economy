@@ -4,7 +4,7 @@
 
 <%= render partial: "/groups/top", locals: { current_nav: "students" } %>
 
-<div class= "pull-right"><%= link_to('Add Student', new_group_student_path(group_id: @group.id), class: "btn") if can? :create, User %></div>
+<div class= "pull-right"><%= link_to("<i class='icon-plus'></i> Add Student".html_safe, new_group_student_path(group_id: @group.id), class: "btn btn-success") if can? :create, User %></div>
 <h2>Students</h2>
 <br/>
 <p>This is a list of students in this class.

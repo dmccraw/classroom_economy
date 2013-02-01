@@ -41,7 +41,7 @@
       <% unless current_user.student? %>
         <% if can? :update, @group.store %>
           <td><%= display_balance(@group.store.account.balance) %></td>
-          <td><%= link_to 'Edit', edit_group_store_path(@group, @group.store), class: "btn" %></td>
+          <td><%= link_to "<i class='icon-cog'></i> Edit".html_safe, edit_group_store_path(@group, @group.store), class: "btn btn-primary" %></td>
         <% end %>
       <% end %>
     </tr>
@@ -80,8 +80,8 @@
             <% if can? :update, store %>
               <td><%= display_balance(store.account.balance) %></td>
               <td>
-                <%= link_to 'Edit', edit_group_store_path(@group, store), class: "btn" %>
-                <%= link_to 'Close', [@group,store], method: :delete, data: { confirm: 'This will permanently close the store and transfer all the money back to the school bank. Are you sure?' }, class: "btn" %>
+                <%= link_to "<i class='icon-cog'></i> Edit".html_safe, edit_group_store_path(@group, store), class: "btn btn-primary" %>
+                <%= link_to "<i class='icon-remove-sign'></i> Close".html_safe, [@group,store], method: :delete, data: { confirm: 'This will permanently close the store and transfer all the money back to the school bank. Are you sure?' }, class: "btn btn-danger" %>
               </td>
             <% end %>
           <% end %>

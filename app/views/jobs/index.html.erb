@@ -5,7 +5,7 @@
 %>
 
 <% if can_update %>
-  <div class="pull-right"><%= link_to "Create Job", new_group_job_path(@group), class: "btn" %></div>
+  <div class="pull-right"><%= link_to "<i class='icon-plus'></i> Create Job".html_safe, new_group_job_path(@group), class: "btn btn-success" %></div>
 <% end %>
 <h2>Jobs</h2>
 <br/>
@@ -37,8 +37,8 @@
           </td>
           <% if can_update %>
             <td><%= link_to "Assign", new_group_job_assignment_path(@group, job_id: job.id), class: "btn" %></td>
-            <td><%= link_to 'Edit', edit_group_job_path(@group,job), class: "btn" %></td>
-            <td><%= link_to 'Destroy', [@group,job], method: :delete, data: { confirm: "This will delete this job and remove it from any assigned students. Are you sure? This can\'t be undone." }, class: "btn" %></td>
+            <td><%= link_to "Edit".html_safe, edit_group_job_path(@group,job), class: "btn btn-primary" %></td>
+            <td><%= link_to "<i class='icon-'></i> Destroy".html_safe, [@group,job], method: :delete, data: { confirm: "This will delete this job and remove it from any assigned students. Are you sure? This can\'t be undone." }, class: "btn btn-danger" %></td>
           <% end %>
         </tr>
       <% end %>

@@ -35,7 +35,7 @@
     <h3>Actions</h3>
     <div class="well">
       <%= if current_user.account(@group.id).balance > 0
-           link_to "Transfer Funds", new_group_transaction_path(@group, from_account_id: current_user.account(@group.id).id), class: "btn btn-danger", style: "width: 140px;"
+           link_to "<i class='icon-minus'></i> Transfer Funds".html_safe, new_group_transaction_path(@group, from_account_id: current_user.account(@group.id).id), class: "btn btn-danger", style: "width: 140px;"
           else
             "Insufficient Funds for a transfer."
           end
@@ -91,7 +91,7 @@
       </tbody>
     </table>
     <div>
-      <%= link_to('Open Store', new_group_store_path(@group, user_id: current_user.id), class: "btn btn-success") %>
+      <%= link_to("<i class='icon-plus'></i> Open Store".html_safe, new_group_store_path(@group, user_id: current_user.id), class: "btn btn-success") %>
     </div>
 
     <hr>
