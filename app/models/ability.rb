@@ -27,6 +27,9 @@ class Ability
     if user.admin?
       can :manage, :all
     elsif user.teacher?
+      # can :manage, Group do |group|
+      #   group.user_id == user.id || group.new_record?
+      # end
       can :manage, Group, user_id: user.id
       can :manage, User, id: user.id
 
