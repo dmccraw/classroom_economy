@@ -55,6 +55,7 @@ class User < ActiveRecord::Base
   has_many :disputes, as: :owner
   # has_many :groups, through: :memberships
   has_many :transactions
+  # has_many :charges, through: :accounts, source: :owner
 
   # validations
   validates :user_type, presence: true
@@ -92,6 +93,10 @@ class User < ActiveRecord::Base
 
   def display_name
     "#{self.first_name} #{self.last_name}"
+  end
+
+  def charges(group)
+    Charge.where("account_id in (?)", owns_or_manages_accounts(group))
   end
 
   def in_group_with?(user)

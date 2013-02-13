@@ -10,6 +10,7 @@
 <h2>Jobs</h2>
 <br/>
 <p>This is a list of jobs that are available for your class. You can add new jobs, edit existing jobs, see which students have which jobs and assign new jobs. All jobs get paid on the first of the month automatically.</p>
+<p>The next payday will occur on <%= first_of_next_month %>.</p>
 <br/>
 
 <table class="table table-striped table-bordered">
@@ -19,8 +20,6 @@
     <th>Monthly Salary</th>
     <th>Students Assigned</th>
     <% if can_update %>
-      <th></th>
-      <th></th>
       <th></th>
     <% end %>
   </thead>
@@ -36,9 +35,9 @@
             <%= students %>
           </td>
           <% if can_update %>
-            <td><%= link_to "Assign", new_group_job_assignment_path(@group, job_id: job.id), class: "btn" %></td>
-            <td><%= link_to "Edit".html_safe, edit_group_job_path(@group,job), class: "btn btn-primary" %></td>
-            <td><%= link_to "<i class='icon-'></i> Destroy".html_safe, [@group,job], method: :delete, data: { confirm: "This will delete this job and remove it from any assigned students. Are you sure? This can\'t be undone." }, class: "btn btn-danger" %></td>
+            <td><%= link_to "Assign", new_group_job_assignment_path(@group, job_id: job.id), class: "btn" %>
+            <%= link_to "Edit".html_safe, edit_group_job_path(@group,job), class: "btn btn-primary" %>
+            <%= link_to "<i class='icon-'></i> Destroy".html_safe, [@group,job], method: :delete, data: { confirm: "This will delete this job and remove it from any assigned students. Are you sure? This can\'t be undone." }, class: "btn btn-danger" %></td>
           <% end %>
         </tr>
       <% end %>

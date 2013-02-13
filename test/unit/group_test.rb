@@ -16,6 +16,14 @@ class GroupTest < ActiveSupport::TestCase
   should validate_presence_of(:name)
   should ensure_length_of(:name).is_at_most(255)
 
+  should have_many(:charges)
+  should have_many(:users)
+  should have_many(:accounts)
+  should have_many(:jobs)
+  should have_many(:job_assignments)
+  should have_many(:transactions)
+  should have_many(:disputes)
+
   test "test account creation" do
     teacher = FactoryGirl.create(:user)
     group = FactoryGirl.create(:group, user_id: teacher.id)

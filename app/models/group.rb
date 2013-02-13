@@ -19,6 +19,7 @@ class Group < ActiveRecord::Base
   has_many :job_assignments, dependent: :destroy
   has_many :transactions
   has_many :disputes
+  has_many :charges
 
   attr_accessible :name, :user_id
 

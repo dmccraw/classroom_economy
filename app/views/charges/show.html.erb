@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>User:</b>
+  <%= @charge.user.display_name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @charge.description %>
+</p>
+
+<p>
+  <b>Amount:</b>
+  <%= display_balance(@charge.amount) %>
+</p>
+
+
+<%= link_to 'Edit', edit_group_charge_path(@group, @charge) %> |
+<%= link_to 'Back', group_charges_path(@group) %>

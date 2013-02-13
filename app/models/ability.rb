@@ -72,6 +72,10 @@ class Ability
         user.in_group?(store_manager.store.group_id)
       end
 
+      can :manage, Charge do |charge|
+        user.in_group?(charge.group_id)
+      end
+
     elsif user.student?
       can :read, User do |_user|
         can_read = false
@@ -128,6 +132,10 @@ class Ability
 
       can :manage, StoreManager do |store_manager|
         store_manager.store.owner?(user)
+      end
+
+      can :read, Charge do |charge|
+        user.id == charge.user_id
       end
 
     end

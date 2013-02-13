@@ -2,16 +2,17 @@
 #
 # Table name: disputes
 #
-#  id             :integer          not null, primary key
-#  owner_id       :integer
-#  owner_type     :string(255)
-#  transaction_id :integer
-#  group_id       :integer
-#  reason         :string(255)
-#  result         :integer
-#  result_reason  :string(255)
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
+#  id                    :integer          not null, primary key
+#  owner_id              :integer
+#  owner_type            :string(255)
+#  transaction_id        :integer
+#  group_id              :integer
+#  reason                :text
+#  result                :integer
+#  result_reason         :text
+#  result_transaction_id :integer
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
 #
 
 require 'test_helper'

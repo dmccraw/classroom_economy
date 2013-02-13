@@ -13,6 +13,9 @@
   <li <%= 'class=active' if current_nav == "jobs" %>>
     <%= link_to "Jobs", group_jobs_path(@group)  %>
   </li>
+  <li <%= 'class=active' if current_nav == "charges" %>>
+    <%= link_to "Charges", group_charges_path(@group)  %>
+  </li>
   <li <%= 'class=active' if current_nav == "accounts" %>>
     <%= link_to "Accounts", group_accounts_path(@group)  %>
   </li>

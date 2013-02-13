@@ -1,9 +1,9 @@
 <div class="row-fluid">
 
   <div class="span8">
-    <h3>Personal Account</h3>
-    <p>
-      <h4>Balance: <%= display_balance(current_user.account(@group.id).balance) %></h4>
+    <h2>Personal Account</h3>
+    <h4>Balance: <%= display_balance(current_user.account(@group.id).balance) %></h4>
+    <p>Charges and payday will occur on <%= first_of_next_month %>.</p>
     <hr>
 
     <h3>Last 20 Transactions</h3>

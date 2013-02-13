@@ -1,7 +1,5 @@
 ClassroomEconomy::Application.routes.draw do
 
-
-
   devise_for :users, :controllers => { :registrations => "registrations" }
 
   resources :groups do
@@ -16,6 +14,7 @@ ClassroomEconomy::Application.routes.draw do
     end
     resources :accounts
     resources :jobs, except: [:show]
+    resources :charges
     resources :transactions do
       collection do
         get "new_class_transaction"
