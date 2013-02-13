@@ -67,7 +67,7 @@
               </td>
             <% end %>
             <td>
-              <% jobs = member.job_assignments.where(group_id: @group.id).map { |ja| ja.job.title }.join(", ") %>
+              <% jobs = member.job_assignments.where(group_id: @group.id).map { |ja| ja.job ? ja.job.title : "unknown" }.join(", ") %>
               <%= jobs.present? ? jobs : "None" %>
               <br/>
             </td>
