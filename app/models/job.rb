@@ -14,7 +14,7 @@
 class Job < ActiveRecord::Base
   # associations
   belongs_to :group
-  has_many :job_assignments
+  has_many :job_assignments, dependent: :destroy
 
   # attr_accessible
   attr_accessible :description, :salary, :title

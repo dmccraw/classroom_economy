@@ -55,6 +55,9 @@ group :development do
   gem 'meta_request'
 end
 
+gem "airbrake"
+gem "girl_friday"
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
