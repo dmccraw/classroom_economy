@@ -32,8 +32,8 @@
       %>
       <tr <%= cls %>>
         <td><%= transaction.id %></td>
-        <td><%= link_to(transaction.from_account.display_name, group_account_path(@group, transaction.from_account)) %></td>
-        <td><%= link_to(transaction.to_account.display_name, group_account_path(@group, transaction.to_account)) %></td>
+        <td><%= link_to(transaction.from_account.display_name, group_account_path(@group, transaction.from_account)) if transaction.from_account.present? %></td>
+        <td><%= link_to(transaction.to_account.display_name, group_account_path(@group, transaction.to_account)) if transaction.to_account.present? %> </td>
         <td><%= display_balance(transaction.amount) %></td>
         <td><%= transaction.description %></td>
         <td><%= I18n.l transaction.occurred_on, format: :medium %></td>
