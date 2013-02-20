@@ -34,7 +34,7 @@
             <%
               students = []
               job.job_assignments.each do |job|
-                students << ja.user.display_name if ja.user.present?
+                students << job.user.display_name if job.user.present?
               end
               student_info = students.join(", ")
             %>
