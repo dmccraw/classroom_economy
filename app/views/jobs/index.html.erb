@@ -31,8 +31,14 @@
           <td><%= job.description %></td>
           <td><%= display_balance(job.salary) %></td>
           <td>
-            <% students = job.job_assignments.map {|ja| ja.user.display_name }.join(", ") %>
-            <%= students %>
+            <%
+              students = []
+              job.job_assignments.each do |job|
+                students << ja.user.display_name if ja.user.present?
+              end
+              student_info = students.join(", ")
+            %>
+            <%= student_info %>
           </td>
           <% if can_update %>
             <td><%= link_to "Assign", new_group_job_assignment_path(@group, job_id: job.id), class: "btn" %>
