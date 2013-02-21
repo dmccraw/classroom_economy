@@ -33,7 +33,10 @@
           </li>
         <% end %>
         <li>
-          <%= link_to("Edit Profile", edit_user_registration_path) %>
+          <%= link_to("Edit Profile", edit_user_path(current_user)) %>
+        </li>
+        <li>
+          <%= link_to("Change Password", edit_user_registration_path) %>
         </li>
         <% if current_user.admin? %>
           <li>

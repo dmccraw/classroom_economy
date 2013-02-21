@@ -12,10 +12,7 @@
     <%= f.text_field :last_name %>
   </div>
   <div class="field">
-    <%= f.label :email, "Email" %>
-      <% if @user.user_type == User::USER_TYPE_STUDENT %>
-        (optional)
-      <% end %>
+    <%= f.label :email, "Email #{'(optional)' if @user.user_type == User::USER_TYPE_STUDENT }" %>
     <%= f.text_field :email %>
   </div>
   <% if current_user.admin? %>
@@ -26,7 +23,12 @@
   <% else %>
     <%= f.hidden_field :user_type %>
   <% end %>
+
+  <div>Select Time Zone:</br>
+    <%= time_zone_select( "user", 'time_zone', ActiveSupport::TimeZone.us_zones, :default => "Pacific Time (US & Canada)") %>
+  </div>
+
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Update", class: "btn" %>
   </div>
 <% end %>
