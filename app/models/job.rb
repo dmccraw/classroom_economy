@@ -27,19 +27,14 @@ class Job < ActiveRecord::Base
       scope: :group_id,
       case_sensitive: false
     }
+
   validates :description,
     presence: true,
-    length: { maximum: 255 },
-    uniqueness: {
-      scope: :group_id,
-      case_sensitive: false
-    }
+    length: { maximum: 255 }
+
   validates :salary,
     presence: true,
-    numericality: { greater_than: 0.0 },
-    uniqueness: {
-      scope: :group_id,
-      case_sensitive: false
-    }
+    numericality: { greater_than: 0.0 }
+
   validates :group_id, presence: true
 end

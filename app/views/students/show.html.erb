@@ -6,8 +6,8 @@
 
 <% if can_update %>
   <div class=" well pull-right">
-    <%= link_to "Edit Student Info", edit_group_student_path(@group, @student), class: "btn"  %>
-    <%= link_to "Delete Student", group_student_path(@group, @student), method: "delete", data: { confirm: "Are you sure? This will delete this student, their accounts, stores and all transactions regarding them.This action can't be undone!"}, class: "btn"  %>
+    <%= link_to "<i class=icon-cog></i> Edit Student Info".html_safe, edit_group_student_path(@group, @student), class: "btn btn-primary"  %>
+    <%= link_to "<i class=icon-remove></i> Delete Student".html_safe, group_student_path(@group, @student), method: "delete", data: { confirm: "Are you sure? This will delete this student, their accounts, stores and all transactions regarding them.This action can't be undone!"}, class: "btn btn-danger"  %>
   </div>
 <% end %>
 
@@ -39,7 +39,7 @@
 
 <% if can_update %>
   <div class="pull-right">
-    <%= link_to "+ Add Job", new_group_job_assignment_path(@group, user_id: @student.id), class: "btn"  %>
+    <%= link_to "+ Add Job", new_group_job_assignment_path(@group, user_id: @student.id), class: "btn btn-success"  %>
   </div>
 <% end %>
 
@@ -101,7 +101,7 @@
         <% if can_update || is_self %>
           <td><%= display_balance(store.account.balance) %></td>
           <td><%= link_to "Transactions", group_transactions_path(@group, account_id: store.account.id), class: "btn"  %></td>
-          <td><%= link_to "Edit", edit_group_store_path(@group, store), class: "btn" %></td>
+          <td><%= link_to "<i class=icon-cog></i> Edit".html_safe, edit_group_store_path(@group, store), class: "btn btn-primary" %></td>
         <% end %>
       </tr>
     <% end %>

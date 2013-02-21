@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
   # has_many :groups, through: :memberships
   has_many :accounts, as: :owner, dependent: :destroy
   has_many :stores, through: :store_owners
-  has_many :store_owners, dependent: :destroy
+  has_many :store_owners
   has_many :store_managers, dependent: :destroy
   has_many :memberships, dependent: :destroy
   has_many :job_assignments, dependent: :destroy
@@ -219,6 +219,15 @@ private
   def destroy_dependencies
     # destroy any groups that this user owns
     Group.where(user_id: self.id).destroy_all
+
+    # destroy stores
+    stores.each do |store|
+      if store.store_owners.count == 1
+        store.destroy
+      end
+    end
+
+    StoreOwner.where(user_id: self.id).destroy_all
   end
 
 end

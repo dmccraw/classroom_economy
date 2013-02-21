@@ -18,7 +18,7 @@ class Group < ActiveRecord::Base
   has_many :accounts, dependent: :destroy
   has_many :jobs, dependent: :destroy
   has_many :job_assignments, dependent: :destroy
-  has_many :transactions, dependent: :destroy
+  has_many :transactions
   has_many :disputes, dependent: :destroy
   has_many :charges#, dependent: :destroy
   has_many :stores, dependent: :destroy
