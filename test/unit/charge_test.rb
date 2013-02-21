@@ -3,9 +3,9 @@
 # Table name: charges
 #
 #  id          :integer          not null, primary key
-#  account_id     :integer
+#  account_id  :integer
 #  group_id    :integer
-#  description :text
+#  description :string(255)
 #  amount      :float
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null

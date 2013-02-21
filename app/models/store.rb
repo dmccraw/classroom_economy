@@ -54,7 +54,7 @@ class Store < ActiveRecord::Base
   private
 
   def create_account
-    Account.create(owner_id: self.id, owner_type: self.class.to_s, group_id: group_id)
+    Account.create(owner_id: self.id, owner_type: self.class.to_s, group_id: self.group_id, balance: 0.0)
   end
 
 end

@@ -44,7 +44,7 @@ class UsersController < ApplicationController
       if @user.save
         if params[:group_id].present?
           Membership.create(user_id: @user.id, group_id: params[:group_id])
-          Account.create(owner_id: @user.id, owner_type: @user.class.to_s, group_id: params[:group_id])
+          Account.create(owner_id: @user.id, owner_type: @user.class.to_s, group_id: params[:group_id], balance: 0.0)
 
           format.html { redirect_to Group.find(params[:group_id]), notice: 'User was successfully created.' }
           format.json { render json: @user, status: :created, location: @user }

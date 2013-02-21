@@ -15,10 +15,13 @@ require 'test_helper'
 
 class AccountTest < ActiveSupport::TestCase
 
+  should belong_to(:owner)
+  should belong_to(:group)
+  should have_many(:charges)
+
   test "initial balance" do
-    group = FactoryGirl.create(:group)
-    puts group.store.inspect
-    puts group.store.account.inspect
+    teacher = FactoryGirl.create(:user)
+    group = FactoryGirl.create(:group, user_id: teacher.id)
     assert_equal(group.store.account.balance, 1000000.0)
   end
 

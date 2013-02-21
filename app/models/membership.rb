@@ -20,6 +20,6 @@ class Membership < ActiveRecord::Base
   private
 
   def create_account
-    Account.create(owner_id: user_id, owner_type: "User", group_id: group_id)
+    Account.create(owner_id: user_id, owner_type: "User", group_id: group_id, balance: 0.0)
   end
 end

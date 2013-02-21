@@ -68,27 +68,13 @@ class UserTest < ActiveSupport::TestCase
     assert user.in_group?(group1.id)
     assert user.in_group?(group2.id)
     assert_nil user.in_group?(group3.id)
-
-
-
-  end
-
-  test "in_group_with?" do
-    # user = FactoryGirl.create(:user)
-    # group = FactoryGirl.create(:group, user_id: user.id)
-    # membership = FactoryGirl.create(:membership, group_id: group.id, user_id: user.id)
-    # user2 = FactoryGirl.create(:user)
-    # membership2 = FactoryGirl.create(:membership, group_id: group.id, user_id: user2.id)
-    # user3 = FactoryGirl.create(:user)
-
-    # assert_equal(true, user.in_group_with?(user2))
-    # assert_false user.in_group_with?(user3)
   end
 
   test "owns_or_manages_account" do
-    account = FactoryGirl.create(:user_account)
-    account2 = FactoryGirl.create(:user_account)
-    account3 = FactoryGirl.create(:store_account)
+    group = FactoryGirl.create(:group)
+    account = FactoryGirl.create(:user_account, group_id: group.id)
+    account2 = FactoryGirl.create(:user_account, group_id: group.id)
+    account3 = FactoryGirl.create(:store_account, group_id: group.id)
     store_manager = FactoryGirl.create(:store_manager, store_id: account3.owner.id, user_id: account.owner.id)
 
     assert_true(account.owner.owns_or_manages_account?(account))
