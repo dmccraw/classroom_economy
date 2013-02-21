@@ -19,6 +19,7 @@ class Account < ActiveRecord::Base
   attr_accessible :balance, :owner_id, :owner_type, :group_id
 
   before_save :set_initial_balance
+  after_destroy :destroy_transactions
 
   scope :users, where("owner_type = ?", "User")
   scope :stores, where("owner_type = ?", "Store")
@@ -46,5 +47,9 @@ class Account < ActiveRecord::Base
     unless self.balance
       write_attribute(:balance, 0.0)
     end
+  end
+
+  def destroy_transactions
+    transactions.destroy_all
   end
 end

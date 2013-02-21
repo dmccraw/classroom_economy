@@ -105,5 +105,63 @@ class UserTest < ActiveSupport::TestCase
     user.owns_or_manages_accounts(group.id)
   end
 
+  test "delete teacher" do
+    teacher = FactoryGirl.create(:user)
+    # create group
+    group = FactoryGirl.create(:group, user_id: teacher.id)
+    # create student
+    student = FactoryGirl.create(:student)
+    membership = FactoryGirl.create(:membership, user_id: student.id, group_id: group.id)
+    # create job
+    job = FactoryGirl.create(:job, group_id: group.id)
+    # create job_assignment
+    job_assignment = FactoryGirl.create(:job_assignment, job_id: job.id, user_id: student.id, group_id: group.id)
+    # charge = FactoryGirl.create(:charge, account_id: student.account(group.id).id, group_id: group.id)
+    # create transaction
+    transaction = FactoryGirl.create(:transaction, from_account_id: group.store.account.id, to_account_id: student.account(group.id).id, user_id: teacher.id, group_id: group.id)
+    # create dispute
+    dispute = FactoryGirl.create(:dispute, owner_id: student.id, owner_type: student.class.to_s, transaction_id: transaction.id, group_id: group.id, current_user_id: student.id)
+
+    teacher.destroy
+    assert_equal(Group.count, 0)
+    assert_equal(User.count, 0)
+    assert_equal(Job.count, 0)
+    assert_equal(JobAssignment.count, 0)
+    assert_equal(Transaction.count, 0)
+    assert_equal(Dispute.count, 0)
+    assert_equal(Charge.count, 0)
+    assert_equal(Store.count, 0)
+
+  end
+
+  test "delete student" do
+    teacher = FactoryGirl.create(:user)
+    # create group
+    group = FactoryGirl.create(:group, user_id: teacher.id)
+    # create student
+    student = FactoryGirl.create(:student)
+    student2 = FactoryGirl.create(:student)
+    membership = FactoryGirl.create(:membership, user_id: student.id, group_id: group.id)
+    membership2 = FactoryGirl.create(:membership, user_id: student2.id, group_id: group.id)
+    # create job
+    job = FactoryGirl.create(:job, group_id: group.id)
+    # create job_assignment
+    job_assignment = FactoryGirl.create(:job_assignment, job_id: job.id, user_id: student.id, group_id: group.id)
+    # charge = FactoryGirl.create(:charge, account_id: student.account(group.id).id, group_id: group.id)
+    # create transaction
+    transaction = FactoryGirl.create(:transaction, from_account_id: group.store.account.id, to_account_id: student.account(group.id).id, user_id: teacher.id, group_id: group.id)
+    # create dispute
+    dispute = FactoryGirl.create(:dispute, owner_id: student.id, owner_type: student.class.to_s, transaction_id: transaction.id, group_id: group.id, current_user_id: student.id)
+
+    student.destroy
+    assert_equal(Group.count, 1)
+    assert_equal(User.count, 2)
+    assert_equal(Job.count, 1)
+    assert_equal(JobAssignment.count, 0)
+    assert_equal(Transaction.count, 0)
+    assert_equal(Dispute.count, 0)
+    assert_equal(Charge.count, 0)
+    assert_equal(Store.count, 1)
+  end
 
 end

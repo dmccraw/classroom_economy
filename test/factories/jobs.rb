@@ -2,8 +2,9 @@
 
 FactoryGirl.define do
   factory :job do
-    title "MyString"
+    title "My Job"
     description "MyString"
-    salary ""
+    salary "1.0"
+    group_id nil
   end
 end

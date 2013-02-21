@@ -23,6 +23,7 @@ class GroupTest < ActiveSupport::TestCase
   should have_many(:job_assignments)
   should have_many(:transactions)
   should have_many(:disputes)
+  should have_many(:stores)
 
   test "test account creation" do
     teacher = FactoryGirl.create(:user)
@@ -32,6 +33,34 @@ class GroupTest < ActiveSupport::TestCase
     puts group.store.account.inspect
     # assert_not_nil account = Store.where(owner_id: teacher.id, group_id: group.id).first
     # puts account.inspect
+  end
 
+  test "group delete" do
+    # create teacher
+    teacher = FactoryGirl.create(:user)
+    # create group
+    group = FactoryGirl.create(:group, user_id: teacher.id)
+    # create student
+    student = FactoryGirl.create(:student)
+    membership = FactoryGirl.create(:membership, user_id: student.id, group_id: group.id)
+    # create job
+    job = FactoryGirl.create(:job, group_id: group.id)
+    # create job_assignment
+    job_assignment = FactoryGirl.create(:job_assignment, job_id: job.id, user_id: student.id, group_id: group.id)
+    # charge = FactoryGirl.create(:charge, account_id: student.account(group.id).id, group_id: group.id)
+    # create transaction
+    transaction = FactoryGirl.create(:transaction, from_account_id: group.store.account.id, to_account_id: student.account(group.id).id, user_id: teacher.id, group_id: group.id)
+    # create dispute
+    dispute = FactoryGirl.create(:dispute, owner_id: student.id, owner_type: student.class.to_s, transaction_id: transaction.id, group_id: group.id, current_user_id: student.id)
+
+    group.destroy
+    assert_equal(Group.count, 0)
+    assert_equal(User.count, 1)
+    assert_equal(Job.count, 0)
+    assert_equal(JobAssignment.count, 0)
+    assert_equal(Transaction.count, 0)
+    assert_equal(Dispute.count, 0)
+    assert_equal(Charge.count, 0)
+    assert_equal(Store.count, 0)
   end
 end

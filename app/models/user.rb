@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
-  attr_accessible :first_name, :last_name, :user_type, :username, :login, :time_zone
+  attr_accessible :first_name, :last_name, :user_type, :login, :time_zone
 
   # relationships
   # has_many :groups, through: :memberships
@@ -51,8 +51,8 @@ class User < ActiveRecord::Base
   has_many :store_owners, dependent: :destroy
   has_many :store_managers, dependent: :destroy
   has_many :memberships, dependent: :destroy
-  has_many :job_assignments
-  has_many :disputes, as: :owner
+  has_many :job_assignments, dependent: :destroy
+  has_many :disputes, as: :owner, dependent: :destroy
   # has_many :groups, through: :memberships
   has_many :transactions
   # has_many :charges, through: :accounts, source: :owner
@@ -67,6 +67,7 @@ class User < ActiveRecord::Base
 
   # callbacks
   before_validation :generate_username
+  after_destroy :destroy_dependencies
 
   USER_TYPE_STUDENT = 1
   USER_TYPE_TEACHER = 2
@@ -204,6 +205,7 @@ private
       end
       self.username = uname
     end
+    self.username = self.username.downcase
   end
 
   def email_for_admin_teacher
@@ -212,6 +214,11 @@ private
         errors.add(:email, "Email can't be blank.")
       end
     end
+  end
+
+  def destroy_dependencies
+    # destroy any groups that this user owns
+    Group.where(user_id: self.id).destroy_all
   end
 
 end

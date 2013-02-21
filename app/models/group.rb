@@ -10,24 +10,29 @@
 #
 
 class Group < ActiveRecord::Base
+  # associations
   belongs_to :user
 
-  has_many :memberships, dependent: :destroy
+  has_many :memberships
   has_many :users, :through => :memberships, :source => :user
   has_many :accounts, dependent: :destroy
   has_many :jobs, dependent: :destroy
   has_many :job_assignments, dependent: :destroy
-  has_many :transactions
-  has_many :disputes
-  has_many :charges
+  has_many :transactions, dependent: :destroy
+  has_many :disputes, dependent: :destroy
+  has_many :charges#, dependent: :destroy
+  has_many :stores, dependent: :destroy
 
+  # attr accessible
   attr_accessible :name, :user_id
 
+  # validations
   validates :name, presence: true, length: { maximum: 255 }
   validates_uniqueness_of :name, :scope => :user_id
 
+  # callbacks
   after_create :create_store
-
+  after_destroy :destroy_users
 
   def can_access?(user)
     (user.user_type == User::USER_TYPE_ADMIN || user.id == self.user_id)
@@ -83,6 +88,16 @@ class Group < ActiveRecord::Base
     store = Store.create(name: "#{self.name} Store", group_id: self.id, approved: true)
     store.account.update_attributes(balance: 1000000.00)
     store_owner = StoreOwner.create(user_id: self.user_id, store_id: store.id)
+  end
+
+  def destroy_users
+    # destroy the students if this is their only group
+    users.each do |user|
+      if user.groups.count == 1
+        user.destroy
+      end
+    end
+    Transaction.where(group_id: self.id).destroy_all
   end
 
 end
