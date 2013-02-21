@@ -72,9 +72,13 @@
               <br/>
             </td>
             <td>
-              <% member.stores.each_with_index do |store, index| %>
-                <%= ", " unless index == 0 %>
-                <%= link_to store.display_name, group_store_path(@group, store) %>
+              <% count = 0 %>
+              <% member.stores.each do |store| %>
+                <% if store.approved || can_update %>
+                  <%= ", " unless count == 0 %>
+                  <%= link_to store.display_name, group_store_path(@group, store) %>
+                  <% count += 1 %>
+                <% end %>
               <% end %>
             </td>
             <% if can_update %>
