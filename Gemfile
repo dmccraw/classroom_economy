@@ -32,6 +32,7 @@ gem 'factory_girl_rails'
 gem 'cancan'
 gem 'will_paginate'
 gem 'thin'
+gem 'awesome_print'
 
 group :test do
   gem 'shoulda'
