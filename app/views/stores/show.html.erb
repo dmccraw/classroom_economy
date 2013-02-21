@@ -1,4 +1,5 @@
 <% can_update = can? :update, @store %>
+<% can_transact = can? :transact, @store %>
 <%= render partial: "/groups/top", locals: { current_nav: "stores" } %>
 
 <% if can_update %>
@@ -10,7 +11,7 @@
 <h1><%= @store.name %><h1>
 <h4><%= @store.description %></h4>
 <hr>
-<% if @store.approved && can_update %>
+<% if @store.approved && (can_update || can_transact) %>
   <center>
     <%= link_to "<i class='icon-minus'></i> Buy Something".html_safe, new_group_transaction_path(@group, from_account_id: @store.account.id), class: "btn btn-danger" %>
     |
@@ -24,13 +25,13 @@
   </div>
   <hr>
 <% end %>
-<% if can_update %>
+<% if can_update || can_transact %>
   <b>Current Balance:</b>
   <%= display_balance(@store.account.balance) %>
   <hr>
 <% end %>
 
-<% if can_update || @store.manager?(current_user) %>
+<% if can_update || can_transact %>
   <h2>Last 20 Transactions</h2>
   <p><%= link_to "All Transactions", group_transactions_path(@group, account_id: @store.account.id), class: "btn"  %>
   <%= render partial: '/transactions/transactions', locals: { transactions: @store.account.transactions.limit(20).order("created_at DESC"), account_id: @store.account.id } %>
