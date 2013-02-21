@@ -37,7 +37,7 @@
       <%= if current_user.account(@group.id).balance > 0
            link_to "<i class='icon-minus'></i> Transfer Funds".html_safe, new_group_transaction_path(@group, from_account_id: current_user.account(@group.id).id), class: "btn btn-danger", style: "width: 140px;"
           else
-            "Insufficient Funds for a transfer."
+            "Insufficient funds for a transfer."
           end
         %>
       </div>
