@@ -108,6 +108,10 @@ class Ability
         store.owner?(user)
       end
 
+      can :transact, Store do |store|
+        store.manager?(user)
+      end
+
       # can read jobs in their own group
       can :read, Job do |job|
         user.in_group?(job.group_id)
