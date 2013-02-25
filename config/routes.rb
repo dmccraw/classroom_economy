@@ -10,7 +10,7 @@ ClassroomEconomy::Application.routes.draw do
         get "deny"
       end
       resources :store_owners, only: [:new, :create, :destroy]
-      resources :store_managers
+      resources :store_managers, only: [:new, :create, :destroy]
     end
     resources :accounts
     resources :jobs, except: [:show]

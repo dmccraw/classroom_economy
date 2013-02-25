@@ -4,25 +4,25 @@ class StoreManagersController < ApplicationController
 
   # GET /store_managers
   # GET /store_managers.json
-  def index
-    @store_managers = group.StoreManager.all
+  # def index
+  #   @store_managers = group.StoreManager.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @store_managers }
-    end
-  end
+  #   respond_to do |format|
+  #     format.html # index.html.erb
+  #     format.json { render json: @store_managers }
+  #   end
+  # end
 
   # GET /store_managers/1
   # GET /store_managers/1.json
-  def show
-    @store_manager = StoreManager.find(params[:id])
+  # def show
+  #   @store_manager = StoreManager.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @store_manager }
-    end
-  end
+  #   respond_to do |format|
+  #     format.html # show.html.erb
+  #     format.json { render json: @store_manager }
+  #   end
+  # end
 
   # GET /store_managers/new
   # GET /store_managers/new.json
@@ -39,10 +39,10 @@ class StoreManagersController < ApplicationController
   end
 
   # GET /store_managers/1/edit
-  def edit
-    @store_manager = StoreManager.find(params[:id])
-    @users = @group.users
-  end
+  # def edit
+  #   @store_manager = StoreManager.find(params[:id])
+  #   @users = @group.users
+  # end
 
   # POST /store_managers
   # POST /store_managers.json
@@ -65,21 +65,21 @@ class StoreManagersController < ApplicationController
 
   # PUT /store_managers/1
   # PUT /store_managers/1.json
-  def update
-    @store_manager = StoreManager.find(params[:id])
+  # def update
+  #   @store_manager = StoreManager.find(params[:id])
 
-    authorize! :udpate, @store_manager
+  #   authorize! :udpate, @store_manager
 
-    respond_to do |format|
-      if @store_manager.update_attributes(params[:store_manager])
-        format.html { redirect_to group_store_path(@group,@store), notice: 'Store manager was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @store_manager.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  #   respond_to do |format|
+  #     if @store_manager.update_attributes(params[:store_manager])
+  #       format.html { redirect_to group_store_path(@group,@store), notice: 'Store manager was successfully updated.' }
+  #       format.json { head :no_content }
+  #     else
+  #       format.html { render action: "edit" }
+  #       format.json { render json: @store_manager.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   # DELETE /store_managers/1
   # DELETE /store_managers/1.json
