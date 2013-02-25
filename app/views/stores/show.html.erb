@@ -16,6 +16,13 @@
     <%= link_to "<i class='icon-minus'></i> Buy Something".html_safe, new_group_transaction_path(@group, from_account_id: @store.account.id), class: "btn btn-danger" %>
     |
     <%= link_to "<i class='icon-plus'></i> Sell Something".html_safe, new_group_transaction_path(@group, to_account_id: @store.account.id), class: "btn btn-success" %>
+    <% if @store.class_store? && (can_update || can_transact) %>
+      <br/></br>
+      <%= link_to "<i class='icon-minus'></i> Fine Entire Class".html_safe, new_class_transaction_group_transactions_path(@group, to_account_id: @group.group_account.id, from: "store"), class: "btn btn-danger" %>
+      |
+      <%= link_to "<i class='icon-plus'></i> Bonus Entire Class".html_safe, new_class_transaction_group_transactions_path(@group, from_account_id: @group.group_account.id, from: "store"), class: "btn btn-success" %>
+
+    <% end %>
   </center>
   <hr>
 <% end %>

@@ -160,7 +160,11 @@ class TransactionsController < ApplicationController
       end
       respond_to do |format|
         flash[:notice] = "Transactions were created."
-        format.html { redirect_to group_path(@group) }
+        if params[:from].present? && params[:from] == "store"
+          format.html { redirect_to group_store_path(@group, @group.store) }
+        else
+          format.html { redirect_to group_path(@group) }
+        end
         format.json { @transaction.errors }
       end
     else

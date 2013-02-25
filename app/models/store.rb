@@ -51,6 +51,11 @@ class Store < ActiveRecord::Base
     self.name
   end
 
+  def class_store?
+    # if any store owner
+    group.store == self
+  end
+
   private
 
   def create_account
