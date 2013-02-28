@@ -16,6 +16,9 @@
     <th>Occurred On</th>
     <th>Entered On</th>
     <th>Dispute</th>
+    <% if current_user.admin? %>
+      <th>Undo</th>
+    <% end %>
   </thead>
   <tbody>
   <% if @transactions && @transactions.count > 0 %>
@@ -42,8 +45,12 @@
           <% if transaction.disputes.count > 0 %>
             <%= link_to "Disputed", group_dispute_path(@group, transaction.disputes.first)  %>
           <% else %>
-            <%= link_to "Dispute", new_group_dispute_path(@group, transaction_id: transaction)  %></td>
+            <%= link_to "Dispute", new_group_dispute_path(@group, transaction_id: transaction)  %>
           <% end %>
+        </td>
+        <% if current_user.admin? %>
+          <td><%= link_to "Undo", undo_group_transaction_path(@group, transaction), data: { remote: true }  %></td>
+        <% end %>
       </tr>
     <% end %>
   <% else %>

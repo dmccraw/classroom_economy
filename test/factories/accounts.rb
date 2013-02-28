@@ -3,10 +3,14 @@
 FactoryGirl.define do
 
   factory :account do
-    owner_id 1
-    owner_type ""
+    owner_id nil
+    owner_type nil
     group_id nil
-    balance 1.5
+    balance 100
+
+    after(:build) do |account|
+      account.group = FactoryGirl.create(:group) unless account.group
+    end
 
     factory :store_account do
       association :owner, factory: :store
@@ -15,6 +19,5 @@ FactoryGirl.define do
     factory :user_account do
       association :owner, factory: :user
     end
-
   end
 end

@@ -175,6 +175,20 @@ class TransactionsController < ApplicationController
     end
   end
 
+  def undo
+    @transaction = Transaction.find(params[:id])
+
+    authorize! :undo, @transaction
+
+    @transaction.undo
+
+    respond_to do |format|
+      flash[:notice] = "Transaction #{@transaction.id} has been undone."
+      format.js { render text: "window.location.reload(true);"}
+    end
+
+  end
+
   private
 
   def get_group

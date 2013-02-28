@@ -19,14 +19,23 @@ require 'test_helper'
 
 class TransactionTest < ActiveSupport::TestCase
 
-  should belong_to(:user)
-  should have_many(:disputes)
+  # should belong_to(:user)
+  # should have_many(:disputes)
 
-  should validate_presence_of(:from_account_id)
-  should validate_presence_of(:to_account_id)
-  should validate_presence_of(:amount)
-  should validate_numericality_of(:amount)
-  should validate_presence_of(:user_id)
-  should validate_presence_of(:occurred_on)
+  # should validate_presence_of(:from_account_id)
+  # should validate_presence_of(:to_account_id)
+  # should validate_presence_of(:amount)
+  # should validate_numericality_of(:amount)
+  # should validate_presence_of(:user_id)
+  # should validate_presence_of(:occurred_on)
+
+  test "should undo" do
+    transaction = FactoryGirl.create(:transaction)
+    assert_equal transaction.from_account.balance, 0
+    assert_equal transaction.to_account.balance, 200.00
+    transaction.undo
+    assert_equal transaction.from_account.balance, 100
+    assert_equal transaction.to_account.balance, 100
+  end
 
 end

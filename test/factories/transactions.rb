@@ -9,13 +9,14 @@ FactoryGirl.define do
     occurred_on "2013-01-05 07:24:34"
     user_id nil
     disputed false
+    group_id nil
 
     after(:build) do |transaction|
       unless transaction.from_account_id
-        transaction.from_account = FactoryGirl.create(:account)
+        transaction.from_account = FactoryGirl.create(:user_account)
       end
       unless transaction.to_account_id
-        transaction.to_account = FactoryGirl.create(:account)
+        transaction.to_account = FactoryGirl.create(:user_account)
       end
       unless transaction.user_id
         transaction.user = FactoryGirl.create(:user)

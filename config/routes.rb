@@ -20,6 +20,9 @@ ClassroomEconomy::Application.routes.draw do
         get "new_class_transaction"
         post "create_class_transaction"
       end
+      member do
+        get "undo"
+      end
     end
     resources :disputes
     resources :job_assignments, only: [:new, :create, :destroy]

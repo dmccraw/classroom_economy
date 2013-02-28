@@ -26,6 +26,7 @@ class Ability
     # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
     if user.admin?
       can :manage, :all
+
     elsif user.teacher?
       # can :manage, Group do |group|
       #   group.user_id == user.id || group.new_record?
@@ -74,6 +75,10 @@ class Ability
 
       can :manage, Charge do |charge|
         user.in_group?(charge.group_id)
+      end
+
+      can :undo, Transaction do |transaction|
+        false
       end
 
     elsif user.student?

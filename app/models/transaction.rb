@@ -40,6 +40,18 @@ class Transaction < ActiveRecord::Base
   # callbacks
   after_create :transfer_funds
 
+  # transfer the money without a transaction and delete this transaction
+  # effectively erases the transaction
+  def undo
+    if from_account && to_account
+      from_account.balance += amount
+      to_account.balance -= amount
+      from_account.save
+      to_account.save
+    end
+    self.destroy
+  end
+
   private
 
   def different_from_to_accounts
@@ -66,7 +78,7 @@ class Transaction < ActiveRecord::Base
   end
 
   def transfer_funds
-    from_account.update_attributes(balance: from_account.balance - amount)
-    to_account.update_attributes(balance: to_account.balance + amount)
+    from_account.update_attributes(balance: from_account.balance - self.amount)
+    to_account.update_attributes(balance: to_account.balance + self.amount)
   end
 end
