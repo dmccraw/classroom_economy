@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130213043040) do
+ActiveRecord::Schema.define(:version => 20130228042124) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "owner_id"
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(:version => 20130213043040) do
     t.datetime "updated_at",  :null => false
   end
 
-  add_index "charges", ["account_id"], :name => "index_charges_on_account_id"
+  add_index "charges", ["account_id"], :name => "index_charges_on_user_id"
   add_index "charges", ["group_id"], :name => "index_charges_on_group_id"
 
   create_table "disputes", :force => true do |t|
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(:version => 20130213043040) do
     t.integer  "manage_level"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.float    "salary"
   end
 
   add_index "store_managers", ["store_id"], :name => "index_store_managers_on_store_id"

@@ -8,9 +8,15 @@
       <%= @store.name %>
       <%= f.hidden_field :store_id %><br/></br>
     </div>
+
     <div class="field">
-      <%= f.label :user_id %>
+      <%= f.label :user_id, "Manager" %>
       <%= f.select :user_id, options_from_collection_for_select(@users, :id, :display_name) %>
+    </div>
+
+    <div class="field">
+      <%= f.label :salary, "Monthly Salary" %>
+      $<%= f.text_field :salary %><br/></br>
     </div>
 
     <%= f.hidden_field :manage_level, value: 1 %>

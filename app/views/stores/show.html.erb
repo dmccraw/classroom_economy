@@ -18,9 +18,9 @@
     <%= link_to "<i class='icon-plus'></i> Sell Something".html_safe, new_group_transaction_path(@group, to_account_id: @store.account.id), class: "btn btn-success" %>
     <% if @store.class_store? && (can_update || can_transact) %>
       <br/></br>
-      <%= link_to "<i class='icon-minus'></i> Fine Entire Class".html_safe, new_class_transaction_group_transactions_path(@group, to_account_id: @group.group_account.id, from: "store"), class: "btn btn-danger" %>
+      <%= link_to "<i class='icon-plus'></i> Fine Entire Class".html_safe, new_class_transaction_group_transactions_path(@group, to_account_id: @group.group_account.id, from: "store"), class: "btn btn-success" %>
       |
-      <%= link_to "<i class='icon-plus'></i> Bonus Entire Class".html_safe, new_class_transaction_group_transactions_path(@group, from_account_id: @group.group_account.id, from: "store"), class: "btn btn-success" %>
+      <%= link_to "<i class='icon-minus'></i> Bonus Entire Class".html_safe, new_class_transaction_group_transactions_path(@group, from_account_id: @group.group_account.id, from: "store"), class: "btn btn-danger" %>
 
     <% end %>
   </center>
@@ -51,6 +51,7 @@
   </div>
 <% end %>
 <h3>Owners</h3>
+<p>Owners have the ability to buy and sell stuff for the store. They can also add other owners, add/remove managers and edit store info.</p>
 <table class="table table-striped table-bordered">
   <thead>
     <th>Name</th>
@@ -79,11 +80,15 @@
   </div>
 <% end %>
 <h3>Managers</h3>
-<p>Managers have the ability to buy stuff and sell stuff for the store.</p>
+<p>Managers are paid employees of the store that have the ability to buy and sell stuff for the store. Owners should not be managers.</p>
 <table class="table table-striped table-bordered">
   <thead>
     <th>Name</th>
+    <% if can_transact %>
+      <th>Salary</th>
+    <% end %>
     <% if can_update %>
+
       <th></th>
     <% end %>
   </thead>
@@ -92,6 +97,9 @@
       <% @store.store_managers.each do |store_manager| %>
         <tr>
           <td><%= store_manager.user.display_name %></td>
+          <% if can_update || can_transact %>
+            <td><%= display_balance(store_manager.salary) %></td>
+          <% end %>
           <% if can_update   %>
             <td>
               <%= link_to "<i class='icon-remove-sign'></i> Remove Manager".html_safe, group_store_store_manager_path(@group, @store, store_manager), method: :delete, data: { confirm: "Are you sure you want to remove this manager? This can't be undone."}, class: "btn btn-danger" %>

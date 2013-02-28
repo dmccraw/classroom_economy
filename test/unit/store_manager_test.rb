@@ -8,12 +8,14 @@
 #  manage_level :integer
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  salary       :float
 #
 
 require 'test_helper'
 
 class StoreManagerTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  should validate_presence_of :store_id
+  should validate_presence_of :user_id
+  should validate_presence_of :salary
+  should validate_numericality_of :salary
 end
