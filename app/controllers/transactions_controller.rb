@@ -40,8 +40,8 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.new
     @transaction.group_id = @group.id
 
-    @from_accounts = @group.accounts
-    @to_accounts = @group.accounts
+    @from_accounts = @group.accounts.includes(:owner).sort { |a,b| a.owner.display_name <=> b.owner.display_name }
+    @to_accounts = @group.accounts.includes(:owner).sort { |a,b| a.owner.display_name <=> b.owner.display_name }
     @transaction.occurred_on = Date.today
 
     if params[:from_account_id].present?
@@ -67,8 +67,8 @@ class TransactionsController < ApplicationController
     @transaction.occurred_on = DateTime.now
     @transaction.group_id = @group.id
 
-    @from_accounts = @group.accounts
-    @to_accounts = @group.accounts
+    @from_accounts = @group.accounts.includes(:owner).sort { |a,b| a.owner.display_name <=> b.owner.display_name }
+    @to_accounts = @group.accounts.includes(:owner).sort { |a,b| a.owner.display_name <=> b.owner.display_name }
 
     if params[:from_account_id].present?
       @from_account = Account.find_by_id(params[:from_account_id])
