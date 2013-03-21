@@ -463,6 +463,120 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "app/models/group.rb",
+			"settings":
+			{
+				"buffer_size": 2640,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/groups/_form.html.erb",
+			"settings":
+			{
+				"buffer_size": 338,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/models/job.rb",
+			"settings":
+			{
+				"buffer_size": 841,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/jobs/_form.html.erb",
+			"settings":
+			{
+				"buffer_size": 575,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/shared/_errors.html.erb",
+			"settings":
+			{
+				"buffer_size": 617,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/models/transaction.rb",
+			"settings":
+			{
+				"buffer_size": 2643,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/models/store.rb",
+			"settings":
+			{
+				"buffer_size": 1462,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "db/migrate/20121229215636_create_store_owners.rb",
+			"settings":
+			{
+				"buffer_size": 302,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/models/account.rb",
+			"settings":
+			{
+				"buffer_size": 1477,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Searching 2228 files for \"polymorphic\"\n\n/Users/dustinmccraw/git/classroom_economy/app/models/account.rb:\n   12  #\n   13  \n   14: # owner_id, polymorphic user or store\n   15  \n   16  class Account < ActiveRecord::Base\n   17    # associations\n   18:   belongs_to :owner, polymorphic: true\n   19    belongs_to :group\n   20    has_many :charges, dependent: :destroy\n\n/Users/dustinmccraw/git/classroom_economy/app/models/dispute.rb:\n   22    belongs_to :result_transaction, class_name: \"Transaction\"\n   23    belongs_to :group\n   24:   belongs_to :owner, polymorphic: true\n   25  \n   26    # validations\n\n/Users/dustinmccraw/git/classroom_economy/db/migrate/20121229213401_create_accounts.rb:\n    2    def change\n    3      create_table :accounts do |t|\n    4:       t.references :owner, :polymorphic => true\n    5        t.references :group\n    6        t.float :balance\n\n/Users/dustinmccraw/git/classroom_economy/db/migrate/20130120034719_create_disputes.rb:\n    2    def change\n    3      create_table :disputes do |t|\n    4:       t.references :owner, polymorphic: true\n    5        t.references :transaction\n    6        t.references :group\n\n5 matches across 4 files\n",
+			"settings":
+			{
+				"buffer_size": 1167,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "db/migrate/20121229213401_create_accounts.rb",
+			"settings":
+			{
+				"buffer_size": 299,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "db/migrate/20130105152434_create_transactions.rb",
+			"settings":
+			{
+				"buffer_size": 717,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/layouts/_navigation.html.erb",
+			"settings":
+			{
+				"buffer_size": 1626,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/models/ability.rb",
+			"settings":
+			{
+				"buffer_size": 4021,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -500,6 +614,20 @@
 	},
 	"file_history":
 	[
+		"/Users/dustinmccraw/git/classroom_economy/app/views/job_assignments/_form.html.erb",
+		"/Users/dustinmccraw/git/classroom_economy/config/routes.rb",
+		"/Users/dustinmccraw/git/classroom_economy/app/models/charge.rb",
+		"/Users/dustinmccraw/git/classroom_economy/app/models/user.rb",
+		"/Users/dustinmccraw/git/classroom_economy/app/models/group.rb",
+		"/Users/dustinmccraw/git/classroom_economy/app/models/transaction.rb",
+		"/Users/dustinmccraw/git/classroom_economy/app/models/job_assignment.rb",
+		"/Users/dustinmccraw/git/classroom_economy/db/migrate/20121226233022_create_groups.rb",
+		"/Users/dustinmccraw/git/classroom_economy/app/models/membership.rb",
+		"/Users/dustinmccraw/git/classroom_economy/app/models/account.rb",
+		"/Users/dustinmccraw/git/classroom_economy/app/models/store.rb",
+		"/Users/dustinmccraw/git/classroom_economy/app/models/job.rb",
+		"/Users/dustinmccraw/git/classroom_economy/lib/tasks/payments.rake",
+		"/Users/dustinmccraw/Desktop/advice.txt",
 		"/Users/dustinmccraw/git/my_big_campus/app/models/folder_attachment.rb",
 		"/Users/dustinmccraw/git/my_big_campus/lib/tasks/drive.rake",
 		"/Users/dustinmccraw/git/my_big_campus/app/assets/javascripts/drive.js.coffee",
@@ -613,21 +741,7 @@
 		"/Users/dustinmccraw/git/my_big_campus/spec/controllers/users_controller_spec.rb",
 		"/Users/dustinmccraw/git/my_big_campus/app/controllers/districts_controller.rb",
 		"/Users/dustinmccraw/git/my_big_campus/app/controllers/admin/parents_controller.rb",
-		"/Users/dustinmccraw/git/my_big_campus/app/views/schoolworks/_form.html.haml",
-		"/Users/dustinmccraw/git/my_big_campus/app/views/schoolworks/index.html.haml",
-		"/Users/dustinmccraw/git/my_big_campus/spec/models/school_spec.rb",
-		"/Users/dustinmccraw/git/my_big_campus/spec/models/schoolwork_spec.rb",
-		"/Users/dustinmccraw/git/my_big_campus/app/views/schoolworks/destroy.js.erb",
-		"/Users/dustinmccraw/git/my_big_campus/app/views/schoolworks/partials/_schoolwork_allow.html.haml",
-		"/Users/dustinmccraw/git/my_big_campus/spec/controllers/folders_controller_spec.rb",
-		"/Users/dustinmccraw/git/my_big_campus/config/initializers/better_errors.rb",
-		"/Users/dustinmccraw/git/my_big_campus/app/assets/javascripts/schoolwork_reports.js.coffee",
-		"/Users/dustinmccraw/git/my_big_campus/spec/controllers/folder_attachments_controller_spec.rb",
-		"/Users/dustinmccraw/git/my_big_campus/app/views/schoolworks/your_schoolwork.html.haml",
-		"/Users/dustinmccraw/git/my_big_campus/app/controllers/folder_attachments_controller.rb",
-		"/Users/dustinmccraw/git/my_big_campus/app/views/folder_attachments/move.js.erb",
-		"/Users/dustinmccraw/git/my_big_campus/app/views/schoolworks/partials/_drive.html.haml",
-		"/Users/dustinmccraw/git/my_big_campus/config/application.rb"
+		"/Users/dustinmccraw/git/my_big_campus/app/views/schoolworks/_form.html.haml"
 	],
 	"find":
 	{
@@ -648,6 +762,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"polymorphic",
+			"class_account",
+			"account",
 			"organize",
 			"drive",
 			"table",
@@ -772,10 +889,7 @@
 			"APPLICATION_TYPE_IDS::SCHOOLWORK",
 			"drive-new-folder",
 			"openNewFolderModal",
-			"render text:",
-			"render js:",
-			"Submissions",
-			"delete"
+			"render text:"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -795,13 +909,429 @@
 	"groups":
 	[
 		{
+			"selected": 13,
 			"sheets":
 			[
-			]
-		},
-		{
-			"sheets":
-			[
+				{
+					"buffer": 0,
+					"file": "app/models/group.rb",
+					"settings":
+					{
+						"buffer_size": 2640,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								302,
+								302
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/Ruby on Rails.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/views/groups/_form.html.erb",
+					"settings":
+					{
+						"buffer_size": 338,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								96,
+								96
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/HTML (Rails).tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "app/models/job.rb",
+					"settings":
+					{
+						"buffer_size": 841,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								157,
+								157
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/Ruby on Rails.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "app/views/jobs/_form.html.erb",
+					"settings":
+					{
+						"buffer_size": 575,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								127,
+								557
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/HTML (Rails).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "app/views/shared/_errors.html.erb",
+					"settings":
+					{
+						"buffer_size": 617,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								70,
+								70
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/HTML (Rails).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "app/models/transaction.rb",
+					"settings":
+					{
+						"buffer_size": 2643,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2291,
+								2301
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/Ruby on Rails.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "app/models/store.rb",
+					"settings":
+					{
+						"buffer_size": 1462,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1118,
+								1118
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/Ruby on Rails.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1107.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "db/migrate/20121229215636_create_store_owners.rb",
+					"settings":
+					{
+						"buffer_size": 302,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								188,
+								207
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/Ruby on Rails.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "app/models/account.rb",
+					"settings":
+					{
+						"buffer_size": 1477,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								66,
+								73
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/Ruby on Rails.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"settings":
+					{
+						"buffer_size": 1167,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										141,
+										152
+									],
+									[
+										269,
+										280
+									],
+									[
+										550,
+										561
+									],
+									[
+										784,
+										795
+									],
+									[
+										1051,
+										1062
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								774,
+								774
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"output_tag": 1,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 139.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "db/migrate/20121229213401_create_accounts.rb",
+					"settings":
+					{
+						"buffer_size": 299,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								210,
+								210
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/Ruby on Rails.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "db/migrate/20130105152434_create_transactions.rb",
+					"settings":
+					{
+						"buffer_size": 717,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								444,
+								512
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/Ruby on Rails.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "app/views/layouts/_navigation.html.erb",
+					"settings":
+					{
+						"buffer_size": 1626,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								956,
+								971
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/HTML (Rails).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 316.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "app/models/ability.rb",
+					"settings":
+					{
+						"buffer_size": 4021,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								474,
+								474
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/Ruby on Rails.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -822,18 +1352,11 @@
 				0,
 				1,
 				1
-			],
-			[
-				1,
-				0,
-				2,
-				1
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.5,
 			1.0
 		],
 		"rows":
@@ -857,6 +1380,86 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"abil",
+				"app/models/ability.rb"
+			],
+			[
+				"nav",
+				"app/views/layouts/_navigation.html.erb"
+			],
+			[
+				"creatra",
+				"db/migrate/20130105152434_create_transactions.rb"
+			],
+			[
+				"tran",
+				"app/models/transaction.rb"
+			],
+			[
+				"accoun",
+				"app/models/account.rb"
+			],
+			[
+				"csto",
+				"db/migrate/20121229215636_create_store_owners.rb"
+			],
+			[
+				"store",
+				"app/models/store.rb"
+			],
+			[
+				"trans",
+				"app/models/transaction.rb"
+			],
+			[
+				"group.r",
+				"app/models/group.rb"
+			],
+			[
+				"shaerr",
+				"app/views/shared/_errors.html.erb"
+			],
+			[
+				"jobfor",
+				"app/views/jobs/_form.html.erb"
+			],
+			[
+				"job",
+				"app/models/job.rb"
+			],
+			[
+				"grouform",
+				"app/views/groups/_form.html.erb"
+			],
+			[
+				"group",
+				"app/models/group.rb"
+			],
+			[
+				"accou",
+				"app/models/account.rb"
+			],
+			[
+				"mem",
+				"app/models/membership.rb"
+			],
+			[
+				"migr",
+				"db/migrate/20121226233022_create_groups.rb"
+			],
+			[
+				"charg",
+				"app/models/charge.rb"
+			],
+			[
+				"jobas",
+				"app/models/job_assignment.rb"
+			],
+			[
+				"user",
+				"app/models/user.rb"
+			],
 			[
 				"drivconsp",
 				"spec/controllers/drive_controller_spec.rb"
@@ -1016,10 +1619,6 @@
 			[
 				"folder",
 				"app/models/folder_attachment.rb"
-			],
-			[
-				"user",
-				"app/models/user.rb"
 			],
 			[
 				"yourstu",
@@ -1292,82 +1891,6 @@
 			[
 				"fschoo",
 				"spec/factories/schoolworks.rb"
-			],
-			[
-				"schoolallconsp",
-				"spec/controllers/schoolwork_allows_controller_spec.rb"
-			],
-			[
-				"scalcon",
-				"app/controllers/schoolwork_allows_controller.rb"
-			],
-			[
-				"schooconspe",
-				"spec/controllers/schoolworks_controller_spec.rb"
-			],
-			[
-				"drive_head",
-				"app/views/drive/_drive_header.html.haml"
-			],
-			[
-				"schoo.js",
-				"app/assets/javascripts/schoolworks.js.coffee"
-			],
-			[
-				"driv.j",
-				"app/assets/javascripts/drive.js.coffee"
-			],
-			[
-				"admischoinde",
-				"app/views/admin/schools/index.html.erb"
-			],
-			[
-				"distr",
-				"app/models/district.rb"
-			],
-			[
-				"addisinde",
-				"app/views/admin/districts/index.html.erb"
-			],
-			[
-				"userconsp",
-				"spec/controllers/users_controller_spec.rb"
-			],
-			[
-				"usecon",
-				"app/controllers/users_controller.rb"
-			],
-			[
-				"dist",
-				"app/models/district.rb"
-			],
-			[
-				"admindiscon",
-				"app/controllers/admin/districts_controller.rb"
-			],
-			[
-				"diston",
-				"app/controllers/districts_controller.rb"
-			],
-			[
-				"admidiscon",
-				"app/controllers/admin/districts_controller.rb"
-			],
-			[
-				"aschocon",
-				"app/controllers/admin/schools_controller.rb"
-			],
-			[
-				"driv.c",
-				"app/assets/stylesheets/drive.css.scss"
-			],
-			[
-				"foldercon",
-				"app/controllers/folders_controller.rb"
-			],
-			[
-				"schooworsp",
-				"spec/models/schoolwork_spec.rb"
 			]
 		],
 		"width": 0.0

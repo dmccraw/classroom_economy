@@ -81,6 +81,10 @@ class Ability
         false
       end
 
+      can :manage, Bill do |bill|
+        user.in_group?(bill.group_id)
+      end
+
     elsif user.student?
       can :read, User do |_user|
         can_read = false
@@ -146,7 +150,6 @@ class Ability
       can :read, Charge do |charge|
         user.id == charge.user_id
       end
-
     end
   end
 end

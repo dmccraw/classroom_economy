@@ -150,4 +150,19 @@ class UserTest < ActiveSupport::TestCase
     assert_equal(Store.count, 1)
   end
 
+  test "bills" do
+    teacher = FactoryGirl.create(:user)
+    group = FactoryGirl.create(:group, user_id: teacher.id)
+    student = FactoryGirl.create(:student)
+    membership = FactoryGirl.create(:membership, user_id: student.id, group_id: group.id)
+
+    assert_equal(student.bills(group.id), [])
+
+    bill = FactoryGirl.create(:bill, group_id: group.id, from_account_id: student.account(group.id).id, to_account_id: group.group_account.id)
+    assert_equal(student.bills(group.id), [bill])
+
+    bill = FactoryGirl.create(:bill, group_id: group.id, from_account_id: student.account(group.id).id, to_account_id: group.group_account.id)
+
+  end
+
 end

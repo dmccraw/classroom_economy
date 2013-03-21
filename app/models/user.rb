@@ -192,6 +192,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  def bills(group)
+    account_ids = owns_or_manages_accounts(group)
+    Bill.where("from_account_id in (?)", account_ids)
+  end
+
 private
 
   def generate_username

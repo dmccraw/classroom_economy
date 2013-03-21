@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>From account:</b>
+  <%= @bill.from_account %>
+</p>
+
+<p>
+  <b>To account:</b>
+  <%= @bill.to_account %>
+</p>
+
+<p>
+  <b>Group:</b>
+  <%= @bill.group %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @bill.user %>
+</p>
+
+<p>
+  <b>Due date:</b>
+  <%= @bill.due_date %>
+</p>
+
+
+<%= link_to 'Edit', edit_bill_path(@bill) %> |
+<%= link_to 'Back', bills_path %>

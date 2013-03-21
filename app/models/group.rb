@@ -22,6 +22,7 @@ class Group < ActiveRecord::Base
   has_many :disputes, dependent: :destroy
   has_many :charges#, dependent: :destroy
   has_many :stores, dependent: :destroy
+  has_many :bills, dependent: :destroy
 
   # attr accessible
   attr_accessible :name, :user_id
