@@ -5,9 +5,11 @@ class BillsController < ApplicationController
   # GET /bills.json
   def index
     if current_user.student?
-      @bills = current_user.bills
+      @paid_bills = current_user.bills.paid.page(params[:page])
+      @unpaid_bills = current_user.bills.paid.page(params[:page1])
     else
-      @bills = @group.bills.all
+      @paid_bills = @group.bills.paid.page(params[:page])
+      @unpaid_bills = @group.bills.unpaid.page(params[:page1])
     end
 
     respond_to do |format|
@@ -33,6 +35,7 @@ class BillsController < ApplicationController
   # GET /bills/new.json
   def new
     @bill = Bill.new
+    @to_accounts = @group.accounts.includes(:owner).sort { |a,b| a.owner.display_name.downcase <=> b.owner.display_name.downcase }
 
     respond_to do |format|
       format.html # new.html.erb
@@ -42,13 +45,28 @@ class BillsController < ApplicationController
 
   # GET /bills/1/edit
   def edit
+    @to_accounts = @group.accounts.includes(:owner).sort { |a,b| a.owner.display_name.downcase <=> b.owner.display_name.downcase }
     @bill = Bill.find(params[:id])
   end
 
   # POST /bills
   # POST /bills.json
   def create
+    @to_accounts = @group.accounts.includes(:owner).sort { |a,b| a.owner.display_name.downcase <=> b.owner.display_name.downcase }
     @bill = Bill.new(params[:bill])
+    @bill.group_id = @group.id
+    @bill.user_id = current_user.id
+
+Rails.logger.red(params[:bill][:due_date].inspect)
+    @bill.due_date = params[:bill][:due_date]
+
+    Rails.logger.red(@bill.inspect)
+    # for now only th
+    unless current_user.student?
+      @bill.from_account_id = @group.group_account.id
+    else
+      @bill.from_account_id = current_user.account(@group).id
+    end
 
     authorize! :create, @bill
 
@@ -66,6 +84,7 @@ class BillsController < ApplicationController
   # PUT /bills/1
   # PUT /bills/1.json
   def update
+    @to_accounts = @group.accounts.includes(:owner).sort { |a,b| a.owner.display_name.downcase <=> b.owner.display_name.downcase }
     @bill = Bill.find(params[:id])
 
     authorize! :udpate, @bill

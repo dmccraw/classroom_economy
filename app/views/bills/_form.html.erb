@@ -1,37 +1,37 @@
-<%= form_for(@bill) do |f| %>
-  <% if @bill.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@bill.errors.count, "error") %> prohibited this bill from being saved:</h2>
+<div class="well">
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#bill_due_date').datepicker({
+          format: 'mm/dd/yyyy'
+      });
+    });
+  </script>
 
-      <ul>
-      <% @bill.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+  <%= form_for([@group,@bill]) do |f| %>
+
+    <%= render partial: "/shared/errors", locals: { o: @bill } %>
+
+    <div class="field">
+      <%= f.label :to_account %>
+      <%= f.select :to_account_id, accounts_for_select(@to_accounts) %>
+    </div>
+
+    <div class="field">
+      <%= f.label :amount %>
+      $<%= f.text_field :amount %>
+    </div>
+
+    <div class="field">
+      <%= f.label :description %>
+      <%= f.text_area :description, class: "input-xxlarge", rows: 3 %>
+    </div>
+
+    <div class="field">
+      <%= f.label :due_date %>
+      <%= f.text_field :due_date, value: I18n.l(DateTime.now, format: :date) %>
+    </div>
+    <div class="actions">
+      <%= f.submit nil, class: "btn" %>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :from_account %><br />
-    <%= f.text_field :from_account %>
-  </div>
-  <div class="field">
-    <%= f.label :to_account %><br />
-    <%= f.text_field :to_account %>
-  </div>
-  <div class="field">
-    <%= f.label :group %><br />
-    <%= f.text_field :group %>
-  </div>
-  <div class="field">
-    <%= f.label :user %><br />
-    <%= f.text_field :user %>
-  </div>
-  <div class="field">
-    <%= f.label :due_date %><br />
-    <%= f.datetime_select :due_date %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>

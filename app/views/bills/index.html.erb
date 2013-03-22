@@ -1,35 +1,83 @@
 <%= render partial: "/groups/top", locals: { current_nav: "bills" } %>
 
+<%
+  can_update = current_user.teacher? || current_user.admin?
+%>
+<% if can_update %>
+  <div class="pull-right"><%= link_to "<i class='icon-plus'></i> Create Bill".html_safe, new_group_bill_path(@group), class: "btn btn-success" %></div>
+<% end %>
+
 <h2>Bills</h2>
-
-<h1>Listing bills</h1>
-
+<br>
+<p>Bills can be sent to students or stores. The students will see these bill and the date they are due and can pay them from their info page.</p>
+<hr>
+<h2>Outstanding Bills</h2>
+<%= will_paginate @unpaid_bills if @unpaid_bills %>
 <table class="table table-striped table-bordered">
   <thead>
     <th>From account</th>
     <th>To account</th>
-    <th>Group</th>
-    <th>User</th>
+    <th>Amount</th>
+    <th>Description</th>
     <th>Due date</th>
     <th></th>
-    <th></th>
-    <th></th>
   </tr>
+  <tbody>
+    <% if @unpaid_bills.count > 0 %>
 
-<% @bills.each do |bill| %>
-  <tr>
-    <td><%= bill.from_account %></td>
-    <td><%= bill.to_account %></td>
-    <td><%= bill.group %></td>
-    <td><%= bill.user %></td>
-    <td><%= bill.due_date %></td>
-    <td><%= link_to 'Show', [@group,bill] %></td>
-    <td><%= link_to 'Edit', edit_group_bill_path(@group, bill) %></td>
-    <td><%= link_to 'Destroy', [@group,bill], method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+      <% @unpaid_bills.each do |bill| %>
+        <tr>
+          <td><%= bill.from_account.display_name %></td>
+          <td><%= bill.to_account.display_name %></td>
+          <td><%= display_balance(bill.amount) %></td>
+          <td><%= bill.description %></td>
+          <td><%= bill.due_date %></td>
+          <% if can_update %>
+            <td>
+              <%= link_to 'Edit', edit_group_bill_path(@group, bill), class: "btn btn-primary" %>
+              <%= link_to "<i class='icon-'></i> Destroy".html_safe, [@group,bill], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="100">There are no outstanding bills for this class.</td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
 
-<br />
 
-<%= link_to 'New Bill', new_group_bill_path(@group) %>
+<h2>Paid Bills</h2>
+<%= will_paginate @paid_bills, param_name: "page1" if @paid_bills %>
+<table class="table table-striped table-bordered">
+  <thead>
+    <th>From account</th>
+    <th>To account</th>
+    <th>Amount</th>
+    <th>Description</th>
+    <th>Due date</th>
+    <th>Paid On</th>
+  </tr>
+  <tbody>
+    <% if @paid_bills.count > 0 %>
+
+      <% @paid_bills.each do |bill| %>
+        <tr>
+          <td><%= bill.from_account.display_name %></td>
+          <td><%= bill.to_account.display_name %></td>
+          <td><%= display_balance(bill.amount) %></td>
+          <td><%= bill.description %></td>
+          <td><%= bill.due_date %></td>
+          <td><%= bill.due_date %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="100">There are no paid bills for this class.</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

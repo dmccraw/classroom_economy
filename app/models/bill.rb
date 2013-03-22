@@ -25,6 +25,9 @@ class Bill < ActiveRecord::Base
   belongs_to :user
   belongs_to :transaction
 
+  # attr_accessible
+  attr_accessible :to_account_id, :due_date, :paid, :paid_date, :amount, :description
+
   # validations
   validates :from_account_id, presence: true
   validates :to_account_id, presence: true
@@ -36,4 +39,8 @@ class Bill < ActiveRecord::Base
 
   validates :paid_date, presence: true, if: :paid
   validates :transaction_id, presence: true, if: :paid
+
+  # scopes
+  scope :paid, where("paid is true")
+  scope :unpaid, where("paid is not true")
 end
