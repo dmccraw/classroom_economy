@@ -16,11 +16,9 @@
   <li <%= 'class=active' if current_nav == "charges" %>>
     <%= link_to "Charges", group_charges_path(@group)  %>
   </li>
-  <% unless current_user.student? %>
   <li <%= 'class=active' if current_nav == "bills" %>>
     <%= link_to "Bills", group_bills_path(@group)  %>
   </li>
-  <% end %>
   <li <%= 'class=active' if current_nav == "accounts" %>>
     <%= link_to "Accounts", group_accounts_path(@group)  %>
   </li>

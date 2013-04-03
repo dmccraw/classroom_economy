@@ -35,4 +35,9 @@ class BillTest < ActiveSupport::TestCase
   should validate_numericality_of(:amount)
   should validate_presence_of(:description)
   should ensure_length_of(:description).is_at_least(3).is_at_most(255)
+
+  test "should pay bill" do
+    bill = FactoryGirl.create(:bill)
+    assert_equal(bill.pay(bill.user), true)
+  end
 end

@@ -29,7 +29,11 @@ ClassroomEconomy::Application.routes.draw do
     resources :disputes
     resources :job_assignments, only: [:new, :create, :destroy]
 
-    resources :bills
+    resources :bills do
+      member do
+        get "pay_bill"
+      end
+    end
   end
 
   resources :users

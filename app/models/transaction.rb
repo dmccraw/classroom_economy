@@ -79,9 +79,7 @@ class Transaction < ActiveRecord::Base
   end
 
   def transfer_funds
-    if from_account.balance <= self.amount
-      from_account.update_attributes(balance: from_account.balance - self.amount)
-      to_account.update_attributes(balance: to_account.balance + self.amount)
-    end
+    from_account.update_attributes(balance: from_account.balance - self.amount)
+    to_account.update_attributes(balance: to_account.balance + self.amount)
   end
 end

@@ -12,8 +12,8 @@
     <%= render partial: "/shared/errors", locals: { o: @bill } %>
 
     <div class="field">
-      <%= f.label :to_account %>
-      <%= f.select :to_account_id, accounts_for_select(@to_accounts) %>
+      <%= f.label :from_account %>
+      <%= f.select :from_account_id, accounts_for_select(@from_accounts) %>
     </div>
 
     <div class="field">

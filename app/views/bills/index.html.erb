@@ -9,9 +9,13 @@
 
 <h2>Bills</h2>
 <br>
-<p>Bills can be sent to students or stores. The students will see these bill and the date they are due and can pay them from their info page.</p>
+<% if can_update %>
+  <p>Bills can be sent to students or stores. The students will see these bill and the date they are due and can pay them from their info page.</p>
+<% else %>
+  <p>This is a list of bills that have been paid and bills that need to be paid.</p>
+<% end %>
 <hr>
-<h2>Outstanding Bills</h2>
+<h2>Unpaid Bills</h2>
 <%= will_paginate @unpaid_bills if @unpaid_bills %>
 <table class="table table-striped table-bordered">
   <thead>
@@ -31,11 +35,15 @@
           <td><%= bill.to_account.display_name %></td>
           <td><%= display_balance(bill.amount) %></td>
           <td><%= bill.description %></td>
-          <td><%= bill.due_date %></td>
+          <td><%= I18n.l bill.due_date, format: :medium %></td>
           <% if can_update %>
             <td>
               <%= link_to 'Edit', edit_group_bill_path(@group, bill), class: "btn btn-primary" %>
               <%= link_to "<i class='icon-'></i> Destroy".html_safe, [@group,bill], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+            </td>
+          <% else %>
+            <td>
+              <%= link_to "Bay Bill", pay_bill_group_bill_path(@group, bill, redirect: group_bills_path(@group)) , confirm: "Are you sure you want to pay this bill?" %>
             </td>
           <% end %>
         </tr>
@@ -69,8 +77,8 @@
           <td><%= bill.to_account.display_name %></td>
           <td><%= display_balance(bill.amount) %></td>
           <td><%= bill.description %></td>
-          <td><%= bill.due_date %></td>
-          <td><%= bill.due_date %></td>
+          <td><%= I18n.l bill.due_date, format: :medium %></td>
+          <td><%= I18n.l bill.paid_date, format: :medium %></td>
         </tr>
       <% end %>
     <% else %>

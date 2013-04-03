@@ -26,7 +26,7 @@ class Bill < ActiveRecord::Base
   belongs_to :transaction
 
   # attr_accessible
-  attr_accessible :to_account_id, :due_date, :paid, :paid_date, :amount, :description
+  attr_accessible :from_account_id, :due_date, :paid, :paid_date, :amount, :description, :transaction_id
 
   # validations
   validates :from_account_id, presence: true
@@ -43,4 +43,27 @@ class Bill < ActiveRecord::Base
   # scopes
   scope :paid, where("paid is true")
   scope :unpaid, where("paid is not true")
+
+  def pay(current_user)
+    # create a transaction and make sure the transaction is successful
+    transaction = Transaction.new(
+      from_account_id: from_account_id,
+      to_account_id: to_account_id,
+      user_id: current_user.id,
+      group_id: group_id,
+      amount: amount,
+      description: "Pay bill: #{description}",
+      occurred_on: created_at
+    )
+    if transaction.save
+      update_attributes(
+        paid: true,
+        paid_date: DateTime.now,
+        transaction_id: transaction.id
+      )
+    else
+      errors.add(:base, "Unable to create a transaction. #{transaction.errors.full_message.join(", ")}")
+      false
+    end
+  end
 end

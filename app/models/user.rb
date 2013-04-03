@@ -158,9 +158,13 @@ class User < ActiveRecord::Base
 
   def owns_or_manages_accounts(group)
     account_ids = [account(group).id]
-    account_ids += store_owners.map {|so| so.store.account.id }
+    account_ids += owns_accounts(group)
     account_ids += store_managers.map {|so| so.store.account.id }
     account_ids
+  end
+
+  def owns_accounts(group)
+    store_owners.map {|so| so.store.account.id }
   end
 
   def owns_or_manages_account?(account)
@@ -195,6 +199,12 @@ class User < ActiveRecord::Base
   def bills(group)
     account_ids = owns_or_manages_accounts(group)
     Bill.where("from_account_id in (?)", account_ids)
+  end
+
+  def unpaid_bills(group)
+    account_ids = [account(group).id]
+    account_ids += owns_accounts(group)
+    Bill.where("from_account_id in (?)", account_ids).unpaid
   end
 
 private

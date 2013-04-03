@@ -5,8 +5,8 @@ class BillsController < ApplicationController
   # GET /bills.json
   def index
     if current_user.student?
-      @paid_bills = current_user.bills.paid.page(params[:page])
-      @unpaid_bills = current_user.bills.paid.page(params[:page1])
+      @paid_bills = current_user.bills(@group).paid.page(params[:page])
+      @unpaid_bills = current_user.bills(@group).unpaid.page(params[:page1])
     else
       @paid_bills = @group.bills.paid.page(params[:page])
       @unpaid_bills = @group.bills.unpaid.page(params[:page1])
@@ -35,7 +35,7 @@ class BillsController < ApplicationController
   # GET /bills/new.json
   def new
     @bill = Bill.new
-    @to_accounts = @group.accounts.includes(:owner).sort { |a,b| a.owner.display_name.downcase <=> b.owner.display_name.downcase }
+    @from_accounts = @group.accounts.includes(:owner).sort { |a,b| a.owner.display_name.downcase <=> b.owner.display_name.downcase }
 
     respond_to do |format|
       format.html # new.html.erb
@@ -45,34 +45,32 @@ class BillsController < ApplicationController
 
   # GET /bills/1/edit
   def edit
-    @to_accounts = @group.accounts.includes(:owner).sort { |a,b| a.owner.display_name.downcase <=> b.owner.display_name.downcase }
+    @from_accounts = @group.accounts.includes(:owner).sort { |a,b| a.owner.display_name.downcase <=> b.owner.display_name.downcase }
     @bill = Bill.find(params[:id])
   end
 
   # POST /bills
   # POST /bills.json
   def create
-    @to_accounts = @group.accounts.includes(:owner).sort { |a,b| a.owner.display_name.downcase <=> b.owner.display_name.downcase }
+    @from_accounts = @group.accounts.includes(:owner).sort { |a,b| a.owner.display_name.downcase <=> b.owner.display_name.downcase }
     @bill = Bill.new(params[:bill])
     @bill.group_id = @group.id
     @bill.user_id = current_user.id
+    @bill.to_account_id
 
-Rails.logger.red(params[:bill][:due_date].inspect)
     @bill.due_date = params[:bill][:due_date]
 
-    Rails.logger.red(@bill.inspect)
-    # for now only th
     unless current_user.student?
-      @bill.from_account_id = @group.group_account.id
+      @bill.to_account_id = @group.group_account.id
     else
-      @bill.from_account_id = current_user.account(@group).id
+      @bill.to_account_id = current_user.account(@group).id
     end
 
     authorize! :create, @bill
 
     respond_to do |format|
       if @bill.save
-        format.html { redirect_to @bill, notice: 'Bill was successfully created.' }
+        format.html { redirect_to group_bills_path(@group), notice: 'Bill was successfully created.' }
         format.json { render json: @bill, status: :created, location: @bill }
       else
         format.html { render action: "new" }
@@ -91,7 +89,7 @@ Rails.logger.red(params[:bill][:due_date].inspect)
 
     respond_to do |format|
       if @bill.update_attributes(params[:bill])
-        format.html { redirect_to @bill, notice: 'Bill was successfully updated.' }
+        format.html { redirect_to group_bills_path(@group), notice: 'Bill was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -105,13 +103,33 @@ Rails.logger.red(params[:bill][:due_date].inspect)
   def destroy
     @bill = Bill.find(params[:id])
 
-    authorize :destroy, @bill
+    authorize! :destroy, @bill
 
     @bill.destroy
 
     respond_to do |format|
-      format.html { redirect_to bills_url }
+      format.html { redirect_to group_bills_url(@group) }
       format.json { head :no_content }
+    end
+  end
+
+  def pay_bill
+    @bill = Bill.find(params[:id])
+
+    authorize! :update, @bill
+
+    if @bill.pay(current_user)
+      flash[:notice] = "Bill has been paid."
+    else
+      flash[:notice] = @bill.errors.full_messages.join(", ")
+    end
+
+    respond_to do |format|
+      if params[:redirect].present?
+        format.html { redirect_to params[:redirect] }
+      else
+        format.html { redirect_to group_path(@group) }
+      end
     end
   end
 

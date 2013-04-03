@@ -35,6 +35,9 @@
       <h4>You have no disputed transactions.</h4>
     <% end %>
     <hr>
+    <h3>Bills</h3>
+    You currently have <%= @group.bills.unpaid.count %> unpaid bills. <%= link_to "Go to Bills", group_bills_path(@group) %>
+    <hr>
     <h3>Requested Stores</h3>
     <% if @group.stores.unapproved.count > 0 %>
       <table class="table table-striped table-bordered">
