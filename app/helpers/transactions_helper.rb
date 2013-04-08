@@ -1,5 +1,5 @@
 module TransactionsHelper
-  def accounts_for_select(accounts, self_account_id = nil)
+  def accounts_for_select(accounts, add_all_class = false, self_account_id = nil)
     store_accounts = []
     user_accounts = []
     accounts.each do |account|
@@ -25,6 +25,8 @@ module TransactionsHelper
       end
     end
     result += "</optgroup>".html_safe if user_accounts.any?
+
+    result += "<option value='-1'>Entire Class</option>" if add_all_class
     result.html_safe
   end
 end

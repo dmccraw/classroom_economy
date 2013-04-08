@@ -52,25 +52,52 @@ class BillsController < ApplicationController
   # POST /bills
   # POST /bills.json
   def create
+    bills = false
     @from_accounts = @group.accounts.includes(:owner).sort { |a,b| a.owner.display_name.downcase <=> b.owner.display_name.downcase }
+
     @bill = Bill.new(params[:bill])
     @bill.group_id = @group.id
     @bill.user_id = current_user.id
-    @bill.to_account_id
+    @bill.due_date = Time.strptime(params[:bill][:due_date], "%m/%d/%Y")
 
-    @bill.due_date = params[:bill][:due_date]
-
-    unless current_user.student?
-      @bill.to_account_id = @group.group_account.id
-    else
+    saved = false
+    Rails.logger.red(@bill.inspect)
+    if current_user.student?
       @bill.to_account_id = current_user.account(@group).id
+      saved = @bill.save
+    else
+      @bill.to_account_id = @group.group_account.id
+      if @bill.from_account_id == -1
+        # create a bill for each student in class
+        if @bill.valid?
+          @group.users.each do |user|
+            bill = Bill.new(
+              from_account_id: user.account(@group).id,
+              due_date: @bill.due_date,
+              amount: @bill.amount,
+              description: @bill.description
+            )
+            bill.to_account_id = @group.group_account.id
+            bill.group_id = @bill.group_id
+            bill.user_id = @bill.user_id
+            saved = bill.save
+            bills = true
+          end
+        else
+          saved = @bill.save
+        end
+      else
+        saved = @bill.save
+      end
     end
+
+
 
     authorize! :create, @bill
 
     respond_to do |format|
-      if @bill.save
-        format.html { redirect_to group_bills_path(@group), notice: 'Bill was successfully created.' }
+      if saved
+        format.html { redirect_to group_bills_path(@group), notice: "#{bills ? "Bills were": "Bill was"} successfully created." }
         format.json { render json: @bill, status: :created, location: @bill }
       else
         format.html { render action: "new" }
@@ -82,13 +109,19 @@ class BillsController < ApplicationController
   # PUT /bills/1
   # PUT /bills/1.json
   def update
-    @to_accounts = @group.accounts.includes(:owner).sort { |a,b| a.owner.display_name.downcase <=> b.owner.display_name.downcase }
+    @from_accounts = @group.accounts.includes(:owner).sort { |a,b| a.owner.display_name.downcase <=> b.owner.display_name.downcase }
     @bill = Bill.find(params[:id])
+    # params[:bill][:due_date] = Time.zone.parse(params[:bill][:due_date]) if params[:bill][:due_date].present?
+
+    # params[:bill][:due_date] = DateTime.strptime(params[:bill][:due_date], t('date.formats.default')).to_time if params[:bill][:due_date].present?
+    params[:bill][:due_date] = Time.strptime(params[:bill][:due_date], "%m/%d/%Y")
 
     authorize! :udpate, @bill
 
     respond_to do |format|
+    Rails.logger.red(params[:bill])
       if @bill.update_attributes(params[:bill])
+        Rails.logger.red @bill.inspect
         format.html { redirect_to group_bills_path(@group), notice: 'Bill was successfully updated.' }
         format.json { head :no_content }
       else

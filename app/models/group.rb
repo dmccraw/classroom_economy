@@ -25,7 +25,7 @@ class Group < ActiveRecord::Base
   has_many :bills, dependent: :destroy
 
   # attr accessible
-  attr_accessible :name, :user_id
+  attr_accessible :name
 
   # validations
   validates :name, presence: true, length: { maximum: 255 }

@@ -35,7 +35,7 @@
           <td><%= bill.to_account.display_name %></td>
           <td><%= display_balance(bill.amount) %></td>
           <td><%= bill.description %></td>
-          <td><%= I18n.l bill.due_date, format: :medium %></td>
+          <td><%= I18n.l bill.due_date, format: :date %></td>
           <% if can_update %>
             <td>
               <%= link_to 'Edit', edit_group_bill_path(@group, bill), class: "btn btn-primary" %>
@@ -77,7 +77,7 @@
           <td><%= bill.to_account.display_name %></td>
           <td><%= display_balance(bill.amount) %></td>
           <td><%= bill.description %></td>
-          <td><%= I18n.l bill.due_date, format: :medium %></td>
+          <td><%= I18n.l bill.due_date, format: :date %></td>
           <td><%= I18n.l bill.paid_date, format: :medium %></td>
         </tr>
       <% end %>

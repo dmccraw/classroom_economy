@@ -30,8 +30,8 @@
                 <%= unpaid_bill.description %>
               </td>
               <td>
-                <span <%= "class=negative" if unpaid_bill.due_date > DateTime.now %>>
-                  <%= I18n.l unpaid_bill.due_date, format: :medium %>
+                <span <%= "class=negative" if DateTime.now > unpaid_bill.due_date %>>
+                  <%= I18n.l unpaid_bill.due_date, format: :date %>
                 </span>
               </td>
               <td>

@@ -24,8 +24,10 @@ class RootController < ApplicationController
   end
 
   def switch_user
-    if user = User.find_by_id(params[:user_id])
-      sign_in user
+    if Rails.env.development?
+      if user = User.find_by_id(params[:user_id])
+        sign_in user
+      end
     end
 
     redirect_to action: "index"

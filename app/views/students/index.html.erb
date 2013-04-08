@@ -29,6 +29,9 @@
       <th></th>
       <th>Username</th>
     <% end %>
+    <% if Rails.env.development? %>
+      <th></th>
+    <% end %>
   </thead>
   <tbody>
     <% if @group.users.count > 0 %>
@@ -99,6 +102,9 @@
                 </div>
               </td>
               <td><%= member.username %></td>
+            <% end %>
+            <% if Rails.env.development? %>
+              <td><%= link_to "Switch User", switch_user_path(user_id: member.id) %></td>
             <% end %>
           </tr>
         <% end %>

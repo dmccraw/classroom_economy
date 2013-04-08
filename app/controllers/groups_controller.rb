@@ -32,7 +32,6 @@ class GroupsController < ApplicationController
   # GET /groups/new.json
   def new
     @group = Group.new
-    @group.user_id = current_user.id
 
     respond_to do |format|
       format.html # new.html.erb
@@ -53,6 +52,7 @@ class GroupsController < ApplicationController
   # POST /groups.json
   def create
     @group = Group.new(params[:group])
+    @group.user_id = current_user.id
 
     authorize! :create, @group
 

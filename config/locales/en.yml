@@ -13,6 +13,6 @@ en:
     pm: "PM"
   date:
     formats:
+      default: '%m/%d/%Y'
       short: "%m/%d/%Y"
       long: "%A, %B %d, %Y"
-

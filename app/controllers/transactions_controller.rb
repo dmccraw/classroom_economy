@@ -64,7 +64,7 @@ class TransactionsController < ApplicationController
   def create
     @transaction = Transaction.new(params[:transaction])
     @transaction.user_id = current_user.id
-    @transaction.occurred_on = DateTime.now
+    @transaction.occurred_on = Time.strptime(params[:transaction][:occurred_on], "%m/%d/%Y")
     @transaction.group_id = @group.id
 
     @from_accounts = @group.accounts.includes(:owner).sort { |a,b| a.owner.display_name.downcase <=> b.owner.display_name.downcase }
@@ -106,7 +106,7 @@ class TransactionsController < ApplicationController
     # check for errors
     @transaction = Transaction.new
     @transaction.user_id = current_user.id
-    @transaction.occurred_on = DateTime.now
+    @transaction.occurred_on = Time.strptime(params[:transaction][:occurred_on], "%m/%d/%Y")
     transaction_attributes = {
       user_id: @transaction.user_id,
       occurred_on: @transaction.occurred_on
