@@ -61,7 +61,6 @@ class BillsController < ApplicationController
     @bill.due_date = Time.strptime(params[:bill][:due_date], "%m/%d/%Y")
 
     saved = false
-    Rails.logger.red(@bill.inspect)
     if current_user.student?
       @bill.to_account_id = current_user.account(@group).id
       saved = @bill.save
@@ -120,7 +119,6 @@ class BillsController < ApplicationController
 
     respond_to do |format|
       if @bill.update_attributes(params[:bill])
-        Rails.logger.red @bill.inspect
         format.html { redirect_to group_bills_path(@group), notice: 'Bill was successfully updated.' }
         format.json { head :no_content }
       else
