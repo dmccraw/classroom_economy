@@ -119,7 +119,6 @@ class BillsController < ApplicationController
     authorize! :udpate, @bill
 
     respond_to do |format|
-    Rails.logger.red(params[:bill])
       if @bill.update_attributes(params[:bill])
         Rails.logger.red @bill.inspect
         format.html { redirect_to group_bills_path(@group), notice: 'Bill was successfully updated.' }

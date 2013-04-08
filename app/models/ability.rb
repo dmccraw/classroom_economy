@@ -154,9 +154,6 @@ class Ability
       can [:read, :update], Bill do |bill|
         account_ids = [user.account(bill.group).id]
         account_ids += user.owns_accounts(bill.group)
-        Rails.logger.red(account_ids.inspect)
-        Rails.logger.red(bill.inspect)
-        Rails.logger.red(bill.from_account_id.inspect)
         account_ids.include?(bill.from_account_id)
       end
     end
