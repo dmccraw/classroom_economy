@@ -106,7 +106,7 @@ class TransactionsController < ApplicationController
     # check for errors
     @transaction = Transaction.new
     @transaction.user_id = current_user.id
-    @transaction.occurred_on = Time.strptime(params[:transaction][:occurred_on], "%m/%d/%Y")
+    @transaction.occurred_on = Time.strptime(params[:occurred_on], "%m/%d/%Y")
     transaction_attributes = {
       user_id: @transaction.user_id,
       occurred_on: @transaction.occurred_on

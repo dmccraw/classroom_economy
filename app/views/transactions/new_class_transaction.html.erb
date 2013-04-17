@@ -1,6 +1,6 @@
 <script type="text/javascript">
   $(document).ready(function() {
-    $('#datepicker').datepicker({
+    $('#occurred_on').datepicker({
         format: 'mm/dd/yyyy'
     });
   });
@@ -57,7 +57,7 @@
     <div class="control-group">
       <label class="control-label" for="transaction_from_account_id"><b>Occurred On:</b></label>
       <div class="controls">
-        <%= text_field_tag :datepicker, I18n.l(DateTime.now, format: :date) %>
+        <%= text_field_tag :occurred_on, I18n.l(DateTime.now, format: :date) %>
       </div>
     </div>
     <div class="control-group">
