@@ -17,5 +17,6 @@
 .DS_Store
 .idea
 /classroom_economy.sublime-workspace
-/config/database.yml
+
 /config/newrelic.yml
+/config/database.yml
