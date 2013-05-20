@@ -23,7 +23,7 @@ namespace :payments do
       end
 
       group.charges.each do |charge|
-        if account
+        if charge.account
           transaction = Transaction.new(
             from_account_id: charge.account_id,
             to_account_id: group_account.id,
