@@ -22,8 +22,8 @@ class Store < ActiveRecord::Base
 
   after_create :create_account
 
-  scope :approved, where(approved: true)
-  scope :unapproved, where(approved: false)
+  scope :approved, -> { where(approved: true) }
+  scope :unapproved, -> { where(approved: false) }
 
   # validations
   validates :name, uniqueness: { scope: :group_id }
