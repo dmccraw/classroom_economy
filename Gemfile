@@ -43,20 +43,14 @@ group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem "webrat", ">= 0.7.2"
   gem "factory_girl_rails", "~> 3.3.0"
+  gem 'simplecov'
 end
 
 group :test do
-  # gem 'shoulda'
-  # gem 'shoulda-context'
-  # gem 'spork'
-  # gem 'spork-testunit'
-  # gem 'guard-spork'
-  # gem 'guard-test'
-  # gem 'rb-inotify', :require => false
-  # gem 'rb-fsevent', :require => false
-  # gem 'rb-fchange', :require => false
-  # gem 'growl_notify'
-  # gem 'ruby-prof'
+  gem 'guard-spork'
+  gem 'guard-rspec'
+  gem 'spork-rails', :github => 'sporkrb/spork-rails'
+  gem "shoulda-matchers"
 end
 
 gem 'newrelic_rpm'
