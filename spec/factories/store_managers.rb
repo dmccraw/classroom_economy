@@ -2,17 +2,9 @@
 
 FactoryGirl.define do
   factory :store_manager do
-    store_id nil
-    user_id nil
+    store
+    user
     manage_level 1
     salary 0.0
-    before(:save) do |store_manager|
-      unless store_id
-        store_manager.store_id = FactoryGirl.create(:store).id
-      end
-      unless user_id
-        user_id = FactoryGirl.create(:user).id
-      end
-    end
   end
 end

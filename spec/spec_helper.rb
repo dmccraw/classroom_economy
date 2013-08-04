@@ -7,9 +7,9 @@ require 'spork'
 
 Spork.prefork do
   # require "rails/application"
-  puts ENV['DRB']
 
   unless ENV['DRB']
+    puts "SimpleCov.start prefork"
     require 'simplecov'
     SimpleCov.start 'rails'
   end
@@ -49,6 +49,8 @@ Spork.prefork do
     # the seed, which is printed after each run.
     #     --seed 1234
     config.order = "random"
+
+    config.include Devise::TestHelpers, :type => :controller
   end
 end
 
@@ -59,6 +61,7 @@ Spork.each_run do
   if ENV['DRB']
     puts 123
     require 'simplecov'
+    puts "SimpleCov.start each_run"
     SimpleCov.start 'rails'
     puts 456
   end

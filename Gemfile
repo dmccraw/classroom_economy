@@ -43,7 +43,6 @@ group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem "webrat", ">= 0.7.2"
   gem "factory_girl_rails", "~> 3.3.0"
-  gem 'simplecov'
 end
 
 group :test do
@@ -51,6 +50,7 @@ group :test do
   gem 'guard-rspec'
   gem 'spork-rails', :github => 'sporkrb/spork-rails'
   gem "shoulda-matchers"
+  gem 'simplecov', :require => false
 end
 
 gem 'newrelic_rpm'
