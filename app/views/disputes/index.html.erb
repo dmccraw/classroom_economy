@@ -1,9 +1,11 @@
 <%= render partial: "/groups/top", locals: { current_nav: "disputes" } %>
 
-<h2>Disputes</h2>
-<br/>
-<p>This is a list of disputes in your class. Disputes occur when a student feels that a transaction is in error. The teacher must handle a dispute by approving or denying it. Approving it will create a new transaction that will transfer the money back to the disputing student/store.</p>
-<br/>
+<div class="row">
+  <div class="col-10">
+    <h2>Disputes</h2>
+    <p>This is a list of disputes in your class. Disputes occur when a student feels that a transaction is in error. The teacher must handle a dispute by approving or denying it. Approving it will create a new transaction that will transfer the money back to the disputing student/store.</p>
+  </div>
+</div>
 
 <%= will_paginate @disputes if @disputes %>
 <table class="table table-striped table-bordered">
@@ -29,7 +31,7 @@
             <%= dispute.result == Dispute::APPROVE ? "Approved: " : "Denied: " %>
             <%= dispute.result_reason %>
           <% else %>
-            <%= link_to "Handle dispute", edit_group_dispute_path(@group, dispute), class: "btn" %>
+            <%= link_to "Handle dispute", edit_group_dispute_path(@group, dispute), class: "btn btn-info" %>
           <% end %>
         </td>
       </tr>

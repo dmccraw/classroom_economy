@@ -29,7 +29,13 @@ gem 'turbolinks'
 gem 'annotate'
 gem 'devise'
 # gem 'bootstrap-sass', :git => 'git://github.com/thomas-mcdonald/bootstrap-sass.git', :branch => '3'
-gem 'bootstrap-sass'
+# gem 'bootstrap-sass'
+# gem 'sass-rails',   '~> 3.2.3'
+gem 'bootstrap-sass', :git => 'git://github.com/thomas-mcdonald/bootstrap-sass.git', :branch => '3'
+gem 'bootstrap-sass', github: 'thomas-mcdonald/bootstrap-sass', branch: '3'
+# gem 'bootstrap-sass', github: 'thomas-mcdonald/bootstrap-sass', branch: '3'
+# https://github.com/thomas-mcdonald/bootstrap-sass.git
+
 gem 'pg'
 
 gem 'cancan'

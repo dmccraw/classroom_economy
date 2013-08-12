@@ -2,7 +2,14 @@
 <%# local_params[:account_id] = account_id if local_assigns.has_key?(:account_id) %>
 
 <%= render partial: "/groups/top", locals: { current_nav: "transactions" } %>
-<h2>Transactions</h2>
+
+
+<div class="row">
+  <div class="col-12">
+    <h2>Transactions</h2>
+    <p>Transactions occur any time money is transferred between accounts.</p>
+  </div>
+</div>
 <h3>Listing Transactions <%= "for #{@account.display_name}" if @account %></h3>
 
 <%= will_paginate @transactions if @transactions %>

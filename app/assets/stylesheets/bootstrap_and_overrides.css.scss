@@ -1,33 +1,67 @@
 @import "bootstrap";
 body { padding-top: 60px; }
-@import "bootstrap-responsive";
 
-// .nav-tabs {
-//   li {
-//     a:hover {
-//       border-color: #eeeeee #eeeeee #dddddd;
-//     }
-//   }
-// }
+.nav-tabs {
+  li {
+    a:hover {
+      border-color: #eeeeee #eeeeee #dddddd;
+    }
+  }
+}
 
-// .nav-tabs > .active > a,
-// .nav-tabs > .active > a:hover {
-//   color: #555555;
-//   background-color: white;
-//   border: 1px solid #dddddd;
-//   border-bottom-color: transparent;
-//   cursor: default;
-// }
+.nav-tabs > .active > a,
+.nav-tabs > .active > a:hover {
+  color: #555555;
+  background-color: white;
+  border: 1px solid #dddddd;
+  border-bottom-color: transparent;
+  cursor: default;
+}
 
 .nav {
   li {
     a:hover {
-      background-color: #000;
+      background-color: #467408;
     }
   }
 
 }
 
-label.bold {
-  font-weight: bold;
+// label.bold {
+//   font-weight: bold;
+// }
+
+// x-large font size
+$font-size-x-large:  ceil($font-size-base * 2) !default;
+
+.navbar-fixed-top {
+  background-color: #467408;
 }
+
+.navbar,
+.navbar-nav {
+  color: white;
+}
+
+.navbar-nav > li > a {
+  color: white;
+}
+
+.navbar-brand {
+  max-width: 400px;
+  color: white;
+  font-size: $font-size-x-large;
+}
+
+.navbar-brand:hover {
+  color: black;
+}
+
+.page-header {
+  border-bottom: 1px solid #dddddd;
+}
+
+.right-button-padding {
+  padding: 10px;
+}
+
