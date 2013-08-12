@@ -20,14 +20,16 @@
         </thead>
         <tbody>
           <% disputes.each do |dispute| %>
-            <tr>
-              <td><%= dispute.transaction.id %></td>
-              <td><%= display_balance(dispute.transaction.amount) %></td>
-              <td><%= dispute.transaction.to_account.owner.display_name %></td>
-              <td><%= dispute.transaction.from_account.owner.display_name %></td>
-              <td><%= dispute.reason %></td>
-              <td><%= link_to "Handle Dispute", edit_group_dispute_path(@group, dispute) %>
-            </tr>
+            <% if dispute.transaction %>
+              <tr>
+                <td><%= dispute.transaction.id %></td>
+                <td><%= display_balance(dispute.transaction.amount) %></td>
+                <td><%= dispute.transaction.to_account.owner.display_name %></td>
+                <td><%= dispute.transaction.from_account.owner.display_name %></td>
+                <td><%= dispute.reason %></td>
+                <td><%= link_to "Handle Dispute", edit_group_dispute_path(@group, dispute) %>
+              </tr>
+            <% end %>
           <% end %>
         </tbody>
       </table>
