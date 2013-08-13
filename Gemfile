@@ -45,7 +45,7 @@ group :test do
   gem 'rb-fsevent', :require => false
   gem 'rb-fchange', :require => false
   gem 'growl_notify'
-  gem 'ruby-prof'
+  # gem 'ruby-prof'
 end
 
 gem 'newrelic_rpm'
