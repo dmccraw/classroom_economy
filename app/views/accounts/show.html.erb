@@ -21,5 +21,5 @@
 <hr>
 
 <h2>Last 20 Transactions</h2>
-<%= link_to "All Transactions", group_transactions_path(@group, account_id: @account.id), class: "btn"  %><br/><br/>
+<%= link_to "All Transactions", group_transactions_path(@group, account_id: @account.id), class: "btn btn-default"  %><br/><br/>
 <%= render partial: '/transactions/transactions', locals: { transactions: @account.transactions.order("created_at DESC").limit(20), account_id: @account.id } %>

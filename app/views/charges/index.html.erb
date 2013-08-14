@@ -3,14 +3,20 @@
 <%
   can_update = current_user.teacher? || current_user.admin?
 %>
-<% if can_update %>
-  <div class="pull-right"><%= link_to "<i class='icon-plus'></i> Create Charge".html_safe, new_group_charge_path(@group), class: "btn btn-success" %></div>
-<% end %>
-<h2>Charges</h2>
-<br/>
-<p>This is a list charges that occur on the first of the month. It is a way for a teacher to charge students or stores rent. The money will be transferred out of the account and into the teachers class account.</p>
-<p>The next charge will occur on <%= first_of_next_month %>.</p>
-<br/>
+<div class="row">
+  <div class="col-md-10">
+    <h2>Charges</h2>
+    <p>A charges is a reoccuring bill that comes up the first of each month. It is a way for a teacher to charge students or stores rent on a once a month basis.</p>
+    <p>The next charge will occur on <%= first_of_next_month %>.</p>
+  </div>
+  <div class="col-md-2 right-button-padding">
+    <% if can_update %>
+      <div class="pull-right">
+        <%= link_to "<i class='icon-plus'></i> Create Charge".html_safe, new_group_charge_path(@group), class: "btn btn-success" %>
+      </div>
+    <% end %>
+  </div>
+</div>
 
 <table class="table table-striped table-bordered">
   <thead>
@@ -31,8 +37,8 @@
           <td><%= display_balance(charge.amount) %></td>
           <td><%= charge.account.display_name %></td>
           <% if can_update %>
-            <td><%= link_to "Edit", edit_group_charge_path(@group,charge), class: "btn btn-primary" %>
-              <%= link_to "<i class='icon-'></i> Destroy".html_safe, [@group,charge], method: :delete, data: { confirm: "This will delete this charge and remove it from any assigned student. Are you sure? This can\'t be undone." }, class: "btn btn-danger" %></td>
+            <td><%= link_to "<i class='icon-cog'></i> Edit".html_safe, edit_group_charge_path(@group,charge), class: "btn btn-primary" %>
+              <%= link_to "<i class='icon-trash'></i> Destroy".html_safe, [@group,charge], method: :delete, data: { confirm: "This will delete this charge and remove it from any assigned student. Are you sure? This can\'t be undone." }, class: "btn btn-danger" %></td>
           <% end %>
         </tr>
       <% end %>

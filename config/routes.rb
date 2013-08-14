@@ -38,7 +38,7 @@ ClassroomEconomy::Application.routes.draw do
 
   resources :users
 
-  match "switch_user" => "root#switch_user"
+  get "switch_user" => "root#switch_user"
   root to: "root#index"
 
 

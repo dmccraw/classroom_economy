@@ -1,33 +1,30 @@
-<div class="well">
-  <%= form_for([@group, @job_assignment]) do |f| %>
+<%= form_for([@group, @job_assignment]) do |f| %>
 
-    <%= render partial: "/shared/errors", locals: { o: @job_assignment } %>
+  <%= render partial: "/shared/errors", locals: { o: @job_assignment } %>
 
-    <div class="field">
-      <% if params[:user_id].present? %>
-        <%= @user.display_name %>
-        <%= f.hidden_field :user_id, value: params[:user_id] %>
-        <%= hidden_field_tag :user_id, params[:user_id] %>
-        <br/><br/>
-      <% else %>
-        <%= f.label :user_id %>
-        <%= f.select :user_id, options_from_collection_for_select(@users, :id, :display_name) %>
-      <% end %>
-    </div>
+  <div class="field form-group">
+    <%= f.label :user_id %>
+    <% if params[:user_id].present? %>
+      <p class="form-control-static"><%= @user.display_name %></p>
+      <%= f.hidden_field :user_id, value: params[:user_id] %>
+      <%= hidden_field_tag :user_id, params[:user_id] %>
+    <% else %>
+      <%= f.select :user_id, options_from_collection_for_select(@users, :id, :display_name), {}, class: "form-control" %>
+    <% end %>
+  </div>
 
-    <div class="field">
-      <%= f.label :job_id %>
-      <% if params[:job_id].present? %>
-        <%= @job.title %>
-        <%= f.hidden_field :job_id, value: params[:job_id] %>
-        <%= hidden_field_tag :job_id, params[:job_id] %>
-        <br/><br/>
-      <% else %>
-        <%= f.select :job_id, options_from_collection_for_select(@jobs, :id, :title) %>
-      <% end %>
-    </div>
-    <div class="actions">
-      <%= f.submit nil, class: "btn" %>
-    </div>
-  <% end %>
-</div>
+  <div class="field form-group">
+    <%= f.label :job_id %>
+    <% if params[:job_id].present? %>
+      <label class="form-control"><%= @job.title %></label>
+      <%= f.hidden_field :job_id, value: params[:job_id] %>
+      <%= hidden_field_tag :job_id, params[:job_id] %>
+    <% else %>
+      <%= f.select :job_id, options_from_collection_for_select(@jobs, :id, :title), {}, class: "form-control" %>
+    <% end %>
+  </div>
+  <div class="form-group pull-right">
+    <%= f.submit (@job_assignment.new_record? ? "Create Job Assignment" : "Edit Job Assignment"), class: "btn btn-success" %>
+    <%= link_to 'Cancel', group_jobs_path(@group), class: "btn btn-danger" %>
+  </div>
+<% end %>

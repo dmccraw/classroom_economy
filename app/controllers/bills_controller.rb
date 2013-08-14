@@ -55,10 +55,10 @@ class BillsController < ApplicationController
     bills = false
     @from_accounts = @group.accounts.includes(:owner).sort { |a,b| a.owner.display_name.downcase <=> b.owner.display_name.downcase }
 
+    params[:bill][:due_date]  = Time.strptime(params[:bill][:due_date], "%m/%d/%Y") if params[:bill][:due_date]
     @bill = Bill.new(params[:bill])
     @bill.group_id = @group.id
     @bill.user_id = current_user.id
-    @bill.due_date = Time.strptime(params[:bill][:due_date], "%m/%d/%Y")
 
     saved = false
     if current_user.student?

@@ -1,22 +1,24 @@
-<div class="well">
-  <%= form_for([@group, @job]) do |f| %>
+<%= form_for([@group, @job]) do |f| %>
 
-    <%= render partial: "/shared/errors", locals: { o: @job } %>
+  <%= render partial: "/shared/errors", locals: { o: @job } %>
 
-    <div class="field">
-      <%= f.label :title %>
-      <%= f.text_field :title %>
+  <div class="field form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: "form-control" %>
+  </div>
+  <div class="field form-group">
+    <%= f.label :description %>
+    <%= f.text_area :description, class: "form-control", rows: 3 %>
+  </div>
+  <div class="field form-group">
+    <%= f.label :salary, "Monthy Salary" %>
+    <div class="input-group">
+      <span class="input-group-addon">$</span>
+      <%= f.text_field :salary, class: "form-control" %>
     </div>
-    <div class="field">
-      <%= f.label :description %>
-      <%= f.text_area :description, class: "input-xxlarge", rows: 3 %>
-    </div>
-    <div class="field">
-      <%= f.label :salary, "Monthy Salary" %>
-      $ <%= f.text_field :salary %>
-    </div>
-    <div class="actions">
-      <%= f.submit nil, class: "btn" %>
-    </div>
-  <% end %>
-</div>
+  </div>
+  <div class="form-group pull-right">
+    <%= f.submit nil, class: "btn btn-success" %>
+    <%= link_to 'Cancel', group_jobs_path(@group), class: "btn btn-danger" %>
+  </div>
+<% end %>

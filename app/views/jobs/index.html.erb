@@ -1,17 +1,22 @@
 <%= render partial: "/groups/top", locals: { current_nav: "jobs" } %>
 
-<%
-  can_update = current_user.teacher? || current_user.admin?
-%>
+<% can_update = current_user.teacher? || current_user.admin? %>
 
-<% if can_update %>
-  <div class="pull-right"><%= link_to "<i class='icon-plus'></i> Create Job".html_safe, new_group_job_path(@group), class: "btn btn-success" %></div>
-<% end %>
-<h2>Jobs</h2>
-<br/>
-<p>This is a list of jobs that are available for your class. You can add new jobs, edit existing jobs, see which students have which jobs and assign new jobs. All jobs get paid on the first of the month automatically.</p>
-<p>The next payday will occur on <%= first_of_next_month %>.</p>
-<br/>
+<div class="row">
+  <div class="col-md-10">
+    <h2>Jobs</h2>
+    <p>This is a list of jobs that are available for your class. You can add new jobs, edit existing jobs, see which students have which jobs and assign new jobs. All jobs get paid on the first of the month automatically.</p>
+    <p>The next payday will occur on <%= first_of_next_month %>.</p>
+  </div>
+  <div class="col-md-2 right-button-padding">
+    <div class="pull-right">
+      <% if can_update %>
+        <%= link_to "<i class='icon-plus'></i> Create Job".html_safe, new_group_job_path(@group), class: "btn btn-success" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
 
 <table class="table table-striped table-bordered">
   <thead>
@@ -41,9 +46,9 @@
             <%= student_info %>
           </td>
           <% if can_update %>
-            <td><%= link_to "Assign", new_group_job_assignment_path(@group, job_id: job.id), class: "btn" %>
-            <%= link_to "Edit".html_safe, edit_group_job_path(@group,job), class: "btn btn-primary" %>
-            <%= link_to "<i class='icon-'></i> Destroy".html_safe, [@group,job], method: :delete, data: { confirm: "This will delete this job and remove it from any assigned students. Are you sure? This can\'t be undone." }, class: "btn btn-danger" %></td>
+            <td><%= link_to "Assign", new_group_job_assignment_path(@group, job_id: job.id), class: "btn btn-default" %>
+            <%= link_to "<i class='icon-cog'></i> Edit".html_safe, edit_group_job_path(@group,job), class: "btn btn-primary" %>
+            <%= link_to "<i class='icon-trash'></i> Destroy".html_safe, [@group,job], method: :delete, data: { confirm: "This will delete this job and remove it from any assigned students. Are you sure? This can\'t be undone." }, class: "btn btn-danger" %></td>
           <% end %>
         </tr>
       <% end %>

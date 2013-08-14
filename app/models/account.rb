@@ -33,8 +33,8 @@ class Account < ActiveRecord::Base
   after_destroy :destroy_transactions
 
   # scopes
-  scope :users, where("owner_type = ?", "User")
-  scope :stores, where("owner_type = ?", "Store")
+  scope :users, -> { where("owner_type = ?", "User") }
+  scope :stores, -> { where("owner_type = ?", "Store") }
 
   def user?
     self.owner_type == "User"
