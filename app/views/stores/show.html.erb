@@ -2,14 +2,25 @@
 <% can_transact = can? :transact, @store %>
 <%= render partial: "/groups/top", locals: { current_nav: "stores" } %>
 
-<% if can_update %>
-  <div class="pull-right">
-    <%= link_to "<i class='icon-cog'></i> Edit Store Info".html_safe, edit_group_store_path(@group, @store), class: "btn btn-primary" %>
-  </div>
-<% end %>
 
-<h1><%= @store.name %><h1>
-<h4><%= @store.description %></h4>
+
+<div class="row">
+  <div class="col-sm-10">
+    <h1><%= @store.name %><h1>
+    <h4><%= @store.description %></h4>
+    <% if can_update || can_transact %>
+      <b>Current Balance:</b>
+      <%= display_balance(@store.account.balance) %>
+    <% end %>
+  </div>
+  <div class="col-sm-2 right-button-padding">
+    <% if can_update %>
+      <div class="pull-right">
+        <%= link_to "<i class='icon-cog'></i> Edit Store Info".html_safe, edit_group_store_path(@group, @store), class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
 <hr>
 <% if @store.approved && (can_update || can_transact) %>
   <center>
@@ -17,8 +28,7 @@
     |
     <%= link_to "<i class='icon-plus'></i> Sell Something".html_safe, new_group_transaction_path(@group, to_account_id: @store.account.id), class: "btn btn-success" %>
     <% if @store.class_store? && (can_update || can_transact) %>
-      <br/></br>
-      <%= link_to "<i class='icon-plus'></i> Fine Entire Class".html_safe, new_class_transaction_group_transactions_path(@group, to_account_id: @group.group_account.id, from: "store"), class: "btn btn-success" %>
+      | <%= link_to "<i class='icon-plus'></i> Fine Entire Class".html_safe, new_class_transaction_group_transactions_path(@group, to_account_id: @group.group_account.id, from: "store"), class: "btn btn-success" %>
       |
       <%= link_to "<i class='icon-minus'></i> Bonus Entire Class".html_safe, new_class_transaction_group_transactions_path(@group, from_account_id: @group.group_account.id, from: "store"), class: "btn btn-danger" %>
 
@@ -32,26 +42,28 @@
   </div>
   <hr>
 <% end %>
-<% if can_update || can_transact %>
-  <b>Current Balance:</b>
-  <%= display_balance(@store.account.balance) %>
-  <hr>
-<% end %>
 
 <% if can_update || can_transact %>
   <h2>Last 20 Transactions</h2>
-  <p><%= link_to "All Transactions", group_transactions_path(@group, account_id: @store.account.id), class: "btn"  %>
+  <p><%= link_to "All Transactions", group_transactions_path(@group, account_id: @store.account.id), class: "btn btn-default"  %>
   <%= render partial: '/transactions/transactions', locals: { transactions: @store.account.transactions.limit(20).order("created_at DESC"), account_id: @store.account.id } %>
   <hr>
 <% end %>
 
-<% if can_update %>
-  <div class="pull-right">
-    <%= link_to "<i class='icon-plus'></i> Add Owner".html_safe, new_group_store_store_owner_path(@group, @store), class: "btn btn-success" %>
+<div class="row">
+  <div class="col-md-10">
+    <h3>Owners</h3>
+    <p>Owners have the ability to buy and sell stuff for the store. They can also add other owners, add/remove managers and edit store info.</p>
   </div>
-<% end %>
-<h3>Owners</h3>
-<p>Owners have the ability to buy and sell stuff for the store. They can also add other owners, add/remove managers and edit store info.</p>
+  <div class="col-md-2">
+    <% if can_update %>
+      <div class="pull-right">
+        <%= link_to "<i class='icon-plus'></i> Add Owner".html_safe, new_group_store_store_owner_path(@group, @store), class: "btn btn-success" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
 <table class="table table-striped table-bordered">
   <thead>
     <th>Name</th>
@@ -65,7 +77,7 @@
         <td><%= store_owner.user.display_name %></td>
         <% if @store.store_owners.count > 1 && can_update %>
           <td>
-            <%= link_to "<i class='icon-remove-sign'></i> Remove Owner".html_safe, group_store_store_owner_path(@group, @store, store_owner), method: :delete, data: { confirm: "Are you sure you want to remove this owner? This can't be undone."}, class: "btn btn-danger" %>
+            <%= link_to "<i class='icon-trash'></i> Remove Owner".html_safe, group_store_store_owner_path(@group, @store, store_owner), method: :delete, data: { confirm: "Are you sure you want to remove this owner? This can't be undone."}, class: "btn btn-danger" %>
           </td>
         <% end %>
       </tr>
@@ -74,13 +86,18 @@
 </table>
 
 <hr>
-<% if can_update %>
-  <div class="pull-right">
-    <%= link_to "<i class='icon-plus'></i> Add Manager".html_safe, new_group_store_store_manager_path(@group, @store), class: "btn btn-success" %>
+<div class="row">
+  <div class="col-md-10">
+    <h3>Managers</h3>
+    <p>Managers are paid employees of the store that have the ability to buy and sell stuff for the store. Owners should not be managers.</p>
   </div>
-<% end %>
-<h3>Managers</h3>
-<p>Managers are paid employees of the store that have the ability to buy and sell stuff for the store. Owners should not be managers.</p>
+  <div class="col-md-2">
+    <% if can_update %>
+      <div class="pull-right">
+        <%= link_to "<i class='icon-plus'></i> Add Manager".html_safe, new_group_store_store_manager_path(@group, @store), class: "btn btn-success" %>
+      </div>
+    <% end %>
+  </div>
 <table class="table table-striped table-bordered">
   <thead>
     <th>Name</th>
@@ -102,7 +119,7 @@
           <% end %>
           <% if can_update   %>
             <td>
-              <%= link_to "<i class='icon-remove-sign'></i> Remove Manager".html_safe, group_store_store_manager_path(@group, @store, store_manager), method: :delete, data: { confirm: "Are you sure you want to remove this manager? This can't be undone."}, class: "btn btn-danger" %>
+              <%= link_to "<i class='icon-trash'></i> Remove Manager".html_safe, group_store_store_manager_path(@group, @store, store_manager), method: :delete, data: { confirm: "Are you sure you want to remove this manager? This can't be undone."}, class: "btn btn-danger" %>
             </td>
           <% end %>
         </tr>

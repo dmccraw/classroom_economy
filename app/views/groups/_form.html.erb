@@ -1,12 +1,11 @@
 <%= form_for(@group) do |f| %>
-
   <%= render partial: '/shared/errors', locals: { o: @group } %>
-
-  <div class="field">
+  <div class="field form-group">
     <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, class: "form-control" %>
   </div>
-  <div class="actions">
-    <%= f.submit (@group.new_record? ? "Create" : "Update"), class: "btn" %>
+  <div class="form-group pull-right">
+    <%= f.submit (@group.new_record? ? "Create" : "Update"), class: "btn btn-success" %>
+    <%= link_to 'Cancel', (@group.new_record? ? root_path : @group), class: "btn btn-danger" %>
   </div>
 <% end %>

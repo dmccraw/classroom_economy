@@ -1,32 +1,33 @@
-<div class="well">
-  <%= form_for([@group,@charge]) do |f| %>
+<%= form_for([@group,@charge]) do |f| %>
 
-    <%= render partial: "/shared/errors", locals: { o: @charge } %>
+  <%= render partial: "/shared/errors", locals: { o: @charge } %>
 
-    <div class="field">
-      <% if @charge.account_id %>
-        <%= f.label :account_id %>
-        <%= @charge.account.display_name %>
-        <%= f.hidden_field :account_id, value: @charge.account_id %>
-        <br/><br/>
-      <% else %>
-        <%= f.label :account_id %>
-        <%= f.select :account_id, accounts_for_select(@accounts) %>
-      <% end %>
-   </div>
+  <div class="field form-group">
+    <% if @charge.account_id %>
+      <%= f.label :account_id %>
+      <%= @charge.account.display_name %>
+      <%= f.hidden_field :account_id, value: @charge.account_id %>
+    <% else %>
+      <%= f.label :account_id %>
+      <%= f.select :account_id, accounts_for_select(@accounts), {}, class: "form-control" %>
+    <% end %>
+ </div>
 
-    <div class="field">
-      <%= f.label :description %>
-      <%= f.text_area :description, class: "input-xxlarge", rows: 3 %>
+  <div class="field form-group">
+    <%= f.label :description %>
+    <%= f.text_area :description, class: "form-control" %>
+  </div>
+
+  <div class="field form-group">
+    <%= f.label :amount %>
+    <div class="input-group">
+      <span class="input-group-addon">$</span>
+      <%= f.text_field :amount, class: "form-control" %>
     </div>
+  </div>
 
-    <div class="field">
-      <%= f.label :amount %>
-      $<%= f.text_field :amount %>
-    </div>
-
-    <div class="actions">
-      <%= f.submit nil, class: "btn" %>
-    </div>
-  <% end %>
-</div>
+  <div class="actions form-group pull-right">
+    <%= f.submit nil, class: "btn btn-success" %>
+    <%= link_to 'Cancel', group_charges_path(@group), class: "btn btn-danger" %>
+  </div>
+<% end %>

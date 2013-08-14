@@ -1,59 +1,70 @@
-<%= link_to "Classroom Economy", root_path, :class => 'brand' %>
-
-<ul class="nav">
-  <% if user_signed_in? %>
-    <% if (current_user.teacher? || current_user.student?) && current_user.groups.count > 1 %>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          Switch Class
-          <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu">
-          <% current_user.groups.each do |group| %>
-            <li><%= link_to(group.name, group_path(group)) %></li>
-          <% end %>
-        </ul>
-      </li>
+<div class="navbar navbar-fixed-top">
+  <div class="container" style="width: auto;">
+    <% if params[:group_id].present? || (params[:controller] == "groups" && params[:id].present?) %>
+      <% id = params[:group_id].present? ? params[:group_id] : params[:id] %>
+      <%= link_to "Classroom Economy", group_path(id: id), :class => 'navbar-brand' %>
+    <% else %>
+      <%= link_to "Classroom Economy", root_path, :class => 'navbar-brand' %>
     <% end %>
-  <% else %>
-    <li>
-    <%= link_to('Login', new_user_session_path)  %>
-    </li>
-  <% end %>
-  <% if user_signed_in? %>
-    <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-        <%= current_user.display_name %>
-        <b class="caret"></b>
-      </a>
-      <ul class="dropdown-menu">
-        <% unless current_user.student? %>
-          <li>
-            <%= link_to("Add Class", new_group_path) %>
+
+    <ul class="nav navbar-nav">
+      <% if user_signed_in? %>
+        <% if (current_user.teacher? || current_user.student?) && current_user.groups.count > 1 %>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              Switch Class
+              <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <% current_user.groups.each do |group| %>
+                <li><%= link_to(group.name, group_path(group)) %></li>
+              <% end %>
+            </ul>
           </li>
         <% end %>
+      <% else %>
         <li>
-          <%= link_to("Edit Profile", edit_user_path(current_user)) %>
+        <%= link_to('Login', new_user_session_path)  %>
         </li>
+      <% end %>
+    </ul>
+    <ul class="nav navbar-nav pull-right">
+      <% if user_signed_in? %>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <%= current_user.display_name %>
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <% unless current_user.student? %>
+              <li>
+                <%= link_to("Add Class", new_group_path) %>
+              </li>
+            <% end %>
+            <li>
+              <%= link_to("Edit Profile", edit_user_path(current_user)) %>
+            </li>
+            <li>
+              <%= link_to("Change Password", edit_user_registration_path) %>
+            </li>
+            <% if current_user.admin? %>
+              <li>
+              <%= link_to('Admin', root_path) %>
+              </li>
+            <% end %>
+            <li>
+            <%= link_to('Logout', destroy_user_session_path, :method=>'delete') %>
+            </li>
+            <% if Rails.env.development? && @group && @group.user %>
+              <li><%= link_to "Switch to #{@group.user.display_name}", switch_user_path(user_id: @group.user.id) %></li>
+            <% end %>
+          </ul>
+        </li>
+      <% else %>
         <li>
-          <%= link_to("Change Password", edit_user_registration_path) %>
+        <%= link_to('Sign up', new_user_registration_path)  %>
         </li>
-        <% if current_user.admin? %>
-          <li>
-          <%= link_to('Admin', root_path) %>
-          </li>
-        <% end %>
-        <li>
-        <%= link_to('Logout', destroy_user_session_path, :method=>'delete') %>
-        </li>
-        <% if Rails.env.development? && @group %>
-          <li><%= link_to "Switch to #{@group.user.display_name}", switch_user_path(user_id: @group.user.id) %></li>
-        <% end %>
-      </ul>
-    </li>
-  <% else %>
-    <li>
-    <%= link_to('Sign up', new_user_registration_path)  %>
-    </li>
-  <% end %>
-</ul>
+      <% end %>
+    </ul>
+  </div>
+</div>

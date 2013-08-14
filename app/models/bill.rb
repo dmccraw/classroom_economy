@@ -41,8 +41,8 @@ class Bill < ActiveRecord::Base
   validates :transaction_id, presence: true, if: :paid
 
   # scopes
-  scope :paid, where("paid is true")
-  scope :unpaid, where("paid is not true")
+  scope :paid, -> { where("paid is true") }
+  scope :unpaid, -> { where("paid is not true") }
 
   def pay(current_user)
     # create a transaction and make sure the transaction is successful

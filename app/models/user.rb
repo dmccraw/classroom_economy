@@ -74,9 +74,9 @@ class User < ActiveRecord::Base
   USER_TYPE_ADMIN   = 10
 
   # scope
-  scope :admins, where(user_type: USER_TYPE_ADMIN)
-  scope :teachers, where(user_type: USER_TYPE_TEACHER)
-  scope :students, where(user_type: USER_TYPE_STUDENT)
+  scope :admins, -> { where(user_type: USER_TYPE_ADMIN) }
+  scope :teachers, -> { where(user_type: USER_TYPE_TEACHER) }
+  scope :students, -> { where(user_type: USER_TYPE_STUDENT) }
 
   attr_accessor :login
 
@@ -128,7 +128,7 @@ class User < ActiveRecord::Base
   def groups
     case user_type
     when USER_TYPE_TEACHER
-      _groups = Group.find_all_by_user_id(self.id)
+      _groups = Group.where(user_id: self.id)
       # find groups through memberships
       memberships.each do |membership|
         _groups << membership.group
