@@ -6,7 +6,7 @@
 
 
 <div class="row">
-  <div class="col-10">
+  <div class="col-md-10">
     <h2>Bills</h2>
     <% if can_update %>
       <p>Bills can be sent to students or stores. The students will see these bill and the date they are due and can pay them from their info page.</p>
@@ -14,7 +14,7 @@
       <p>This is a list of bills that have been paid and bills that need to be paid.</p>
     <% end %>
   </div>
-  <div class="col-2 right-button-padding">
+  <div class="col-md-2 right-button-padding">
     <% if can_update %>
       <div class="pull-right">
         <%= link_to "<i class='icon-plus'></i> Create Bill".html_safe, new_group_bill_path(@group), class: "btn btn-success" %>
@@ -46,8 +46,8 @@
           <td><%= I18n.l bill.due_date, format: :date %></td>
           <% if can_update %>
             <td>
-              <%= link_to "<i class='icon-cog'></i> Edit".html_safe, edit_group_bill_path(@group, bill), class: "btn btn-info" %>
-              <%= link_to "<i class='icon-'></i> Destroy".html_safe, [@group,bill], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+              <%= link_to "<i class='icon-cog'></i> Edit".html_safe, edit_group_bill_path(@group, bill), class: "btn btn-primary" %>
+              <%= link_to "<i class='icon-trash'></i> Destroy".html_safe, [@group,bill], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
             </td>
           <% else %>
             <td>

@@ -1,33 +1,31 @@
-<div class="well">
-  <%= form_for(@student, url: (@student.new_record? ? group_students_path(@group) : group_student_path(@group,@student))) do |f| %>
+<%= form_for(@student, url: (@student.new_record? ? group_students_path(@group) : group_student_path(@group,@student))) do |f| %>
 
   <%= render partial: "/shared/errors", locals: { o: @student } %>
 
-    <%= f.hidden_field :user_type %>
+  <%= f.hidden_field :user_type %>
 
-    <div class="field">
-      <%= f.label :first_name %>
-      <%= f.text_field :first_name %>
-    </div>
+  <div class="field form-group">
+    <%= f.label :first_name %>
+    <%= f.text_field :first_name, class: "form-control" %>
+  </div>
 
-    <div class="field">
-      <%= f.label :last_name %>
-      <%= f.text_field :last_name %>
-    </div>
+  <div class="field form-group">
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name, class: "form-control" %>
+  </div>
 
-    <div class="field">
-      <%= f.label :email, "Email #{"(optional)" if @student.user_type == User::USER_TYPE_STUDENT }" %>
-      <%= f.text_field :email %>
-    </div>
+  <div class="field form-group">
+    <%= f.label :email, "Email #{"(optional)" if @student.user_type == User::USER_TYPE_STUDENT }" %>
+    <%= f.text_field :email, class: "form-control" %>
+  </div>
 
-    <div class="field">
-      <%= f.label :password %>
-      <%= f.password_field :password %>
-    </div>
+  <div class="field form-group">
+    <%= f.label :password %>
+    <%= f.password_field :password, class: "form-control" %>
+  </div>
 
-    <div class="actions">
-      <%= f.submit (@student.new_record? ? "Create" : "Update"), class: "btn" %>
-    </div>
- <% end %>
-
-</div>
+  <div class="actions pull-right">
+    <%= f.submit (@student.new_record? ? "Create" : "Update"), class: "btn btn-success" %>
+    <%= link_to 'Cancel', group_students_path, class: "btn btn-danger" %>
+  </div>
+<% end %>

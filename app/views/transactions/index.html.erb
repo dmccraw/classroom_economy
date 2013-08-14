@@ -5,7 +5,7 @@
 
 
 <div class="row">
-  <div class="col-12">
+  <div class="col-md-12">
     <h2>Transactions</h2>
     <p>Transactions occur any time money is transferred between accounts.</p>
   </div>
@@ -30,13 +30,12 @@
   <tbody>
   <% if @transactions && @transactions.count > 0 %>
     <% @transactions.each do |transaction| %>
-      <%
-        cls = nil
+      <% cls = nil
         if params[:account_id]
           if params[:account_id].to_i == transaction.to_account_id
             cls = "class=success"
           else
-            cls = "class=error"
+            cls = "class=danger"
           end
         end
       %>
@@ -44,7 +43,12 @@
         <td><%= transaction.id %></td>
         <td><%= link_to(transaction.from_account.display_name, group_account_path(@group, transaction.from_account)) if transaction.from_account.present? %></td>
         <td><%= link_to(transaction.to_account.display_name, group_account_path(@group, transaction.to_account)) if transaction.to_account.present? %> </td>
-        <td><%= display_balance(transaction.amount) %></td>
+        <td>
+          <% if cls %>
+            <i class="<%= cls == "class=success" ? "icon-arrow-up" : "icon-arrow-down" %>"></i>
+          <% end %>
+          <%= display_balance(transaction.amount) %>
+        </td>
         <td><%= transaction.description %></td>
         <td><%= I18n.l transaction.occurred_on, format: :medium %></td>
         <td><%= I18n.l transaction.created_at, format: :medium %> by <%= transaction.user.display_name %></td>

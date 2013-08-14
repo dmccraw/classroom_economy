@@ -5,7 +5,7 @@
 <%= render partial: "/groups/top", locals: { current_nav: "students" } %>
 
 <div class="row">
-  <div class="col-10">
+  <div class="col-md-10">
     <h2>Students</h2>
     <p>This is a list of students in this class.
       <% if can? :update, User %>
@@ -13,8 +13,10 @@
       <% end %>
     </p>
   </div>
-  <div class="col-2 right-button-padding">
-    <div class= ""><%= link_to("<i class='icon-plus'></i> Add Student".html_safe, new_group_student_path(group_id: @group.id), class: "btn btn-success") if can? :create, User %></div>
+  <div class="col-md-2 right-button-padding">
+    <div class="pull-right">
+      <%= link_to("<i class='icon-plus'></i> Add Student".html_safe, new_group_student_path(group_id: @group.id), class: "btn btn-success") if can? :create, User %>
+    </div>
   </div>
 </div>
 </br>

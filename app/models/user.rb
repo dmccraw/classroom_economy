@@ -128,7 +128,7 @@ class User < ActiveRecord::Base
   def groups
     case user_type
     when USER_TYPE_TEACHER
-      _groups = Group.find_all_by_user_id(self.id)
+      _groups = Group.where(user_id: self.id)
       # find groups through memberships
       memberships.each do |membership|
         _groups << membership.group

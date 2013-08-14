@@ -1,7 +1,7 @@
 <%= render partial: "/groups/top", locals: { current_nav: "accounts" } %>
 
 <div class="row">
-  <div class="col-12">
+  <div class="col-md-12">
     <h2>Accounts</h2>
     <p>This is a list of the accounts for this class.</p>
   </div>
@@ -11,9 +11,9 @@
 
 <table class="table table-striped table-bordered">
   <tr>
-    <th>Owner</th>
-    <th>Balance</th>
-    <th></th>
+    <th width="33%">Owner</th>
+    <th width="33%">Balance</th>
+    <th width="33%"></th>
   </tr>
 
 <% @user_accounts.each do |account| %>
@@ -31,9 +31,9 @@
 
 <table class="table table-striped table-bordered">
   <tr>
-    <th>Owner</th>
-    <th>Balance</th>
-    <th></th>
+    <th width="33%">Owner</th>
+    <th width="33%">Balance</th>
+    <th width="33%"></th>
   </tr>
 
 <% @store_accounts.each do |account| %>

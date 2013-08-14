@@ -1,22 +1,21 @@
-<div class="well">
   <%= form_for([@group,@store,@store_owner]) do |f| %>
 
-    <%= render partial: '/shared/errors', locals: { o: @store_owner } %>
+  <%= render partial: '/shared/errors', locals: { o: @store_owner } %>
 
-    <%= f.hidden_field :store_id %>
+  <%= f.hidden_field :store_id %>
 
-    <div class="field">
-      <%= label_tag :store_name, "Store Name" %>
-      <%= @store.name %><br/><br/>
-    </div>
+  <div class="field form-group">
+    <%= label_tag :store_name, "Store Name:" %>
+    <%= @store.name %>
+  </div>
 
-    <div class="field">
-      <%= f.label :user_id, "Owner" %>
-      <%= f.select :user_id, options_from_collection_for_select(@users, :id, :display_name) %>
-    </div>
+  <div class="field form-group">
+    <%= f.label :user_id, "Owner" %>
+    <%= f.select :user_id, options_from_collection_for_select(@users, :id, :display_name), {}, class: "form-control" %>
+  </div>
 
-    <div class="actions">
-      <%= f.submit (@store_owner.new_record? ? "Add Owner" : "Update"), class: "btn" %>
-    </div>
-  <% end %>
-</div>
+  <div class="actions form-group pull-right">
+    <%= f.submit (@store_owner.new_record? ? "Add Owner" : "Update"), class: "btn btn-success" %>
+    <%= link_to 'Cancel', group_store_path(@group, @store), class: "btn btn-danger" %>
+  </div>
+<% end %>

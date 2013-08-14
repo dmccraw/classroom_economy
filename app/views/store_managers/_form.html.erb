@@ -1,28 +1,31 @@
-<div class="well">
-  <%= form_for([@group, @store, @store_manager]) do |f| %>
+<%= form_for([@group, @store, @store_manager]) do |f| %>
 
     <%= render partial: "/shared/errors", locals: { o: @store_manager } %>
 
-    <div class="field">
-      <%= f.label :store_id %>
+    <div class="field form-group">
+      <%= f.label :store_id, "Store:" %>
       <%= @store.name %>
-      <%= f.hidden_field :store_id %><br/></br>
+      <%= f.hidden_field :store_id %>
     </div>
 
-    <div class="field">
+    <div class="field form-group">
       <%= f.label :user_id, "Manager" %>
-      <%= f.select :user_id, options_from_collection_for_select(@users, :id, :display_name) %>
+      <%= f.select :user_id, options_from_collection_for_select(@users, :id, :display_name), {}, class: "form-control" %>
     </div>
 
-    <div class="field">
+    <div class="field form-group">
       <%= f.label :salary, "Monthly Salary" %>
-      $<%= f.text_field :salary %><br/></br>
+      <div class="input-group">
+        <span class="input-group-addon">$</span>
+        <%= f.text_field :salary, class: "form-control" %>
+      </div>
     </div>
 
     <%= f.hidden_field :manage_level, value: 1 %>
 
-    <div class="actions">
-      <%= f.submit nil, class: "btn" %>
+    <div class="actions form-group pull-right">
+      <%= f.submit nil, class: "btn btn-success" %>
+      <%= link_to 'Back', group_store_path(@group, @store), class: "btn btn-danger" %>
     </div>
   <% end %>
 </div>

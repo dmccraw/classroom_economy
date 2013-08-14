@@ -1,6 +1,11 @@
 <div class="navbar navbar-fixed-top">
   <div class="container" style="width: auto;">
-    <%= link_to "Classroom Economy", root_path, :class => 'navbar-brand' %>
+    <% if params[:group_id].present? || (params[:controller] == "groups" && params[:id].present?) %>
+      <% id = params[:group_id].present? ? params[:group_id] : params[:id] %>
+      <%= link_to "Classroom Economy", group_path(id: id), :class => 'navbar-brand' %>
+    <% else %>
+      <%= link_to "Classroom Economy", root_path, :class => 'navbar-brand' %>
+    <% end %>
 
     <ul class="nav navbar-nav">
       <% if user_signed_in? %>
@@ -50,7 +55,7 @@
             <li>
             <%= link_to('Logout', destroy_user_session_path, :method=>'delete') %>
             </li>
-            <% if Rails.env.development? && @group %>
+            <% if Rails.env.development? && @group && @group.user %>
               <li><%= link_to "Switch to #{@group.user.display_name}", switch_user_path(user_id: @group.user.id) %></li>
             <% end %>
           </ul>

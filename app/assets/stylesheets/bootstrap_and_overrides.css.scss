@@ -1,5 +1,39 @@
 @import "bootstrap";
-body { padding-top: 60px; }
+
+// @import url("//fonts.googleapis.com/css?family=Lato:400,700,900,400italic");
+
+@media screen and (max-width: $screen-small) {
+  body { padding-top: 75px; }
+}
+
+@media screen and (min-width: $screen-small) {
+  body { padding-top: 55px; }
+}
+
+// $green-color: #9CAA9C;
+$green-color: #6A8347;
+// $green-color: #1b8d10;
+// $green-color: #71a538;
+
+.content {
+//   // background-color: #EFEFDE;
+//   // background-color: #CCCC99;
+//   //background-color: #f5f5f5;
+  background-color: #eeeeee;
+  padding: 10px 20px 10px 20px;
+  //margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
+  -webkit-border-radius: 0 0 6px 6px;
+  -moz-border-radius: 0 0 6px 6px;
+  border-radius: 0 0 6px 6px;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+  -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+  box-shadow: 0 1px 2px rgba(0,0,0,.15);
+}
+
+.negative {
+  font-weight: bold;
+  color: #bd362f;
+}
 
 .nav-tabs {
   li {
@@ -21,7 +55,7 @@ body { padding-top: 60px; }
 .nav {
   li {
     a:hover {
-      background-color: #467408;
+      background-color: $green-color;
     }
   }
 
@@ -35,7 +69,7 @@ body { padding-top: 60px; }
 $font-size-x-large:  ceil($font-size-base * 2) !default;
 
 .navbar-fixed-top {
-  background-color: #467408;
+  background-color: $green-color;
 }
 
 .navbar,
@@ -58,10 +92,22 @@ $font-size-x-large:  ceil($font-size-base * 2) !default;
 }
 
 .page-header {
+  // margin: 40px 0 20px;
+  margin: 0 0 20px 0;
   border-bottom: 1px solid #dddddd;
 }
 
 .right-button-padding {
   padding: 10px;
+}
+
+@media screen and (min-width: $screen-tablet) {
+  .container-half {
+    width: 50%;
+  }
+}
+
+hr {
+  border-top: 1px solid #dddddd;
 }
 

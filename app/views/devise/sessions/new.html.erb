@@ -1,31 +1,38 @@
 <div class="container sign-in" style="max-width:500px;">
-  <h2>Sign in</h2>
+
+  <div class="field form-group">
+    <div class="col-lg-offset-4 col-lg-8">
+      <h2>Sign in</h2>
+    </div>
+  </div>
 
   <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), html: { class: "form-horizontal"}) do |f| %>
 
     <%= f.hidden_field :user_type, value: 2 %>
-    <div class="form-group">
-      <%= f.label :login, "Email/Username", class: "col-lg-4 control-label" %>
+    <div class="field form-group">
+      <div class="col-lg-4">
+        <%= f.label :login, "Email/Username", class: "control-label" %>
+      </div>
       <div class="col-lg-8">
         <%= f.text_field :login, placeholder: "Email/Username", class: "form-control" %>
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="field form-group">
       <%= f.label :password, class: "col-lg-4 control-label" %>
     <div class="col-lg-8">
         <%= f.password_field :password, placeholder: "Password", class: "form-control" %>
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="field form-group">
       <div class="col-lg-offset-4 col-lg-8">
         <% if devise_mapping.rememberable? -%>
           <div><%= f.check_box :remember_me %> <%= f.label :remember_me, style: "display:inline;" %></div>
         <% end -%>
       </div>
     </div>
-    <div class="form-group">
+    <div class="field form-group">
       <div class="col-lg-offset-4 col-lg-8">
         <%= f.submit "Sign in", class: "btn btn-default" %>
       </div>

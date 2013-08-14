@@ -3,7 +3,7 @@
     if account_id == transaction.to_account_id
       cls = "class=success"
     else
-      cls = "class=error"
+      cls = "class=danger"
     end
   end
 %>
@@ -12,7 +12,12 @@
   <td><%= transaction.id %></td>
   <td><%= transaction.from_account.display_name %></td>
   <td><%= transaction.to_account.display_name %></td>
-  <td><%= display_balance(transaction.amount) %></td>
+  <td>
+    <% if cls %>
+      <i class="<%= cls == "class=success" ? "icon-arrow-up" : "icon-arrow-down" %>"></i>
+    <% end %>
+    <%= display_balance(transaction.amount) %>
+  </td>
   <td><%= transaction.description %></td>
   <td><%= I18n.l transaction.occurred_on.to_date, format: :short %></td>
   <td><%= I18n.l transaction.created_at, format: :medium %> by <%= transaction.user.display_name %></td>

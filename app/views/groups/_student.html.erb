@@ -1,6 +1,6 @@
 <div class="row">
 
-  <div class="col-8">
+  <div class="col-md-7">
     <h2>Personal Account</h3>
     <h4>Balance: <%= display_balance(current_user.account(@group.id).balance) %></h4>
     <p>Charges and payday will occur on <%= first_of_next_month %>.</p>
@@ -35,7 +35,7 @@
                 </span>
               </td>
               <td>
-                <%= link_to "Bay Bill", pay_bill_group_bill_path(@group, unpaid_bill) , data: { confirm: "Are you sure you want to pay this bill?" } %>
+                <%= link_to "Pay Bill", pay_bill_group_bill_path(@group, unpaid_bill), class: "btn btn-danger" , data: { confirm: "Are you sure you want to pay this bill?" } %>
               </td>
             </tr>
           <% end %>
@@ -47,7 +47,7 @@
     <hr>
 
     <h3>Last 20 Transactions</h3>
-    <%= link_to "All Transactions", group_transactions_path(@group, account_id: current_user.account(@group.id)), class: "btn" %><br/><br/>
+    <%= link_to "All Transactions", group_transactions_path(@group, account_id: current_user.account(@group.id)), class: "btn btn-default" %><br/><br/>
     <table class="table table-striped table-bordered">
       <thead>
         <th>ID</th>
@@ -71,7 +71,7 @@
     </table>
   </div>
 
-  <div class="col-4 pull-right">
+  <div class="col-md-5">
     <h3>Actions</h3>
     <div class="well">
       <%= if current_user.account(@group.id).balance > 0

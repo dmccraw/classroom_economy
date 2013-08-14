@@ -12,7 +12,7 @@
   <tr>
     <td><%= link_to(group.name, group_path(group)) %></td>
     <td><%= group.user.display_name %></td>
-    <td><%= link_to 'Edit', edit_group_path(group) %></td>
+    <td><%= link_to "<i class='icon-cog'></i> Edit".html_safe, edit_group_path(group) %></td>
     <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } if current_user.admin? || (current_user.teacher? && current_user.id == group.user_id) %></td>
   </tr>
 <% end %>
