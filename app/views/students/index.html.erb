@@ -60,7 +60,7 @@
                       from_account_id: @group.group_account.id,
                       to_account_id: member.account(@group.id).id
                     ),
-                    class: "btn btn-success", style: "width:120px;"
+                    class: "btn btn-success btn-sm btn-block"
                   ) if can_deposit
                 %>
               </div>
@@ -70,7 +70,7 @@
                       to_account_id: @group.group_account.id,
                       from_account_id: member.account(@group.id).id
                     ),
-                    class: "btn btn-danger", style: "width:120px;"
+                    class: "btn btn-danger btn-sm btn-block"
                   ) if can_withdraw
                 %>
               </div>
