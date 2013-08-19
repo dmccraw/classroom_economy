@@ -1,12 +1,20 @@
-<div class="navbar navbar-fixed-top">
-  <div class="container" style="width: auto;">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
     <% if params[:group_id].present? || (params[:controller] == "groups" && params[:id].present?) %>
       <% id = params[:group_id].present? ? params[:group_id] : params[:id] %>
       <%= link_to "Classroom Economy", group_path(id: id), :class => 'navbar-brand' %>
     <% else %>
       <%= link_to "Classroom Economy", root_path, :class => 'navbar-brand' %>
     <% end %>
+  </div>
 
+  <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav">
       <% if user_signed_in? %>
         <% if (current_user.teacher? || current_user.student?) && current_user.groups.count > 1 %>
@@ -28,7 +36,7 @@
         </li>
       <% end %>
     </ul>
-    <ul class="nav navbar-nav pull-right">
+    <ul class="nav navbar-nav navbar-right">
       <% if user_signed_in? %>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -67,4 +75,4 @@
       <% end %>
     </ul>
   </div>
-</div>
+</nav>

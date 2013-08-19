@@ -1,14 +1,6 @@
 @import "bootstrap";
 
-// @import url("//fonts.googleapis.com/css?family=Lato:400,700,900,400italic");
-
-@media screen and (max-width: $screen-small) {
-  body { padding-top: 75px; }
-}
-
-@media screen and (min-width: $screen-small) {
-  body { padding-top: 55px; }
-}
+body { padding-top: 75px; }
 
 // $green-color: #9CAA9C;
 $green-color: #6A8347;
@@ -89,6 +81,12 @@ $font-size-x-large:  ceil($font-size-base * 2) !default;
 
 .navbar-brand:hover {
   color: black;
+}
+
+.dropdown-menu {
+  li {
+    background-color: white;
+  }
 }
 
 .page-header {
