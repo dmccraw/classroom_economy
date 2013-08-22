@@ -62,9 +62,9 @@ class TransactionsController < ApplicationController
   # POST /transactions
   # POST /transactions.json
   def create
+    params[:transaction][:occurred_on] = Time.strptime(params[:transaction][:occurred_on], "%m/%d/%Y") if params[:transaction][:occurred_on]
     @transaction = Transaction.new(params[:transaction])
     @transaction.user_id = current_user.id
-    @transaction.occurred_on = Time.strptime(params[:transaction][:occurred_on], "%m/%d/%Y")
     @transaction.group_id = @group.id
 
     @from_accounts = @group.accounts.includes(:owner).sort { |a,b| a.owner.display_name.downcase <=> b.owner.display_name.downcase }
