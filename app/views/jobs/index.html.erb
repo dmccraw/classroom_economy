@@ -8,12 +8,12 @@
     <p>This is a list of jobs that are available for your class. You can add new jobs, edit existing jobs, see which students have which jobs and assign new jobs. All jobs get paid on the first of the month automatically.</p>
     <p>The next payday will occur on <%= first_of_next_month %>.</p>
   </div>
-  <div class="col-md-2 right-button-padding">
-    <div class="pull-right">
+  <div class="col-md-2">
+    <h2 class="pull-right">
       <% if can_update %>
         <%= link_to "<i class='icon-plus'></i> Create Job".html_safe, new_group_job_path(@group), class: "btn btn-success" %>
       <% end %>
-    </div>
+    </h2>
   </div>
 </div>
 

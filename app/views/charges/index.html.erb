@@ -9,11 +9,11 @@
     <p>A charges is a reoccuring bill that comes up the first of each month. It is a way for a teacher to charge students or stores rent on a once a month basis.</p>
     <p>The next charge will occur on <%= first_of_next_month %>.</p>
   </div>
-  <div class="col-md-2 right-button-padding">
+  <div class="col-md-2">
     <% if can_update %>
-      <div class="pull-right">
+      <h2 class="pull-right">
         <%= link_to "<i class='icon-plus'></i> Create Charge".html_safe, new_group_charge_path(@group), class: "btn btn-success" %>
-      </div>
+      <h2>
     <% end %>
   </div>
 </div>

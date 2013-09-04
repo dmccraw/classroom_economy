@@ -95,10 +95,6 @@ $font-size-x-large:  ceil($font-size-base * 2) !default;
   border-bottom: 1px solid #dddddd;
 }
 
-.right-button-padding {
-  padding: 10px;
-}
-
 @media screen and (min-width: $screen-tablet) {
   .container-half {
     width: 50%;

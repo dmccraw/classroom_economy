@@ -14,11 +14,11 @@
       <p>This is a list of bills that have been paid and bills that need to be paid.</p>
     <% end %>
   </div>
-  <div class="col-md-2 right-button-padding">
+  <div class="col-md-2">
     <% if can_update %>
-      <div class="pull-right">
+      <h2 class="pull-right">
         <%= link_to "<i class='icon-plus'></i> Create Bill".html_safe, new_group_bill_path(@group), class: "btn btn-success" %>
-      </div>
+      </h2>
     <% end %>
   </div>
 </div>
