@@ -7,7 +7,7 @@ ClassroomEconomy::Application.configure do
   config.cache_classes = false
 
   # Log error messages when you accidentally call methods on nil.
-  config.whiny_nils = true
+  # config.whiny_nils = true
 
   # Do not eager load code on boot.
   config.eager_load = false

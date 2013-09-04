@@ -28,7 +28,7 @@ namespace :payments do
             from_account_id: charge.account_id,
             to_account_id: group_account.id,
             group_id: group.id,
-            amount: group.amount,
+            amount: charge.amount,
             description: "Monthy charge for #{charge.description}",
             user_id: group.user_id,
             occurred_on: DateTime.now
