@@ -4,8 +4,7 @@ namespace :payments do
     puts Time.now
     puts Time.now.day
     puts Time.now.day == 1
-    puts Time.now.day == 9
-    if Time.now.day == 9
+    if Time.now.day == 1
       # go through each group and pay each job assignment
       Group.all.each do |group|
 
