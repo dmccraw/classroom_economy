@@ -1,7 +1,11 @@
 namespace :payments do
   task :monthly => :environment do
     # this should only be run once per month on the first of the month
-    if Time.now.day == 1
+    puts Time.now
+    puts Time.now.day
+    puts Time.now.day == 1
+    puts Time.now.day == 9
+    if Time.now.day == 9
       # go through each group and pay each job assignment
       Group.all.each do |group|
 
