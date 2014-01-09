@@ -39,8 +39,8 @@
 
       <% @unpaid_bills.each do |bill| %>
         <tr>
-          <td><%= bill.from_account.display_name %></td>
-          <td><%= bill.to_account.display_name %></td>
+          <td><%= bill.from_account.display_name if bill.from_account %></td>
+          <td><%= bill.to_account.display_name if bill.to_account %></td>
           <td><%= display_balance(bill.amount) %></td>
           <td><%= bill.description %></td>
           <td><%= I18n.l bill.due_date, format: :date %></td>
