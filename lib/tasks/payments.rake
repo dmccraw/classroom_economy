@@ -48,7 +48,7 @@ namespace :payments do
     end
   end
 
-  task :monthy_no_date => :environment do
+  task :monthly_no_date => :environment do
     pay_groups
   end
 end
