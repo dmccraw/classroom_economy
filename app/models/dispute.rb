@@ -18,7 +18,7 @@
 
 class Dispute < ActiveRecord::Base
   # associations
-  belongs_to :transaction
+  belongs_to :a_transaction, class_name: "Transaction"
   belongs_to :result_transaction, class_name: "Transaction"
   belongs_to :group
   belongs_to :owner, polymorphic: true

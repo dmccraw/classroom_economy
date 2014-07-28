@@ -17,14 +17,14 @@
   </thead>
   <% if @disputes.count > 0 %>
     <% @disputes.each do |dispute| %>
-      <% if dispute.transaction %>
+      <% if dispute.a_transaction %>
         <tr>
           <td><%= dispute.owner.display_name %></td>
           <td>
-            From: <%= dispute.transaction.from_account.display_name %><br/>
-            To: <%= dispute.transaction.to_account.display_name %><br/>
-            Amount: <%= number_to_currency(dispute.transaction.amount) %><br/>
-            Description: <%= dispute.transaction.description %>
+            From: <%= dispute.a_transaction.from_account.display_name %><br/>
+            To: <%= dispute.a_transaction.to_account.display_name %><br/>
+            Amount: <%= number_to_currency(dispute.a_transaction.amount) %><br/>
+            Description: <%= dispute.a_transaction.description %>
           </td>
           <td><%= dispute.reason %></td>
           <td>

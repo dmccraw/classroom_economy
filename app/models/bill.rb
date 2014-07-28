@@ -23,7 +23,7 @@ class Bill < ActiveRecord::Base
   belongs_to :to_account, class_name: "Account"
   belongs_to :group
   belongs_to :user
-  belongs_to :transaction
+  belongs_to :a_transaction, class_name: "Transaction"
 
   # attr_accessible
   attr_accessible :from_account_id, :due_date, :paid, :paid_date, :amount, :description, :transaction_id
