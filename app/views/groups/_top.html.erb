@@ -22,8 +22,8 @@
   <li <%= 'class=active' if current_nav == "accounts" %>>
     <%= link_to "Accounts", group_accounts_path(@group)  %>
   </li>
-  <li <%= 'class=active' if current_nav == "transactions" %>>
-    <%= link_to "Transactions", group_transactions_path(@group)  %>
+  <li <%= 'class=active' if current_nav == "transfers" %>>
+    <%= link_to "Transfers", group_transfers_path(@group)  %>
   </li>
   <% unless current_user.student? %>
     <li <%= 'class=active' if current_nav == "disputes" %>>

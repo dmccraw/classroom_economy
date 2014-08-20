@@ -77,7 +77,7 @@ class Ability
         user.in_group?(charge.group_id)
       end
 
-      can :undo, Transaction do |transaction|
+      can :undo, Transfer do |transfer|
         false
       end
 
@@ -136,7 +136,7 @@ class Ability
       end
 
       can :read, Dispute do |dispute|
-        user.owns_or_manages_account?(dispute.transaction.to_account) || user.owns_or_manages_account?(dispute.transaction.from_account)
+        user.owns_or_manages_account?(dispute.transfer.to_account) || user.owns_or_manages_account?(dispute.transfer.from_account)
       end
 
       can [:create, :destroy], StoreOwner do |store_owner|

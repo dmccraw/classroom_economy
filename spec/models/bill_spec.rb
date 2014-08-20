@@ -4,7 +4,7 @@ describe Bill do
   context "associations" do
     it { should belong_to(:group) }
     it { should belong_to(:user) }
-    it { should belong_to(:transaction) }
+    it { should belong_to(:transfer) }
   end
 
   context "validations" do

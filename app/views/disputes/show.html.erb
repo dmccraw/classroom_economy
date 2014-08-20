@@ -3,8 +3,8 @@
 <h2>Dispute</h2>
 <hr>
 
-<strong><%= label_tag :transaction, "Transaction", class: "bold" %></strong>
-<%= render partial: "/transactions/transactions", locals: { transactions: [@dispute.transaction] } %>
+<strong><%= label_tag :transfer, "Transfers", class: "bold" %></strong>
+<%= render partial: "/transfers/transfers", locals: { transfers: [@dispute.transfer] } %>
 
 <table class="table">
   <tr>
@@ -25,4 +25,4 @@
   </tr>
 </table>
 
-<%= link_to 'Back', group_transactions_path(@group) %>
+<%= link_to 'Back', group_transfers_path(@group) %>

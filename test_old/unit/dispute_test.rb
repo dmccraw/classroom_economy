@@ -5,12 +5,12 @@
 #  id                    :integer          not null, primary key
 #  owner_id              :integer
 #  owner_type            :string(255)
-#  transaction_id        :integer
+#  transfer_id        :integer
 #  group_id              :integer
 #  reason                :text
 #  result                :integer
 #  result_reason         :text
-#  result_transaction_id :integer
+#  result_transfer_id :integer
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #
@@ -18,14 +18,14 @@
 require 'test_helper'
 
 class DisputeTest < ActiveSupport::TestCase
-  should belong_to :transaction
+  should belong_to :transfer
   should belong_to :group
   should belong_to :owner
-  should belong_to :result_transaction
+  should belong_to :result_transfer
 
   should validate_presence_of(:owner_id)
   should validate_presence_of(:owner_type)
-  should validate_presence_of(:transaction_id)
+  should validate_presence_of(:transfer_id)
   should validate_presence_of(:group_id)
   should validate_presence_of(:reason)
   should ensure_length_of(:owner_type).is_at_most(255)
@@ -38,7 +38,7 @@ class DisputeTest < ActiveSupport::TestCase
     dispute.result_reason = "Test"
     dispute.current_user_id = FactoryGirl.create(:user).id
     assert dispute.save
-    assert dispute.result_transaction
+    assert dispute.result_transfer
   end
 
 end

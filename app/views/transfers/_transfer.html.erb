@@ -1,0 +1,24 @@
+<% cls = nil
+  if local_assigns.has_key?(:account_id)
+    if account_id == transfer.to_account_id
+      cls = "class=success"
+    else
+      cls = "class=danger"
+    end
+  end
+%>
+
+<tr <%= cls %>>
+  <td><%= transfer.id %></td>
+  <td><%= transfer.from_account.display_name %></td>
+  <td><%= transfer.to_account.display_name %></td>
+  <td>
+    <% if cls %>
+      <i class="<%= cls == "class=success" ? "icon-arrow-up" : "icon-arrow-down" %>"></i>
+    <% end %>
+    <%= display_balance(transfer.amount) %>
+  </td>
+  <td><%= transfer.description %></td>
+  <td><%= I18n.l transfer.occurred_on.to_date, format: :short %></td>
+  <td><%= I18n.l transfer.created_at, format: :medium %> by <%= transfer.user.display_name %></td>
+</tr>

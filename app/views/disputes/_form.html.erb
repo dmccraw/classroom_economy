@@ -5,11 +5,11 @@
   <%= f.hidden_field :owner_id %>
   <%= f.hidden_field :owner_type %>
   <%= f.hidden_field :group_id %>
-  <%= f.hidden_field :transaction_id %>
+  <%= f.hidden_field :transfer_id %>
 
   <div class="field form-group">
-    <strong><%= label_tag :transaction, "Transaction" %></strong>
-    <%= render partial: "/transactions/transactions", locals: { transactions: [@dispute.transaction] } %>
+    <strong><%= label_tag :transfer, "Transfer" %></strong>
+    <%= render partial: "/transfers/transfers", locals: { transfers: [@dispute.transfer] } %>
   </div>
   <div class="field form-group">
     <%= f.label :reason, nil %></b>

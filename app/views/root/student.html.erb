@@ -12,8 +12,8 @@
   <%= display_balance(account.balance) %> |
   <%= link_to("View Account", account_path(account)) %>
 </p>
-<p>Last 5 transactions</p>
-<% transactions = account.transactions.limit(5).order("created_at ASC") %>
+<p>Last 5 transfers</p>
+<% transfers = account.transfers.limit(5).order("created_at ASC") %>
 <table class="table table-striped table-bordered">
   <thead>
     <th>From</th>
@@ -24,7 +24,7 @@
     <th>Entered In</th>
   </thead>
   <tbody>
-    <%= render partial: transactions %>
+    <%= render partial: transfers %>
   </tbody>
 </table>
 <hr>

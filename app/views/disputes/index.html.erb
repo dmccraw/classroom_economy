@@ -3,7 +3,7 @@
 <div class="row">
   <div class="col-md-10">
     <h2>Disputes</h2>
-    <p>This is a list of disputes in your class. Disputes occur when a student feels that a transaction is in error. The teacher must handle a dispute by approving or denying it. Approving it will create a new transaction that will transfer the money back to the disputing student/store.</p>
+    <p>This is a list of disputes in your class. Disputes occur when a student feels that a transfer is in error. The teacher must handle a dispute by approving or denying it. Approving it will create a new transfer that will transfer the money back to the disputing student/store.</p>
   </div>
 </div>
 
@@ -17,14 +17,14 @@
   </thead>
   <% if @disputes.count > 0 %>
     <% @disputes.each do |dispute| %>
-      <% if dispute.a_transaction %>
+      <% if dispute.transfer %>
         <tr>
           <td><%= dispute.owner.display_name %></td>
           <td>
-            From: <%= dispute.a_transaction.from_account.display_name %><br/>
-            To: <%= dispute.a_transaction.to_account.display_name %><br/>
-            Amount: <%= number_to_currency(dispute.a_transaction.amount) %><br/>
-            Description: <%= dispute.a_transaction.description %>
+            From: <%= dispute.transfer.from_account.display_name %><br/>
+            To: <%= dispute.transfer.to_account.display_name %><br/>
+            Amount: <%= number_to_currency(dispute.transfer.amount) %><br/>
+            Description: <%= dispute.transfer.description %>
           </td>
           <td><%= dispute.reason %></td>
           <td>

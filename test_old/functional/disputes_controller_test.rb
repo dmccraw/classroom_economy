@@ -21,7 +21,7 @@ class DisputesControllerTest < ActionController::TestCase
 
   test "should create dispute" do
     assert_difference('Dispute.count') do
-      post :create, group_id: @group.id, dispute: { reason: @dispute.reason, result: @dispute.result, result_reason: @dispute.result_reason, transaction: @dispute.transaction, owner_id: @dispute.owner_id, owner_type: @dispute.owner_type }
+      post :create, group_id: @group.id, dispute: { reason: @dispute.reason, result: @dispute.result, result_reason: @dispute.result_reason, transfer: @dispute.transfer, owner_id: @dispute.owner_id, owner_type: @dispute.owner_type }
     end
 
     assert_redirected_to dispute_path(assigns(:dispute))
@@ -33,7 +33,7 @@ class DisputesControllerTest < ActionController::TestCase
   end
 
   test "should update dispute" do
-    put :update, id: @dispute, group_id: @group.id, dispute: { reason: @dispute.reason, result: @dispute.result, result_reason: @dispute.result_reason, transaction: @dispute.transaction, owner_id: @dispute.owner_id, owner_type: @dispute.owner_type }
+    put :update, id: @dispute, group_id: @group.id, dispute: { reason: @dispute.reason, result: @dispute.result, result_reason: @dispute.result_reason, transfer: @dispute.transfer, owner_id: @dispute.owner_id, owner_type: @dispute.owner_type }
     assert_redirected_to group_dispute_path(@group, assigns(:dispute))
   end
 
