@@ -1,5 +1,12 @@
-@import "bootstrap";
+@import "bootstrap-sass-official/assets/stylesheets/bootstrap";
 
+.test {
+  .test {
+    .test {
+      background-color: red;
+    }
+  }
+}
 body { padding-top: 75px; }
 
 // $green-color: #9CAA9C;

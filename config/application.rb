@@ -57,6 +57,9 @@ module ClassroomEconomy
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'components', 'bootstrap-sass-official', 'assets', 'fonts')
+
     # Heroku
     config.assets.initialize_on_precompile = false
   end
