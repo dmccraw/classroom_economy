@@ -44,7 +44,7 @@ gem 'awesome_print'
 gem 'protected_attributes'
 
 group :development, :test do
-  gem 'rspec-rails', '2.99.0'
+  gem 'rspec-rails', '~> 3.1.0'
   gem "webrat", ">= 0.7.2"
   gem "factory_girl_rails"
   gem "transpec"
