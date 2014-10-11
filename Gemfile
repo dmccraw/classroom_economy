@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-ruby "2.0.0"
+ruby "2.1.2"
 
-gem 'rails', '4.0.0'
+gem 'rails', '4.1.6'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -25,6 +25,7 @@ gem 'coffee-rails', '~> 4.0.0'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 # gem 'turbolinks'
 
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 1.2'
 
@@ -43,9 +44,10 @@ gem 'awesome_print'
 gem 'protected_attributes'
 
 group :development, :test do
-  gem 'rspec-rails', '~> 2.0'
+  gem 'rspec-rails', '2.99.0'
   gem "webrat", ">= 0.7.2"
-  gem "factory_girl_rails", "~> 3.3.0"
+  gem "factory_girl_rails"
+  gem "transpec"
 end
 
 group :test do
@@ -68,6 +70,9 @@ gem "airbrake"
 gem "girl_friday"
 
 gem 'rails_12factor', group: :production
+
+gem 'active_model_serializers'
+
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

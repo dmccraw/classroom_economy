@@ -2,7 +2,8 @@
 	"folders":
 	[
 		{
-			"path": "/Users/dustinmccraw/git/classroom_economy"
+			"path": "/Users/dustinmccraw/git/classroom_economy",
+      "folder_exclude_patterns": [".git", ".sass-cache", "tmp"]
 		}
 	]
 }
