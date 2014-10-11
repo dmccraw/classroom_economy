@@ -1,4 +1,4 @@
-module TransactionsHelper
+module TransfersHelper
   def accounts_for_select(accounts, add_all_class = false, self_account_id = nil)
     store_accounts = []
     user_accounts = []

@@ -1,6 +1,6 @@
 <script type="text/javascript">
   $(document).ready(function() {
-    $('#transaction_occurred_on').datepicker({
+    $('#transfer_occurred_on').datepicker({
         format: 'mm/dd/yyyy'
     });
   });
@@ -11,15 +11,15 @@
   <div class="page-header">
     <h1>Transfer Funds</h1>
   </div>
-  <%= form_for [@group,@transaction] , html: { class: "#{@transaction.new_record? ? "new_transaction" : "edit_transaction"} form-horizontal" } do |f| %>
+  <%= form_for [@group,@transfer] , html: { class: "#{@transfer.new_record? ? "new_transfer" : "edit_transfer"} form-horizontal" } do |f| %>
 
-    <%= render partial: "/shared/errors", locals: { o: @transaction } %>
+    <%= render partial: "/shared/errors", locals: { o: @transfer } %>
 
     <%= hidden_field_tag :from_account_id, params[:from_account_id] %>
     <%= hidden_field_tag :to_account_id, params[:to_account_id] %>
 
     <div class="field form-group input-group">
-      <label for="transaction_amount">Transfer:</label>
+      <label for="transfer_amount">Transfer:</label>
       <div class="input-group">
         <span class="input-group-addon">$</span>
         <%= f.text_field :amount, class: "form-control" %>
@@ -27,7 +27,7 @@
     </div>
 
     <div class="field form-group">
-      <label for="transaction_to_account_id">To:</label>
+      <label for="transfer_to_account_id">To:</label>
       <div class="controls">
         <% if params[:to_account_id].present? %>
           <%= f.hidden_field :to_account_id %>
@@ -41,7 +41,7 @@
     </div>
 
     <div class="field form-group">
-      <label for="transaction_from_account_id">From:</label>
+      <label for="transfer_from_account_id">From:</label>
       <% if params[:from_account_id].present? %>
         <%= f.hidden_field :from_account_id %>
         <p class="form-control-static">
@@ -53,12 +53,12 @@
     </div>
 
     <div class="field form-group">
-      <label for="transaction_from_account_id">Description:</label>
+      <label for="transfer_from_account_id">Description:</label>
       <%= f.text_area :description, class: "form-control", rows: 3 %>
     </div>
     <div class="field form-group">
-      <label for="transaction_from_account_id">Occurred On:</label>
-      <%= f.text_field :occurred_on, value: I18n.l(@transaction.occurred_on, format: :date), class: "form-control" %>
+      <label for="transfer_from_account_id">Occurred On:</label>
+      <%= f.text_field :occurred_on, value: I18n.l(@transfer.occurred_on, format: :date), class: "form-control" %>
     </div>
     <div class="field form-group pull-right">
       <%= f.submit "Submit", class: "btn btn-success" %>

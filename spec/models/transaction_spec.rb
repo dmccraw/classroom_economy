@@ -13,12 +13,12 @@ describe Transaction do
 
   describe "#undo" do
     it "should undo" do
-      transaction = FactoryGirl.create(:transaction)
-      expect(transaction.from_account.balance).to eq 0
-      expect(transaction.to_account.balance).to eq 200.00
-      transaction.undo
-      expect(transaction.from_account.balance).to eq 100
-      expect(transaction.to_account.balance).to eq 100
+      transfer = FactoryGirl.create(:transfer)
+      expect(transfer.from_account.balance).to eq 0
+      expect(transfer.to_account.balance).to eq 200.00
+      transfer.undo
+      expect(transfer.from_account.balance).to eq 100
+      expect(transfer.to_account.balance).to eq 100
     end
   end
 

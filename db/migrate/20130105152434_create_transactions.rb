@@ -1,6 +1,6 @@
-class CreateTransactions < ActiveRecord::Migration
+class CreateTransfers < ActiveRecord::Migration
   def change
-    create_table :transactions do |t|
+    create_table :transfers do |t|
       t.references :from_account, :null => false
       t.references :to_account,   :null => false
       t.references :group,        :null => false
@@ -12,9 +12,9 @@ class CreateTransactions < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :transactions, :from_account_id
-    add_index :transactions, :to_account_id
-    add_index :transactions, :user_id
-    add_index :transactions, :group_id
+    add_index :transfers, :from_account_id
+    add_index :transfers, :to_account_id
+    add_index :transfers, :user_id
+    add_index :transfers, :group_id
   end
 end

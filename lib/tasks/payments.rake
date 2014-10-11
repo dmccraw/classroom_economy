@@ -7,7 +7,7 @@ def pay_groups
 
     group.job_assignments.each do |job_assignment|
       if job_assignment.user && job_assignment.user.account(group.id)
-        transaction = Transaction.new(
+        transfer = Transfer.new(
           from_account_id: group_account.id,
           to_account_id: job_assignment.user.account(group.id).id,
           group_id: group.id,
@@ -16,13 +16,13 @@ def pay_groups
           user_id: group.user_id,
           occurred_on: DateTime.now
         )
-        transaction.save!
+        transfer.save!
       end
     end
 
     group.charges.each do |charge|
       if charge.account
-        transaction = Transaction.new(
+        transfer = Transfer.new(
           from_account_id: charge.account_id,
           to_account_id: group_account.id,
           group_id: group.id,

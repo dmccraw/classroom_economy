@@ -149,7 +149,7 @@ ActiveRecord::Schema.define(:version => 20130321043027) do
 
   add_index "stores", ["group_id"], :name => "index_stores_on_group_id"
 
-  create_table "transactions", :force => true do |t|
+  create_table "transfers", :force => true do |t|
     t.integer  "from_account_id",                    :null => false
     t.integer  "to_account_id",                      :null => false
     t.integer  "group_id",                           :null => false
@@ -162,10 +162,10 @@ ActiveRecord::Schema.define(:version => 20130321043027) do
     t.datetime "updated_at",                         :null => false
   end
 
-  add_index "transactions", ["from_account_id"], :name => "index_transactions_on_from_account_id"
-  add_index "transactions", ["group_id"], :name => "index_transactions_on_group_id"
-  add_index "transactions", ["to_account_id"], :name => "index_transactions_on_to_account_id"
-  add_index "transactions", ["user_id"], :name => "index_transactions_on_user_id"
+  add_index "transfers", ["from_account_id"], :name => "index_transfers_on_from_account_id"
+  add_index "transfers", ["group_id"], :name => "index_transfers_on_group_id"
+  add_index "transfers", ["to_account_id"], :name => "index_transfers_on_to_account_id"
+  add_index "transfers", ["user_id"], :name => "index_transfers_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "first_name",                             :null => false

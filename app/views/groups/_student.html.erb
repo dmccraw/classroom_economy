@@ -46,8 +46,8 @@
     <% end %>
     <hr>
 
-    <h3>Last 20 Transactions</h3>
-    <%= link_to "All Transactions", group_transactions_path(@group, account_id: current_user.account(@group.id)), class: "btn btn-default" %><br/><br/>
+    <h3>Last 20 Transfers</h3>
+    <%= link_to "All Transfers", group_transfers_path(@group, account_id: current_user.account(@group.id)), class: "btn btn-default" %><br/><br/>
     <table class="table table-striped table-bordered">
       <thead>
         <th>ID</th>
@@ -59,12 +59,12 @@
         <th>Entered</th>
       </thead>
       <tbody>
-        <% transactions = current_user.account(@group.id).transactions.limit(20).order("created_at DESC") %>
-        <% if transactions.count > 0 %>
-          <%= render partial: transactions, locals: { account_id: current_user.account(@group.id).id} %>
+        <% transfers = current_user.account(@group.id).transfers.limit(20).order("created_at DESC") %>
+        <% if transfers.count > 0 %>
+          <%= render partial: transfers, locals: { account_id: current_user.account(@group.id).id} %>
         <% else %>
           <tr>
-            <td colspan="100">You have no transactions.</td>
+            <td colspan="100">You have no transfers.</td>
           </tr>
         <% end %>
       </tbody>
@@ -75,7 +75,7 @@
     <h3>Actions</h3>
     <div class="well">
       <%= if current_user.account(@group.id).balance > 0
-           link_to "<i class='icon-minus'></i> Transfer Funds".html_safe, new_group_transaction_path(@group, from_account_id: current_user.account(@group.id).id), class: "btn btn-danger", style: "width: 140px;"
+           link_to "<i class='icon-minus'></i> Transfer Funds".html_safe, new_group_transfer_path(@group, from_account_id: current_user.account(@group.id).id), class: "btn btn-danger", style: "width: 140px;"
           else
             "Insufficient funds for a transfer."
           end

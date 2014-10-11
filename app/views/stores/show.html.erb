@@ -24,13 +24,13 @@
 <hr>
 <% if @store.approved && (can_update || can_transact) %>
   <center>
-    <%= link_to "<i class='icon-minus'></i> Buy Something".html_safe, new_group_transaction_path(@group, from_account_id: @store.account.id), class: "btn btn-danger" %>
+    <%= link_to "<i class='icon-minus'></i> Buy Something".html_safe, new_group_transfer_path(@group, from_account_id: @store.account.id), class: "btn btn-danger" %>
     |
-    <%= link_to "<i class='icon-plus'></i> Sell Something".html_safe, new_group_transaction_path(@group, to_account_id: @store.account.id), class: "btn btn-success" %>
+    <%= link_to "<i class='icon-plus'></i> Sell Something".html_safe, new_group_transfer_path(@group, to_account_id: @store.account.id), class: "btn btn-success" %>
     <% if @store.class_store? && (can_update || can_transact) %>
-      | <%= link_to "<i class='icon-plus'></i> Fine Entire Class".html_safe, new_class_transaction_group_transactions_path(@group, to_account_id: @group.group_account.id, from: "store"), class: "btn btn-success" %>
+      | <%= link_to "<i class='icon-plus'></i> Fine Entire Class".html_safe, new_class_transfer_group_transfers_path(@group, to_account_id: @group.group_account.id, from: "store"), class: "btn btn-success" %>
       |
-      <%= link_to "<i class='icon-minus'></i> Bonus Entire Class".html_safe, new_class_transaction_group_transactions_path(@group, from_account_id: @group.group_account.id, from: "store"), class: "btn btn-danger" %>
+      <%= link_to "<i class='icon-minus'></i> Bonus Entire Class".html_safe, new_class_transfer_group_transfers_path(@group, from_account_id: @group.group_account.id, from: "store"), class: "btn btn-danger" %>
 
     <% end %>
   </center>
@@ -44,9 +44,9 @@
 <% end %>
 
 <% if can_update || can_transact %>
-  <h2>Last 20 Transactions</h2>
-  <p><%= link_to "All Transactions", group_transactions_path(@group, account_id: @store.account.id), class: "btn btn-default"  %>
-  <%= render partial: '/transactions/transactions', locals: { transactions: @store.account.transactions.limit(20).order("created_at DESC"), account_id: @store.account.id } %>
+  <h2>Last 20 Transfers</h2>
+  <p><%= link_to "All Transfers", group_transfers_path(@group, account_id: @store.account.id), class: "btn btn-default"  %>
+  <%= render partial: '/transfers/transfers', locals: { transfers: @store.account.transfers.limit(20).order("created_at DESC"), account_id: @store.account.id } %>
   <hr>
 <% end %>
 
