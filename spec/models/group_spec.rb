@@ -1,20 +1,20 @@
 require 'spec_helper'
 
-describe Group do
+describe Group, :type => :model do
   context "associations" do
-    it { should have_many(:charges) }
-    it { should have_many(:users) }
-    it { should have_many(:accounts) }
-    it { should have_many(:jobs) }
-    it { should have_many(:job_assignments) }
-    it { should have_many(:transfers) }
-    it { should have_many(:disputes) }
-    it { should have_many(:stores) }
+    it { is_expected.to have_many(:charges) }
+    it { is_expected.to have_many(:users) }
+    it { is_expected.to have_many(:accounts) }
+    it { is_expected.to have_many(:jobs) }
+    it { is_expected.to have_many(:job_assignments) }
+    it { is_expected.to have_many(:transfers) }
+    it { is_expected.to have_many(:disputes) }
+    it { is_expected.to have_many(:stores) }
   end
 
   context "validations" do
-    it { should validate_presence_of(:name) }
-    it { should ensure_length_of(:name).is_at_most(255) }
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to ensure_length_of(:name).is_at_most(255) }
   end
 
   describe "test account creation" do

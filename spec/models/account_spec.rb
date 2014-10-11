@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Account do
-  it { should belong_to(:owner) }
-  it { should belong_to(:group) }
-  it { should have_many(:charges) }
+describe Account, :type => :model do
+  it { is_expected.to belong_to(:owner) }
+  it { is_expected.to belong_to(:group) }
+  it { is_expected.to have_many(:charges) }
 
   describe "initial balance" do
     it "should work" do
