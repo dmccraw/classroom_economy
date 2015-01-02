@@ -10,6 +10,7 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require jquery/dist/jquery
-//= require jquery-ujs/src/rails
-//= require_tree ./vendor
+//= require angular/angular
+//= require angular-resource/angular-resource
+//= require angular/main.js
+//= require_tree ./angular

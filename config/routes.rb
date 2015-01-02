@@ -1,8 +1,11 @@
 ClassroomEconomy::Application.routes.draw do
 
-
-
   devise_for :users, :controllers => { :registrations => "registrations" }
+
+  namespace "v1", defaults: {format: :json} do
+    resources :groups do
+    end
+  end
 
   resources :groups do
     resources :students
@@ -39,6 +42,9 @@ ClassroomEconomy::Application.routes.draw do
   resources :users
 
   get "switch_user" => "root#switch_user"
+
+  get "angular" => "angular#index"
+
   root to: "root#index"
 
 
