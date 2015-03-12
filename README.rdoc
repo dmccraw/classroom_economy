@@ -1,2 +1,3 @@
 Classroom Economy
+
 Allows teachers to set up classrooms with students where the students have a virtual bank account. The teacher can assign jobs to students who then get paid for thier in-class job. Students can also create their own stores and sell virtual goods to other students.
