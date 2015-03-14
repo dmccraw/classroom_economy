@@ -38,6 +38,7 @@ gem 'thin'
 gem 'awesome_print'
 gem 'protected_attributes'
 
+gem 'transpec'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

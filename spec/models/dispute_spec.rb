@@ -2,21 +2,21 @@ require 'spec_helper'
 
 describe Dispute do
   context "associations" do
-    it { should belong_to :transfer }
-    it { should belong_to :group }
-    it { should belong_to :owner }
-    it { should belong_to :result_transfer }
+    it { is_expected.to belong_to :transfer }
+    it { is_expected.to belong_to :group }
+    it { is_expected.to belong_to :owner }
+    it { is_expected.to belong_to :result_transfer }
   end
 
   context "validations" do
-    it { should validate_presence_of(:owner_id) }
-    it { should validate_presence_of(:owner_type) }
-    it { should validate_presence_of(:transfer_id) }
-    it { should validate_presence_of(:group_id) }
-    it { should validate_presence_of(:reason) }
-    it { should ensure_length_of(:owner_type).is_at_most(255) }
-    it { should ensure_length_of(:reason).is_at_most(255) }
-    it { should ensure_length_of(:result_reason).is_at_most(255) }
+    it { is_expected.to validate_presence_of(:owner_id) }
+    it { is_expected.to validate_presence_of(:owner_type) }
+    it { is_expected.to validate_presence_of(:transfer_id) }
+    it { is_expected.to validate_presence_of(:group_id) }
+    it { is_expected.to validate_presence_of(:reason) }
+    it { is_expected.to ensure_length_of(:owner_type).is_at_most(255) }
+    it { is_expected.to ensure_length_of(:reason).is_at_most(255) }
+    it { is_expected.to ensure_length_of(:result_reason).is_at_most(255) }
   end
 
   context "transfer_funds" do

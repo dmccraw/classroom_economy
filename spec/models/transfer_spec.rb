@@ -1,15 +1,15 @@
 require 'spec_helper'
 
 describe Transfer do
-  it { should belong_to(:user) }
-  it { should have_many(:disputes) }
+  it { is_expected.to belong_to(:user) }
+  it { is_expected.to have_many(:disputes) }
 
-  it { should validate_presence_of(:from_account_id) }
-  it { should validate_presence_of(:to_account_id) }
-  it { should validate_presence_of(:amount) }
-  it { should validate_numericality_of(:amount) }
-  it { should validate_presence_of(:user_id) }
-  it { should validate_presence_of(:occurred_on) }
+  it { is_expected.to validate_presence_of(:from_account_id) }
+  it { is_expected.to validate_presence_of(:to_account_id) }
+  it { is_expected.to validate_presence_of(:amount) }
+  it { is_expected.to validate_numericality_of(:amount) }
+  it { is_expected.to validate_presence_of(:user_id) }
+  it { is_expected.to validate_presence_of(:occurred_on) }
 
   describe "#undo" do
     it "should undo" do

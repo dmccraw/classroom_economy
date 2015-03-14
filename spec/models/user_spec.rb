@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe User do
-  it { should have_many(:transfers) }
-  it { should have_many(:disputes) }
+  it { is_expected.to have_many(:transfers) }
+  it { is_expected.to have_many(:disputes) }
 
 end
