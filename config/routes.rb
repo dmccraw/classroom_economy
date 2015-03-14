@@ -15,10 +15,10 @@ Rails.application.routes.draw do
     resources :accounts
     resources :jobs, except: [:show]
     resources :charges
-    resources :transactions do
+    resources :transfers do
       collection do
-        get "new_class_transaction"
-        post "create_class_transaction"
+        get "new_class_transfer"
+        post "create_class_transfer"
       end
       member do
         get "undo"

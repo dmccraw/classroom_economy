@@ -31,7 +31,7 @@ require 'test_helper'
 class UserTest < ActiveSupport::TestCase
 
   # should have_many(:groups)
-  should have_many(:transactions)
+  should have_many(:transfers)
   should have_many(:disputes)
 
   test "valid_email" do
@@ -103,17 +103,17 @@ class UserTest < ActiveSupport::TestCase
     # create job_assignment
     job_assignment = FactoryGirl.create(:job_assignment, job_id: job.id, user_id: student.id, group_id: group.id)
     # charge = FactoryGirl.create(:charge, account_id: student.account(group.id).id, group_id: group.id)
-    # create transaction
-    transaction = FactoryGirl.create(:transaction, from_account_id: group.store.account.id, to_account_id: student.account(group.id).id, user_id: teacher.id, group_id: group.id)
+    # create transfer
+    transfer = FactoryGirl.create(:transfer, from_account_id: group.store.account.id, to_account_id: student.account(group.id).id, user_id: teacher.id, group_id: group.id)
     # create dispute
-    dispute = FactoryGirl.create(:dispute, owner_id: student.id, owner_type: student.class.to_s, transaction_id: transaction.id, group_id: group.id, current_user_id: student.id)
+    dispute = FactoryGirl.create(:dispute, owner_id: student.id, owner_type: student.class.to_s, transfer_id: transfer.id, group_id: group.id, current_user_id: student.id)
 
     teacher.destroy
     assert_equal(Group.count, 0)
     assert_equal(User.count, 0)
     assert_equal(Job.count, 0)
     assert_equal(JobAssignment.count, 0)
-    assert_equal(Transaction.count, 0)
+    assert_equal(Transfer.count, 0)
     assert_equal(Dispute.count, 0)
     assert_equal(Charge.count, 0)
     assert_equal(Store.count, 0)
@@ -134,17 +134,17 @@ class UserTest < ActiveSupport::TestCase
     # create job_assignment
     job_assignment = FactoryGirl.create(:job_assignment, job_id: job.id, user_id: student.id, group_id: group.id)
     # charge = FactoryGirl.create(:charge, account_id: student.account(group.id).id, group_id: group.id)
-    # create transaction
-    transaction = FactoryGirl.create(:transaction, from_account_id: group.store.account.id, to_account_id: student.account(group.id).id, user_id: teacher.id, group_id: group.id)
+    # create transfer
+    transfer = FactoryGirl.create(:transfer, from_account_id: group.store.account.id, to_account_id: student.account(group.id).id, user_id: teacher.id, group_id: group.id)
     # create dispute
-    dispute = FactoryGirl.create(:dispute, owner_id: student.id, owner_type: student.class.to_s, transaction_id: transaction.id, group_id: group.id, current_user_id: student.id)
+    dispute = FactoryGirl.create(:dispute, owner_id: student.id, owner_type: student.class.to_s, transfer_id: transfer.id, group_id: group.id, current_user_id: student.id)
 
     student.destroy
     assert_equal(Group.count, 1)
     assert_equal(User.count, 2)
     assert_equal(Job.count, 1)
     assert_equal(JobAssignment.count, 0)
-    assert_equal(Transaction.count, 0)
+    assert_equal(Transfer.count, 0)
     assert_equal(Dispute.count, 0)
     assert_equal(Charge.count, 0)
     assert_equal(Store.count, 1)

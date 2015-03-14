@@ -18,7 +18,7 @@ class Group < ActiveRecord::Base
   has_many :accounts, dependent: :destroy
   has_many :jobs, dependent: :destroy
   has_many :job_assignments, dependent: :destroy
-  has_many :transactions
+  has_many :transfers
   has_many :disputes, dependent: :destroy
   has_many :charges#, dependent: :destroy
   has_many :stores, dependent: :destroy
@@ -74,12 +74,12 @@ class Group < ActiveRecord::Base
     store.account
   end
 
-  def transactions
-    Transaction.where("to_account_id IN (:account_ids) OR from_account_id in (:account_ids)", account_ids: accounts.map() {|a| a.id})
+  def transfers
+    Transfer.where("to_account_id IN (:account_ids) OR from_account_id in (:account_ids)", account_ids: accounts.map() {|a| a.id})
   end
 
-  def account_transactions(account_id)
-    Transaction.where("to_account_id = (:account_id) OR from_account_id = (:account_id)", account_id: account_id)
+  def account_transfers(account_id)
+    Transfer.where("to_account_id = (:account_id) OR from_account_id = (:account_id)", account_id: account_id)
   end
 
   private
@@ -88,7 +88,7 @@ class Group < ActiveRecord::Base
     # every group has their own account
     store = Store.create(name: "#{self.name} Store", group_id: self.id, approved: true)
     store.account.update_attributes(balance: 1000000.00)
-    store_owner = StoreOwner.create(user_id: self.user_id, store_id: store.id)
+    StoreOwner.create(user_id: self.user_id, store_id: store.id)
   end
 
   def destroy_users
@@ -98,7 +98,7 @@ class Group < ActiveRecord::Base
         user.destroy
       end
     end
-    Transaction.where(group_id: self.id).destroy_all
+    Transfer.where(group_id: self.id).destroy_all
   end
 
 end

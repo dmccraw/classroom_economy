@@ -12,7 +12,7 @@
 #  updated_at      :datetime         not null
 #  paid            :boolean
 #  paid_date       :datetime
-#  transaction_id  :integer
+#  transfer_id  :integer
 #  amount          :float
 #  description     :string(255)
 #
@@ -24,7 +24,7 @@ class BillTest < ActiveSupport::TestCase
 
   should belong_to(:group)
   should belong_to(:user)
-  should belong_to(:transaction)
+  should belong_to(:transfer)
 
   should validate_presence_of(:from_account_id)
   should validate_presence_of(:to_account_id)

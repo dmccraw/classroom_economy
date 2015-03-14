@@ -11,10 +11,10 @@
     <th>Entered On</th>
   </thead>
   <tbody>
-  <% if transactions.count > 0 %>
-    <%= render partial: transactions, locals: local_params %>
+  <% if transfers.count > 0 %>
+    <%= render partial: transfers, locals: local_params %>
   <% else %>
-    <tr><td colspan="100">No transactions for this account.</td></tr>
+    <tr><td colspan="100">No transfers for this account.</td></tr>
   <% end %>
   </tbody>
 </table>

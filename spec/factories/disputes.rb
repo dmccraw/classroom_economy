@@ -4,12 +4,12 @@ FactoryGirl.define do
   factory :dispute do
     owner_id nil
     owner_type nil
-    transaction_id nil
+    transfer_id nil
     group_id nil
     reason "MyString"
     result 1
     result_reason "MyString"
-    result_transaction_id nil
+    result_transfer_id nil
     current_user_id nil
 
     factory :user_dispute do
@@ -22,8 +22,8 @@ FactoryGirl.define do
         unless dispute.group_id
           dispute.group = FactoryGirl.create(:group, user_id: user.id)
         end
-        unless dispute.transaction_id
-          dispute.transaction = FactoryGirl.create(:transaction)
+        unless dispute.transfer_id
+          dispute.transfer = FactoryGirl.create(:transfer)
         end
         unless dispute.current_user_id
           dispute.current_user_id = FactoryGirl.create(:user).id

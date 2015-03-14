@@ -7,7 +7,7 @@ describe Group do
     it { should have_many(:accounts) }
     it { should have_many(:jobs) }
     it { should have_many(:job_assignments) }
-    it { should have_many(:transactions) }
+    it { should have_many(:transfers) }
     it { should have_many(:disputes) }
     it { should have_many(:stores) }
   end
@@ -43,17 +43,17 @@ describe Group do
       # create job_assignment
       job_assignment = FactoryGirl.create(:job_assignment, job_id: job.id, user_id: student.id, group_id: group.id)
       # charge = FactoryGirl.create(:charge, account_id: student.account(group.id).id, group_id: group.id)
-      # create transaction
-      transaction = FactoryGirl.create(:transaction, from_account_id: group.store.account.id, to_account_id: student.account(group.id).id, user_id: teacher.id, group_id: group.id)
+      # create transfer
+      transfer = FactoryGirl.create(:transfer, from_account_id: group.store.account.id, to_account_id: student.account(group.id).id, user_id: teacher.id, group_id: group.id)
       # create dispute
-      dispute = FactoryGirl.create(:dispute, owner_id: student.id, owner_type: student.class.to_s, transaction_id: transaction.id, group_id: group.id, current_user_id: student.id)
+      dispute = FactoryGirl.create(:dispute, owner_id: student.id, owner_type: student.class.to_s, transfer_id: transfer.id, group_id: group.id, current_user_id: student.id)
 
       group.destroy
       expect(Group.count).to eq(0)
       expect(User.count).to eq(1)
       expect(Job.count).to eq(0)
       expect(JobAssignment.count).to eq(0)
-      expect(Transaction.count).to eq(0)
+      expect(Transfer.count).to eq(0)
       expect(Dispute.count).to eq(0)
       expect(Charge.count).to eq(0)
       expect(Store.count).to eq(0)

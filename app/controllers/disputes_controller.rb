@@ -35,13 +35,13 @@ class DisputesController < ApplicationController
 
     @dispute = @group.disputes.new
 
-    unless params[:transaction_id] || !(transaction = Transaction.find(params[:transaction_id]))
-      flash[:notice] = "Invalid Transaction"
+    unless params[:transfer_id] || !(transfer = Transfer.find(params[:transfer_id]))
+      flash[:notice] = "Invalid Transfer"
       redirect_to(:back)
       return
     end
 
-    @dispute.transaction_id = params[:transaction_id]
+    @dispute.transfer_id = params[:transfer_id]
     @dispute.owner_id = current_user.id
     @dispute.owner_type = current_user.class.to_s
 
