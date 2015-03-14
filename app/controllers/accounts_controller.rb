@@ -5,8 +5,8 @@ class AccountsController < ApplicationController
   # GET /accounts
   # GET /accounts.json
   def index
-    @user_accounts = @group.accounts.users.to_a.sort_by!(&:display_name)
-    @store_accounts = @group.accounts.stores.to_a.sort_by!(&:display_name)
+    @user_accounts = @group.accounts.includes(:owner).users.to_a.sort_by!(&:display_name)
+    @store_accounts = @group.accounts.includes(:owner).stores.to_a.sort_by!(&:display_name)
 
     respond_to do |format|
       format.html # index.html.erb

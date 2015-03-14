@@ -1,4 +1,4 @@
-<% accounts = @group.accounts.order("balance DESC") %>
+<% accounts = @group.accounts.includes(:owner).order("balance DESC") %>
 
 <div class="row">
 

@@ -5,7 +5,7 @@ class DisputesController < ApplicationController
   # GET /disputes
   # GET /disputes.json
   def index
-    @disputes = @group.disputes.page(params[:page]).all
+    @disputes = @group.disputes.includes(transfer: [:from_account, :to_account]).includes(:owner).page(params[:page]).all
 
     if current_user.student?
       raise CanCan::AccessDenied.new("Unable to access this page")

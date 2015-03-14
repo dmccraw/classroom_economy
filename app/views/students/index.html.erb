@@ -42,7 +42,7 @@
   </thead>
   <tbody>
     <% if @group.users.count > 0 %>
-      <% @group.users.order("first_name").each do |member| %>
+      <% @group.users.includes(:stores).order("first_name").each do |member| %>
         <% if member.student? %>
           <tr>
             <td><b style="text-decoration:underline;"><%= link_to(member.display_name, group_student_path(@group,member)) %></b></td>

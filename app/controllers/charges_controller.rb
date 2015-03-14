@@ -6,9 +6,9 @@ class ChargesController < ApplicationController
   # GET /charges.json
   def index
     if current_user.student?
-      @charges = current_user.charges(@group)
+      @charges = current_user.charges(@group).includes(account: :owner)
     else
-      @charges = @group.charges.all
+      @charges = @group.charges.includes(account: :owner).all
     end
 
     respond_to do |format|

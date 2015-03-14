@@ -17,7 +17,7 @@ class TransfersController < ApplicationController
       end
     else
       if current_user.teacher? || current_user.admin?
-        @transfers = @group.transfers.page(params[:page]).order("created_at DESC")
+        @transfers = @group.transfers.includes(:from_account, :to_account).page(params[:page]).order("created_at DESC")
       else
         account_ids = current_user.owns_or_manages_accounts(@group)
 
