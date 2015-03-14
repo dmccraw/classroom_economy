@@ -62,6 +62,8 @@ group :development, :test do
   # gem "webrat"
   gem "factory_girl_rails"
 
+  gem 'bullet'
+
 end
 
 group :test do
