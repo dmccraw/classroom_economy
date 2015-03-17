@@ -44,7 +44,6 @@ class Account < ActiveRecord::Base
     self.owner_type == "Store"
   end
 
-
   def transfers
     Transfer.where("from_account_id = :id OR to_account_id = :id", id: self.id)
   end
@@ -56,9 +55,7 @@ class Account < ActiveRecord::Base
   private
 
   def set_initial_balance
-    unless self.balance
-      write_attribute(:balance, 0.0)
-    end
+    write_attribute(:balance, 0.0) unless self.balance
   end
 
   def destroy_transfers
