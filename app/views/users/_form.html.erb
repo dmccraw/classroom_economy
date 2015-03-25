@@ -1,34 +1,52 @@
-<%= form_for(@user) do |f| %>
+<%= form_for(@user, html: {class: "form-horizontal"}) do |f| %>
 
   <%= render partial: "/shared/errors", locals: { o: @user } %>
 
   <%= hidden_field_tag :group_id, params[:group_id] %>
-  <div class="field">
-    <%= f.label :first_name %>
-    <%= f.text_field :first_name %>
+  <div class="field form-group">
+    <%= f.label :first_name, nil, class: "col-lg-4 control-label"  %>
+    <div class="col-lg-8">
+      <%= f.text_field :first_name, class: "form-control" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :last_name %>
-    <%= f.text_field :last_name %>
+  <div class="field form-group">
+    <%= f.label :last_name, nil, class: "col-lg-4 control-label"  %>
+
+    <div class="col-lg-8">
+      <%= f.text_field :last_name, class: "form-control" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :email, "Email #{'(optional)' if @user.user_type == User::USER_TYPE_STUDENT }" %>
-    <%= f.text_field :email %>
+  <div class="field form-group">
+    <%= f.label :email, "Email #{'(optional)' if @user.user_type == User::USER_TYPE_STUDENT }", class: "col-lg-4 control-label"  %>
+    <div class="col-lg-8">
+      <%= f.text_field :email, class: "form-control" %>
+    </div>
   </div>
   <% if current_user.admin? %>
-    <div class="field">
-      <%= f.label :user_type %>
-      <%= f.number_field :user_type %>
+    <div class="field form-group">
+      <%= f.label :user_type, nil, class: "col-lg-4 control-label"  %>
+      <div class="col-lg-8">
+        <%= f.number_field :user_type, class: "form-control" %>
+      </div>
     </div>
   <% else %>
     <%= f.hidden_field :user_type %>
   <% end %>
 
-  <div>Select Time Zone:</br>
-    <%= time_zone_select( "user", 'time_zone', ActiveSupport::TimeZone.us_zones, :default => "Pacific Time (US & Canada)") %>
+  <div class="field form-group">
+    <div class="col-lg-4 control-label">Select Time Zone:</div>
+      <div class="col-lg-8">
+        <%= time_zone_select( "user", 'time_zone', ActiveSupport::TimeZone.us_zones, { default: "Pacific Time (US & Canada)"}, class: "form-control") %>
+      </div>
   </div>
 
   <div class="actions">
-    <%= f.submit "Update", class: "btn" %>
+
+    <div class="field form-group">
+      <div class="col-lg-4"></div>
+      <div class="col-lg-8">
+        <%= f.submit "Update", class: "btn" %>
+      </div>
+    </div>
   </div>
 <% end %>
