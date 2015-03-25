@@ -2,25 +2,22 @@
 
   <div class="field form-group">
     <div class="col-lg-offset-4 col-lg-8">
-      <h2>Sign in</h2>
+      <h2>Log in</h2>
     </div>
   </div>
 
-  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), html: { class: "form-horizontal"}) do |f| %>
-
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "form-horizontal"}) do |f| %>
     <%= f.hidden_field :user_type, value: 2 %>
     <div class="field form-group">
-      <div class="col-lg-4">
-        <%= f.label :login, "Email/Username", class: "control-label" %>
-      </div>
+      <%= f.label :login, "Email/Username", class: "col-lg-4 control-label" %>
       <div class="col-lg-8">
-        <%= f.text_field :login, placeholder: "Email/Username", class: "form-control" %>
+        <%= f.text_field :login, placeholder: "Email/Username", class: "form-control", autofocus: true %>
       </div>
     </div>
 
     <div class="field form-group">
       <%= f.label :password, class: "col-lg-4 control-label" %>
-    <div class="col-lg-8">
+      <div class="col-lg-8">
         <%= f.password_field :password, placeholder: "Password", class: "form-control" %>
       </div>
     </div>
@@ -37,8 +34,6 @@
         <%= f.submit "Sign in", class: "btn btn-default" %>
       </div>
     </div>
-
-
   <% end %>
 
 </div>

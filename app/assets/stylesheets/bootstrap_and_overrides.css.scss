@@ -1,6 +1,13 @@
 @import "bootstrap";
 
-body { padding-top: 75px; }
+html {
+  font-family: 'Open Sans', sans-serif;
+}
+
+body {
+  padding-top: 75px;
+  font-family: 'Open Sans', sans-serif;
+}
 
 // $green-color: #9CAA9C;
 $green-color: #6A8347;
