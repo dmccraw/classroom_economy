@@ -112,7 +112,7 @@ GEM
     factory_girl_rails (4.5.0)
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
-    ffi (1.9.7)
+    ffi (1.9.25)
     formatador (0.2.5)
     girl_friday (0.11.2)
       connection_pool (~> 1.0)
