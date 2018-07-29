@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby "2.0.0"
+ruby "2.3.1"
 
 gem 'rails', '4.0.0'
 
@@ -31,7 +31,8 @@ gem 'turbolinks'
 gem 'annotate'
 gem 'devise'
 # gem 'bootstrap-sass', :git => 'git://github.com/thomas-mcdonald/bootstrap-sass.git', :branch => '3'
-gem 'bootstrap-sass', github: 'thomas-mcdonald/bootstrap-sass', branch: '3'
+# gem 'bootstrap-sass', github: 'thomas-mcdonald/bootstrap-sass', branch: '3'
+gem 'bootstrap-sass'
 
 gem 'pg'
 
@@ -51,7 +52,7 @@ end
 group :test do
   gem 'guard-spork'
   gem 'guard-rspec'
-  gem 'spork-rails', :github => 'sporkrb/spork-rails'
+  # gem 'spork-rails', :github => 'sporkrb/spork-rails'
   gem "shoulda-matchers"
   gem 'simplecov', :require => false
 end
