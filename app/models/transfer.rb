@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: transactions
+# Table name: transfers
 #
 #  id              :integer          not null, primary key
 #  from_account_id :integer          not null
@@ -15,7 +15,7 @@
 #  updated_at      :datetime         not null
 #
 
-class Transaction < ActiveRecord::Base
+class Transfer < ActiveRecord::Base
   # relationships
   belongs_to :from_account, class_name: "Account"
   belongs_to :to_account, class_name: "Account"
@@ -40,8 +40,8 @@ class Transaction < ActiveRecord::Base
   # callbacks
   after_create :transfer_funds
 
-  # transfer the money without a transaction and delete this transaction
-  # effectively erases the transaction
+  # transfer the money without a transfer and delete this transfer
+  # effectively erases the transfer
   def undo
     if from_account && to_account
       from_account.balance += amount

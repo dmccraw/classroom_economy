@@ -1,4 +1,4 @@
-<% accounts = @group.accounts.order("balance DESC") %>
+<% accounts = @group.accounts.includes(:owner).order("balance DESC") %>
 
 <div class="row">
 
@@ -8,7 +8,7 @@
       <p>Charges and payday will occur on <%= first_of_next_month %>.</p>
     </div>
 
-    <h3>Disputed Transactions</h3>
+    <h3>Disputed Transfers</h3>
     <% disputes = @group.disputes.where(result: nil) %>
     <% if disputes.count > 1 %>
       <table class="table table-striped table-bordered">
@@ -21,12 +21,12 @@
         </thead>
         <tbody>
           <% disputes.each do |dispute| %>
-            <% if dispute.transaction %>
+            <% if dispute.transfer %>
               <tr>
-                <td><%= dispute.transaction.id %></td>
-                <td><%= display_balance(dispute.transaction.amount) %></td>
-                <td><%= dispute.transaction.to_account.owner.display_name %></td>
-                <td><%= dispute.transaction.from_account.owner.display_name %></td>
+                <td><%= dispute.transfer.id %></td>
+                <td><%= display_balance(dispute.transfer.amount) %></td>
+                <td><%= dispute.transfer.to_account.owner.display_name %></td>
+                <td><%= dispute.transfer.from_account.owner.display_name %></td>
                 <td><%= dispute.reason %></td>
                 <td><%= link_to "Handle Dispute", edit_group_dispute_path(@group, dispute) %>
               </tr>
@@ -35,7 +35,7 @@
         </tbody>
       </table>
     <% else %>
-      <p>You have no disputed transactions.</p>
+      <p>You have no disputed transfers.</p>
     <% end %>
     <hr>
     <h3>Bills</h3>
@@ -74,10 +74,10 @@
     <h2>Class Actions</h2>
     <div class="well">
       <div style="padding: 2px;">
-        <%= link_to "<i class='icon-plus'></i> Bonus Entire Class".html_safe, new_class_transaction_group_transactions_path(@group, from_account_id: @group.group_account.id), class: "btn btn-block btn-success", style: "width: 150px;" %>
+        <%= link_to "<i class='icon-plus'></i> Bonus Entire Class".html_safe, new_class_transfer_group_transfers_path(@group, from_account_id: @group.group_account.id), class: "btn btn-block btn-success" %>
       </div>
       <div style="padding: 2px;">
-        <%= link_to "<i class='icon-minus'></i> Fine Entire Class".html_safe, new_class_transaction_group_transactions_path(@group, to_account_id: @group.group_account.id), class: "btn btn-block btn-danger", style: "width: 150px;" %>
+        <%= link_to "<i class='icon-minus'></i> Fine Entire Class".html_safe, new_class_transfer_group_transfers_path(@group, to_account_id: @group.group_account.id), class: "btn btn-block btn-danger" %>
       </div>
     </div>
 

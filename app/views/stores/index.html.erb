@@ -33,7 +33,7 @@
     <tr>
       <td><%= link_to(@group.store.name, group_store_path(@group, @group.store)) %></td>
       <td>
-        <% @group.store.store_owners.each do |owner| %>
+        <% @group.store.store_owners.includes(:user).each do |owner| %>
           <%= link_to(owner.user.display_name, group_student_path(@group, owner.user)) %>&nbsp;
         <% end %>
       </td>
@@ -67,16 +67,16 @@
   </thead>
   <tbody>
     <% if @group.student_stores.approved.count > 0 %>
-      <% @group.student_stores.approved.order("name").each do |store| %>
+      <% @group.student_stores.includes(:account).approved.order("name").each do |store| %>
         <tr>
           <td><%= link_to(store.name, group_store_path(@group, store)) %></td>
           <td>
-            <% store.store_owners.each do |owner| %>
+            <% store.store_owners.includes(:user).each do |owner| %>
               <%= link_to(owner.user.display_name, group_student_path(@group, owner.user)) %>&nbsp;
             <% end %>
           </td>
           <td>
-           <% store.store_managers.each do |store_manager| %>
+           <% store.store_managers.includes(:user).each do |store_manager| %>
               <%= link_to(store_manager.user.display_name, group_student_path(@group, store_manager.user)) %>&nbsp;
            <% end %>
            <%= "None" if store.store_managers.count == 0 %>

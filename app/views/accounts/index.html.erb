@@ -21,7 +21,7 @@
     <tr>
       <td><%= link_to(account.display_name, group_account_path(@group, account)) %></td>
       <td><%= display_balance(account.balance) %></td>
-      <td><%= link_to "Transactions", group_transactions_path(@group, account_id: account), class: "btn btn-default" %> </td>
+      <td><%= link_to "Transfers", group_transfers_path(@group, account_id: account), class: "btn btn-default" %> </td>
     </tr>
   <% end %>
 <% end %>
@@ -41,7 +41,7 @@
     <tr>
       <td><%= link_to(account.display_name, group_account_path(@group, account)) %></td>
       <td><%= display_balance account.balance %></td>
-      <td><%= link_to "Transactions", group_transactions_path(@group, account_id: account), class: "btn btn-default" if current_user.owns_or_manages_account?(account) || current_user.teacher?  %> </td>
+      <td><%= link_to "Transfers", group_transfers_path(@group, account_id: account), class: "btn btn-default" if current_user.owns_or_manages_account?(account) || current_user.teacher?  %> </td>
     </tr>
   <% end %>
 <% end %>

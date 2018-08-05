@@ -20,7 +20,7 @@ FactoryGirl.define do
     factory :paid_bill do
       paid true
       paid_date "2013-03-20 20:42:45"
-      transaction { FactoryGirl.generate(:transaction, from_account_id: from_account_id, to_account_id: to_account_id)}
+      transfer { FactoryGirl.generate(:transfer, from_account_id: from_account_id, to_account_id: to_account_id)}
     end
   end
 end

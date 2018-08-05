@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
   has_many :job_assignments, dependent: :destroy
   has_many :disputes, as: :owner, dependent: :destroy
   # has_many :groups, through: :memberships
-  has_many :transactions
+  has_many :transfers
   # has_many :charges, through: :accounts, source: :owner
 
   # validations

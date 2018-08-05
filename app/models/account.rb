@@ -30,7 +30,7 @@ class Account < ActiveRecord::Base
 
   # callbacks
   before_save :set_initial_balance
-  after_destroy :destroy_transactions
+  after_destroy :destroy_transfers
 
   # scopes
   scope :users, -> { where("owner_type = ?", "User") }
@@ -44,9 +44,8 @@ class Account < ActiveRecord::Base
     self.owner_type == "Store"
   end
 
-
-  def transactions
-    Transaction.where("from_account_id = :id OR to_account_id = :id", id: self.id)
+  def transfers
+    Transfer.where("from_account_id = :id OR to_account_id = :id", id: self.id)
   end
 
   def display_name
@@ -56,12 +55,10 @@ class Account < ActiveRecord::Base
   private
 
   def set_initial_balance
-    unless self.balance
-      write_attribute(:balance, 0.0)
-    end
+    write_attribute(:balance, 0.0) unless self.balance
   end
 
-  def destroy_transactions
-    Transaction.where("from_account_id = :id OR to_account_id = :id", id: self.id).destroy_all
+  def destroy_transfers
+    Transfer.where("from_account_id = :id OR to_account_id = :id", id: self.id).destroy_all
   end
 end
