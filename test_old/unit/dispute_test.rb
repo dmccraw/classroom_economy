@@ -28,9 +28,9 @@ class DisputeTest < ActiveSupport::TestCase
   should validate_presence_of(:transfer_id)
   should validate_presence_of(:group_id)
   should validate_presence_of(:reason)
-  should ensure_length_of(:owner_type).is_at_most(255)
-  should ensure_length_of(:reason).is_at_most(255)
-  should ensure_length_of(:result_reason).is_at_most(255)
+  should validate_length_of(:owner_type).is_at_most(255)
+  should validate_length_of(:reason).is_at_most(255)
+  should validate_length_of(:result_reason).is_at_most(255)
 
   test "should transfer_funds" do
     dispute = FactoryGirl.create(:user_dispute)

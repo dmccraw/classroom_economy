@@ -14,9 +14,9 @@ describe Dispute do
     it { is_expected.to validate_presence_of(:transfer_id) }
     it { is_expected.to validate_presence_of(:group_id) }
     it { is_expected.to validate_presence_of(:reason) }
-    it { is_expected.to ensure_length_of(:owner_type).is_at_most(255) }
-    it { is_expected.to ensure_length_of(:reason).is_at_most(255) }
-    it { is_expected.to ensure_length_of(:result_reason).is_at_most(255) }
+    it { is_expected.to validate_length_of(:owner_type).is_at_most(255) }
+    it { is_expected.to validate_length_of(:reason).is_at_most(255) }
+    it { is_expected.to validate_length_of(:result_reason).is_at_most(255) }
   end
 
   context "transfer_funds" do
