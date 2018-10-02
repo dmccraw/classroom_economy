@@ -73,15 +73,19 @@ $font-size-x-large:  ceil($font-size-base * 2) !default;
   color: white;
 }
 
-.navbar-brand {
+.navbar-default .navbar-brand {
   max-width: 400px;
   color: white;
   font-size: $font-size-x-large;
 }
 
-.navbar-brand:hover {
-  color: black;
+.navbar-default .navbar-nav > li > a {
+  color: white;
 }
+
+// .navbar-brand:hover {
+//   color: black;
+// }
 
 .dropdown-menu {
   li {

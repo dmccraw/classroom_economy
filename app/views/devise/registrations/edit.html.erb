@@ -3,16 +3,24 @@
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
   <%= devise_error_messages! %>
 
-  <div><%= f.label :password, "New Password" %>
-  <%= f.password_field :password, :autocomplete => "off" %></div>
+  <div class="field">
+    <%= f.label :password, "New Password" %>
+    <%= f.password_field :password, :autocomplete => "off" %>
+  </div>
 
-  <div><%= f.label :password_confirmation, "New Password Confirmation" %>
-  <%= f.password_field :password_confirmation %></div>
+  <div class="field">
+    <%= f.label :password_confirmation, "New Password Confirmation" %>
+    <%= f.password_field :password_confirmation %>
+  </div>
 
-  <div><%= f.label :current_password %>
-  <%= f.password_field :current_password %></div>
+  <div class="field">
+    <%= f.label :current_password %>
+    <%= f.password_field :current_password %>
+  </div>
 
-  <div><%= f.submit "Update", class: "btn btn-default" %></div>
+  <div class="actions">
+    <%= f.submit "Update", class: "btn btn-default" %>
+  </div>
 <% end %>
 
 <%= link_to "Back", :back %>
