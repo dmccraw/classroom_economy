@@ -41,7 +41,7 @@ class Group < ActiveRecord::Base
 
   def members
     members = []
-    memberships = Membership.find_all_by_group_id(self.id)
+    memberships = Membership.where(group_id: self.id)
     memberships.each do |member|
       members << member.user if member.user.student?
     end
